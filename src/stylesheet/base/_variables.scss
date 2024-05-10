@@ -1,0 +1,28 @@
+$color: (
+  "black": #000000,
+  "white": #ffffff
+);
+
+$font-weight: (
+  thin:       100,
+  extralight: 200,
+  light:      300,
+  regular:    400,
+  medium:     500,
+  semibold:   600,
+  bold:       700,
+  extrabold:  800,
+  black:      900
+);
+
+$font-size: (
+  xs:     11,
+  sm:     13,
+  normal: 16,
+  lg:     18,
+  xl:     20,
+  xxl:    24,
+  xxxl:   30
+);
+
+$font-body: "Be Vietnam Pro", sans-serif;

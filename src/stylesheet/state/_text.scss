@@ -1,0 +1,100 @@
+.txt-left {
+  text-align: left;
+}
+.txt-right {
+  text-align: right;
+}
+.txt-center {
+  text-align: center;
+}
+
+.txt-prewarp {
+  white-space: pre-wrap;
+}
+.no-wrap {
+  white-space: nowrap;
+}
+
+.txt.lowercase {
+  text-transform: lowercase;
+}
+.txt-uppercase {
+  text-transform: uppercase;
+}
+.txt-capitalize {
+  text-transform: capitalize;
+}
+
+.txt-thin {
+  font-weight: map-get($font-weight, thin);
+  font-style: normal;
+}
+.txt-extralight {
+  font-weight: map-get($font-weight, extralight);
+  font-style: normal;
+}
+.txt-light {
+  font-weight: map-get($font-weight, light);
+  font-style: normal;
+}
+.txt-regular {
+  font-weight: map-get($font-weight, regular);
+  font-style: normal;
+}
+.txt-medium {
+  font-weight: map-get($font-weight, medium);
+  font-style: normal;
+}
+.txt-semibold {
+  font-weight: map-get($font-weight, semibold);
+  font-style: normal;
+}
+.txt-bold {
+  font-weight: map-get($font-weight, bold);
+  font-style: normal;
+}
+.txt-extrabold {
+  font-weight: map-get($font-weight, semibold);
+  font-style: normal;
+}
+.txt-black {
+  font-weight: map-get($font-weight, black);
+  font-style: normal;
+}
+
+.txt-thin-italic {
+  font-weight: map-get($font-weight, thin);
+  font-style: italic;
+}
+.txt-extralight-italic {
+  font-weight: map-get($font-weight, extralight);
+  font-style: italic;
+}
+.txt-light-italic {
+  font-weight: map-get($font-weight, light);
+  font-style: italic;
+}
+.txt-regular-italic {
+  font-weight: map-get($font-weight, regular);
+  font-style: italic;
+}
+.txt-medium-italic {
+  font-weight: map-get($font-weight, medium);
+  font-style: italic;
+}
+.txt-semibold-italic {
+  font-weight: map-get($font-weight, semibold);
+  font-style: italic;
+}
+.txt-bold-italic {
+  font-weight: map-get($font-weight, bold);
+  font-style: italic;
+}
+.txt-extrabold-italic {
+  font-weight: map-get($font-weight, semibold);
+  font-style: italic;
+}
+.txt-black-italic {
+  font-weight: map-get($font-weight, black);
+  font-style: italic;
+}
