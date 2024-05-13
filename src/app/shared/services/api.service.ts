@@ -91,7 +91,7 @@ export default class ApiService {
   handleRefreshToken(successCb?: () => void) {
 
     return this.post(
-      [ENDPOINT.users.refreshToken], {},
+      [ENDPOINT.auth.refreshToken], {},
       this.authHelper.setRootHeader()
     ).then((res: any) => {
       this.authHelper.setAccessToken(res.user_token);
