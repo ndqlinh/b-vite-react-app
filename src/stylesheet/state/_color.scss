@@ -1,0 +1,11 @@
+@each $name, $color in $color { //$color is defined in _variables.scss
+  @if (str-index($name, "bg-")) {
+    .#{$name} {
+      background: $color;
+    }
+  }
+
+  .txt-#{$name} {
+    color: $color;
+  }
+}

@@ -98,3 +98,9 @@
   font-weight: map-get($font-weight, black);
   font-style: italic;
 }
+
+@each $name, $size in $font-size {
+  .txt-#{$name} {
+    @include pxRem(font-size, $size);
+  }
+}

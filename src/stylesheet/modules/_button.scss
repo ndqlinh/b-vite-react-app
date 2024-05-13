@@ -1,0 +1,19 @@
+.btn {
+  @include pxRem(padding, 10 20);
+  @include pxRem(border-radius, 5);
+  @include pxRem(font-size, map-get($font-size, normal));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: map-get($color, "white");
+  border: 1px solid map-get($color, border);
+  cursor: pointer;
+  .btn-icon {
+    @include pxRem(margin-right, 10);
+  }
+  &.btn-primary {
+    color: map-get($color, "white");
+    background-color: map-get($color, "blue");
+    border-color: map-get($color, "blue");
+  }
+}

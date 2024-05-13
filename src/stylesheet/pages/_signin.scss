@@ -1,0 +1,41 @@
+.login-page {
+  .login-sso {
+    @include pxRem(margin-bottom, 40);
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 2;
+    align-items: stretch;
+    .btn-login-sso {
+      width: 100%;
+      &:first-child {
+        @include pxRem(margin-right, 10);
+      }
+    }
+  }
+  .division-txt {
+    @include pxRem(font-size, map-get($font-size, sm));
+    @include pxRem(margin-bottom, 20);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    color: map-get($color, "grey");
+    p {
+      @include pxRem(padding, 0 5);
+      background-color: map-get($color, "white");
+      z-index: 1;
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      height: 1px;
+      width: 100%;
+      background-color: map-get($color, border);
+      z-index: 0;
+    }
+  }
+  .btn-submit {
+    width: 100%;
+  }
+}

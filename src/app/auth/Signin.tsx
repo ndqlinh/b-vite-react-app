@@ -1,18 +1,50 @@
+import EmailIcon from '@assets/email.svg?react';
+import LockIcon from '@assets/lock.svg?react';
+import CheckboxIcon from '@assets/checkbox.svg?react';
+import GoogleIcon from '@assets/google.svg?react';
+import FacebookIcon from '@assets/facebook.svg?react';
+
 const Signin = () => {
   return (
-    <div className="login-page">
+    <div className="auth-page login-page">
       <div className="card">
-        <form className="form-login">
+        <h1 className="page-title">Log in to your Account</h1>
+        <h3 className="page-subtitle">Welcome back! Select method to log in</h3>
+        <div className="login-sso">
+          <button className="btn btn-login-sso">
+            <GoogleIcon className="btn-icon" />
+            <span className="btn-text">Google</span>
+          </button>
+          <button className="btn btn-login-sso">
+            <FacebookIcon className="btn-icon" />
+            <span className="btn-text">Facebook</span>
+          </button>
+        </div>
+        <div className="division-txt">
+          <p>or continue with email</p>
+        </div>
+        <form className="form-login mb-8">
           <div className="form-group">
-            <label htmlFor="username">User name / Email</label>
-            <input type="text" name="username" id="username" />
+            <EmailIcon className="icon" />
+            <input type="text" name="email" id="email" className="input" placeholder="Email" />
           </div>
           <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input type="text" name="password" id="password" />
+            <LockIcon className="icon" />
+            <input type="text" name="password" id="password" className="input" placeholder="Password" />
           </div>
-          <button className="btn">Sign in</button>
+          <div className="flex justify-content-between align-items-center mb-8">
+            <div className="checkbox">
+              <input type="checkbox" name="remember" id="cb" className="checkbox-input" />
+              <label htmlFor="cb" className="checkbox-label">
+                <span><CheckboxIcon className="checked-icon" /></span>
+                <span>Remember me</span>
+              </label>
+            </div>
+            <a className="txt-blue" href="#">Forgot Password?</a>
+          </div>
+          <button className="btn btn-primary btn-submit">Log in</button>
         </form>
+        <p className="txt-sm txt-center">Don't have an account? <a className="txt-blue" href="#">Creat an account</a></p>
       </div>
     </div>
   );
