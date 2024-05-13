@@ -13,7 +13,7 @@
     outline: none;
     transition: .5s ease;
     &::placeholder {
-      color: #94a3b8;
+      color: map-get($color, "grey");
     }
     &:focus, &:hover {
       outline: none;
