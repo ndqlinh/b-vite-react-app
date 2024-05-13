@@ -1,10 +1,25 @@
+import { useForm } from 'react-hook-form';
+
 import EmailIcon from '@assets/email.svg?react';
 import LockIcon from '@assets/lock.svg?react';
 import CheckboxIcon from '@assets/checkbox.svg?react';
 import GoogleIcon from '@assets/google.svg?react';
 import FacebookIcon from '@assets/facebook.svg?react';
 
+import { emailValidator, PASSWORD_MAXLENGTH, PASSWORD_MINLENGTH, passwordValidator } from 'app/shared/validators/form.validator';
+
 const Signin = () => {
+  const {
+    register,
+    formState: { errors }
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      email: '',
+      password: ''
+    }
+  });
+
   return (
     <div className="auth-page login-page">
       <div className="card">
@@ -26,11 +41,29 @@ const Signin = () => {
         <form className="form-login mb-8">
           <div className="form-group">
             <EmailIcon className="icon" />
-            <input type="text" name="email" id="email" className="input" placeholder="Email" />
+            <input
+              type="text"
+              name="email"
+              id="email"
+              className="input"
+              placeholder="Email"
+              { ...register("email", emailValidator()) }
+            />
+            <p className="txt-red error-msg">{ errors?.email?.message }</p>
           </div>
           <div className="form-group">
             <LockIcon className="icon" />
-            <input type="text" name="password" id="password" className="input" placeholder="Password" />
+            <input
+              type="password"
+              name="password"
+              id="password"
+              className="input"
+              placeholder="Password"
+              maxLength={ PASSWORD_MAXLENGTH }
+              minLength={ PASSWORD_MINLENGTH }
+              { ...register("password", passwordValidator()) }
+            />
+            <p className="txt-red error-msg">{ errors?.password?.message }</p>
           </div>
           <div className="flex justify-content-between align-items-center mb-8">
             <div className="checkbox">

@@ -1,7 +1,8 @@
 .form-group {
   @include pxRem(margin-bottom, 15);
   display: flex;
-  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   position: relative;
   .input {
     @include pxRem(padding, 10 20 10 48);
@@ -21,12 +22,15 @@
     }
   }
   .icon {
+    @include pxRem(top, 10);
     @include pxRem(left, 16);
     @include pxRem(font-size, 20);
     display: flex;
     align-items: center;
     position: absolute;
-    fill: none;
+  }
+  .error-msg {
+    @include pxRem(margin-top, 5);
   }
 }
 
