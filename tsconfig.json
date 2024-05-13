@@ -21,9 +21,12 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": false,
     "noImplicitReturns": false,
-    "types": ["vite/client", "vite-plugin-svgr/client"],
+    "types": ["vite/client", "vite-plugin-svgr/client", "node"],
     "paths": {
-      "@assets/*": ["./assets/*"]
+      "@assets/*": ["./assets/*"],
+      "@core/*": ["./app/core/*"],
+      "@shared/*": ["./app/shared/*"],
+      "@config/*": ["./config/*"]
     }
   },
   "include": ["src"],

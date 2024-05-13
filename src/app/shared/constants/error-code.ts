@@ -1,0 +1,4 @@
+export default {
+  USER_RESOURCE_DENY: 2101,
+  WORKSPACE_RESOURCE_DENY: 2102
+};
