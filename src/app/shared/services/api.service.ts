@@ -105,45 +105,12 @@ export default class ApiService {
   }
 
   private async _handleError(error: AxiosError) {
-    // Detect refresh Token
-    // if (error.isAxiosError && error.response?.status === 401) {
-    //   const originalRequest = error.config;
-    //   const req = await this.authHelper.handleRefreshToken(originalRequest);
-    //   return this.axiosInstance(req);
-    // }
-
-    // Make error model before promise
-    if (error.isAxiosError && error.response) {
-      const errorStatus = error.response.status;
-      const errorData: any = error.response.data;
-      // Axios error
-      if (errorStatus === 401) {
-        signOut();
-      } else if (errorStatus === 403) {
-        const errorCode = errorData?.error?.code;
-        if ([ERROR_CODE.USER_RESOURCE_DENY, ERROR_CODE.WORKSPACE_RESOURCE_DENY].includes(errorCode)) {
-          this.handleRefreshToken()
-            .then(() => {
-              if (errorCode === ERROR_CODE.USER_RESOURCE_DENY) {
-                this._handleRedirectPage('/app/user/suspended-account');
-              } else if (errorCode === ERROR_CODE.WORKSPACE_RESOURCE_DENY) {
-                this._handleRedirectPage('/app/user/workspaces');
-              }
-            })
-            .catch(() => {
-              //
-            });
-        }
-      } else if (errorStatus === 503) {
-        this._handleRedirectPage('/app/error/maintenance');
-      }
+    if (error.isAxiosError && error.response?.status === 401) {
+      const originalRequest = error.config;
+      const req = await this.authHelper.handleRefreshToken(originalRequest);
+      return this.axiosInstance(req);
     }
 
     return Promise.reject(error);
-  }
-
-  private _handleRedirectPage = url => {
-    window.onbeforeunload = null;
-    window.location.href = `${environment.clientBaseUrl}${url}`;
   }
 }
