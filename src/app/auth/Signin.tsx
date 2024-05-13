@@ -6,7 +6,12 @@ import CheckboxIcon from '@assets/checkbox.svg?react';
 import GoogleIcon from '@assets/google.svg?react';
 import FacebookIcon from '@assets/facebook.svg?react';
 
-import { emailValidator, PASSWORD_MAXLENGTH, PASSWORD_MINLENGTH, passwordValidator } from 'app/shared/validators/form.validator';
+import {
+  emailValidator,
+  PASSWORD_MAXLENGTH,
+  PASSWORD_MINLENGTH,
+  passwordValidator
+} from 'app/shared/validators/form.validator';
 
 const Signin = () => {
   const {
