@@ -1,8 +1,6 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import AuthHelper from '@core/helpers/auth.helper';
 import { environment } from 'config/environment';
-import ERROR_CODE from '@shared/constants/error-code';
-import { signOut } from '@shared/utils/auth.util';
 import { ENDPOINT } from 'config/endpoint';
 
 export default class ApiService {
@@ -10,6 +8,8 @@ export default class ApiService {
   authHelper: AuthHelper;
 
   constructor() {
+    this.authHelper = new AuthHelper();
+    console.log(environment.apiBaseUrl);
     this.axiosInstance = axios.create({
       baseURL: environment.apiBaseUrl,
       // Common header

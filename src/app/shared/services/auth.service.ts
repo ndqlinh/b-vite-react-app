@@ -13,7 +13,7 @@ interface SignUpBodyRequest {
   display_name: string;
 }
 
-export class AuthService extends AuthHelper {
+export default class AuthService extends AuthHelper {
   http = new ApiService();
 
   constructor() {
@@ -21,9 +21,6 @@ export class AuthService extends AuthHelper {
   }
 
   async signIn(body: any) {
-    /* this is the default signIn,
-      If you want to override it, please write the same function in specific type of auth.
-    */
     return this.http.post([ENDPOINT.auth.signin], body);
   }
 
