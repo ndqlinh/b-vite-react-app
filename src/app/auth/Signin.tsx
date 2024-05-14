@@ -12,7 +12,8 @@ import {
   PASSWORD_MINLENGTH,
   passwordValidator
 } from 'app/shared/validators/form.validator';
-import AuthService from '@shared/services/auth.service';
+import { useAppDispatch, useAppSelector } from 'app/stores/hook';
+import { signin } from './authSlice';
 
 interface SigninData {
   email: string;
@@ -31,13 +32,12 @@ const Signin = () => {
       password: ''
     }
   });
-  const auth = new AuthService();
+  const dispatch = useAppDispatch();
+  const authData = useAppSelector((state) => state.auth);
+  console.log('authData', authData);
 
   const onSubmit: SubmitHandler<SigninData> = (data) => {
-    console.log(data);
-    auth.signIn(data)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    dispatch(signin(data));
   };
 
   return (
