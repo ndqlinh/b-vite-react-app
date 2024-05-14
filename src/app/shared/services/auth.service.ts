@@ -10,7 +10,6 @@ interface ResetPasswordBody {
 interface SignUpBodyRequest {
   email: string;
   password: string;
-  office_name: string;
   display_name: string;
 }
 
@@ -43,7 +42,6 @@ export class AuthService extends AuthHelper {
   refreshToken() {
     this.http.post([ENDPOINT.auth.refreshToken], {}, this.setRootHeader())
       .then((res: any) => {
-        this.setCurrentOffice('');
         this.setAccessToken(res.user_token);
       })
       .catch(err => {
@@ -53,7 +51,6 @@ export class AuthService extends AuthHelper {
 
   resetUserToken(token: string) {
     this.cleanupToken();
-    this.setCurrentOffice('');
     this.setAccessToken(token);
   }
 }
