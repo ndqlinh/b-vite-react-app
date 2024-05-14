@@ -5,6 +5,8 @@ import LockIcon from '@assets/lock.svg?react';
 import CheckboxIcon from '@assets/checkbox.svg?react';
 import GoogleIcon from '@assets/google.svg?react';
 import FacebookIcon from '@assets/facebook.svg?react';
+import ShowIcon from '@assets/eyes-show.svg?react';
+import HideIcon from '@assets/eyes-hide.svg?react';
 
 import {
   emailValidator,
@@ -14,6 +16,7 @@ import {
 } from 'app/shared/validators/form.validator';
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 import { signin } from './authSlice';
+import { useState } from 'react';
 
 interface SigninData {
   email: string;
@@ -34,7 +37,11 @@ const Signin = () => {
   });
   const dispatch = useAppDispatch();
   const authData = useAppSelector((state) => state.auth);
-  console.log('authData', authData);
+  const [isShowPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword(prev => !prev);
+  };
 
   const onSubmit: SubmitHandler<SigninData> = (data) => {
     dispatch(signin(data));
@@ -61,7 +68,7 @@ const Signin = () => {
         <form className="form-login mb-8" onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group">
             <div className="input-wrapper">
-              <EmailIcon className="icon" />
+              <EmailIcon className="prev-icon" />
               <input
                 type="text"
                 name="email"
@@ -75,9 +82,9 @@ const Signin = () => {
           </div>
           <div className="form-group">
             <div className="input-wrapper">
-              <LockIcon className="icon" />
+              <LockIcon className="prev-icon" />
               <input
-                type="password"
+                type={ isShowPassword ? "text" : "password" }
                 name="password"
                 id="password"
                 className="input"
@@ -86,6 +93,9 @@ const Signin = () => {
                 minLength={ PASSWORD_MINLENGTH }
                 { ...register("password", passwordValidator()) }
               />
+              <div className="sub-icon cursor-pointer" onClick={ toggleShowPassword }>
+                { isShowPassword ? <HideIcon /> : <ShowIcon /> }
+              </div>
             </div>
             <p className="txt-red error-msg">{ errors?.password?.message }</p>
           </div>

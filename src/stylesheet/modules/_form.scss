@@ -25,12 +25,18 @@
       box-shadow: 0 0 0 5px rgba($color: map-get($color, "blue"), $alpha: 0.3);
     }
   }
-  .icon {
-    @include pxRem(left, 16);
+  .prev-icon,
+  .sub-icon {
     @include pxRem(font-size, 20);
     display: flex;
     align-items: center;
     position: absolute;
+  }
+  .prev-icon {
+    @include pxRem(left, 16);
+  }
+  .sub-icon {
+    @include pxRem(right, 16);
   }
   .error-msg {
     @include pxRem(margin-top, 5);
