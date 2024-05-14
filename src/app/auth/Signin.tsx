@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 import EmailIcon from '@assets/email.svg?react';
 import LockIcon from '@assets/lock.svg?react';
@@ -13,10 +13,16 @@ import {
   passwordValidator
 } from 'app/shared/validators/form.validator';
 
+interface SigninData {
+  email: string;
+  password: string;
+}
+
 const Signin = () => {
   const {
     register,
-    formState: { errors }
+    formState: { errors },
+    handleSubmit
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -24,6 +30,10 @@ const Signin = () => {
       password: ''
     }
   });
+
+  const onSubmit: SubmitHandler<SigninData> = (data) => {
+    console.log(data);
+  };
 
   return (
     <div className="auth-page login-page">
@@ -43,7 +53,7 @@ const Signin = () => {
         <div className="division-txt">
           <p>or continue with email</p>
         </div>
-        <form className="form-login mb-8">
+        <form className="form-login mb-8" onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group">
             <div className="input-wrapper">
               <EmailIcon className="icon" />
