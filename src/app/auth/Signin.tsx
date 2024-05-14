@@ -45,29 +45,33 @@ const Signin = () => {
         </div>
         <form className="form-login mb-8">
           <div className="form-group">
-            <EmailIcon className="icon" />
-            <input
-              type="text"
-              name="email"
-              id="email"
-              className="input"
-              placeholder="Email"
-              { ...register("email", emailValidator()) }
-            />
+            <div className="input-wrapper">
+              <EmailIcon className="icon" />
+              <input
+                type="text"
+                name="email"
+                id="email"
+                className="input"
+                placeholder="Email"
+                { ...register("email", emailValidator()) }
+              />
+            </div>
             <p className="txt-red error-msg">{ errors?.email?.message }</p>
           </div>
           <div className="form-group">
-            <LockIcon className="icon" />
-            <input
-              type="password"
-              name="password"
-              id="password"
-              className="input"
-              placeholder="Password"
-              maxLength={ PASSWORD_MAXLENGTH }
-              minLength={ PASSWORD_MINLENGTH }
-              { ...register("password", passwordValidator()) }
-            />
+            <div className="input-wrapper">
+              <LockIcon className="icon" />
+              <input
+                type="password"
+                name="password"
+                id="password"
+                className="input"
+                placeholder="Password"
+                maxLength={ PASSWORD_MAXLENGTH }
+                minLength={ PASSWORD_MINLENGTH }
+                { ...register("password", passwordValidator()) }
+              />
+            </div>
             <p className="txt-red error-msg">{ errors?.password?.message }</p>
           </div>
           <div className="flex justify-content-between align-items-center mb-8">

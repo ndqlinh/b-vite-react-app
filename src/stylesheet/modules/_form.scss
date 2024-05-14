@@ -3,9 +3,13 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  position: relative;
+  .input-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
   .input {
-    @include pxRem(padding, 10 20 10 48);
+    @include pxRem(padding, 12 20 12 48);
     @include pxRem(border-radius, 5);
     @include pxRem(font-size, map-get($font-size, normal));
     width: 100%;
@@ -22,7 +26,6 @@
     }
   }
   .icon {
-    @include pxRem(top, 10);
     @include pxRem(left, 16);
     @include pxRem(font-size, 20);
     display: flex;

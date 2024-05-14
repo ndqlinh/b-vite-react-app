@@ -35,6 +35,9 @@
       z-index: 0;
     }
   }
+  .form-login {
+    @include pxRem(width, 350);
+  }
   .btn-submit {
     width: 100%;
   }

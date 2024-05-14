@@ -1,5 +1,5 @@
 .btn {
-  @include pxRem(padding, 10 20);
+  @include pxRem(padding, 12 20);
   @include pxRem(border-radius, 5);
   @include pxRem(font-size, map-get($font-size, normal));
   display: flex;
