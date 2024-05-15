@@ -1,6 +1,7 @@
-import AuthHelper from '@core/helpers/auth.helper';
 import { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
+
+import AuthHelper from '@core/helpers/auth.helper';
 
 const Auth = () => {
   const navigate = useNavigate();
