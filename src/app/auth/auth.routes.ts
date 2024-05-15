@@ -1,8 +1,8 @@
 import { lazy } from 'react';
 
 const Auth = lazy(() => import('./Auth'));
-const Signin = lazy(() => import('./Signin'));
-const Signup = lazy(() => import('./Signup'));
+const Signin = lazy(() => import('./childrens/Signin'));
+const Signup = lazy(() => import('./childrens/Signup'));
 
 const router = [
   {

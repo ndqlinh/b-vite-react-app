@@ -17,7 +17,7 @@ import {
   passwordValidator
 } from 'app/shared/validators/form.validator';
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
-import { reset, signin } from './authSlice';
+import { reset, signin } from '../authSlice';
 import AuthHelper from '@core/helpers/auth.helper';
 
 interface SigninData {
