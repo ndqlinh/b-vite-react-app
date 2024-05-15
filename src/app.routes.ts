@@ -1,9 +1,9 @@
 import authRoutes from './app/auth/auth.routes';
-import homeRoutes from './app/home/home.routes';
+import principalsRoutes from './app/principal/pricipal.routes';
 
 const appRoutes = [
   ...authRoutes,
-  ...homeRoutes
+  ...principalsRoutes
 ];
 
 export default appRoutes;
