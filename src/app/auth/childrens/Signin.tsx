@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import EmailIcon from '@assets/email.svg?react';
-import LockIcon from '@assets/lock.svg?react';
-import CheckboxIcon from '@assets/checkbox.svg?react';
-import GoogleIcon from '@assets/google.svg?react';
-import FacebookIcon from '@assets/facebook.svg?react';
-import ShowIcon from '@assets/eyes-show.svg?react';
-import HideIcon from '@assets/eyes-hide.svg?react';
+import EmailIcon from '@assets/icons/email.svg?react';
+import LockIcon from '@assets/icons/lock.svg?react';
+import CheckboxIcon from '@assets/icons/checkbox.svg?react';
+import GoogleIcon from '@assets/icons/google.svg?react';
+import FacebookIcon from '@assets/icons/facebook.svg?react';
+import ShowIcon from '@assets/icons/eyes-show.svg?react';
+import HideIcon from '@assets/icons/eyes-hide.svg?react';
 
 import {
   emailValidator,

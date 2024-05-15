@@ -1,6 +1,10 @@
+import Header from '@shared/components/Header';
 const Home = () => {
   return (
-    <div>Home page</div>
+    <>
+      <Header />
+      <div>Home page</div>
+    </>
   )
 };
 
