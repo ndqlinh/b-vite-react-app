@@ -53,7 +53,7 @@ const Signin = () => {
       auth.setRefreshToken(refreshToken);
       navigate('/');
     }
-  }, [authData.data]);
+  }, [authData]);
 
   const toggleShowPassword = () => {
     setShowPassword(prev => !prev);

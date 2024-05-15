@@ -22,7 +22,8 @@ export const signup = createAsyncThunk(
   ENDPOINT.auth.signup,
   async (data: any, thunkAPI) => {
     try {
-      return await auth.signUp(data);
+      const response: any = await auth.signUp(data);
+      return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -33,9 +34,10 @@ export const signin = createAsyncThunk(
   ENDPOINT.auth.signin,
   async (data: any, thunkAPI) => {
     try {
-      return auth.signIn(data);
+      const response: any = await auth.signIn(data);
+      return response;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -58,7 +60,7 @@ export const authSlice = createSlice({
       .addCase(signup.rejected, (state: any, action: any) => {
         state.isLoading = false;
         state.hasError = true;
-        state.error = action.payload;
+        state.error = action.payload.message;
       })
       .addCase(signin.pending, (state: any) => {
         state.isLoading = true;
@@ -70,7 +72,7 @@ export const authSlice = createSlice({
       .addCase(signin.rejected, (state: any, action: any) => {
         state.isLoading = false;
         state.hasError = true;
-        state.error = action.payload;
+        state.error = action.payload.message;
       });
   },
 });
