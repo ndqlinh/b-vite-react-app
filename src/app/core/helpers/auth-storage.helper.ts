@@ -1,6 +1,10 @@
-import { AuthStorage } from '@core/helpers/auth.helper';
+export interface AuthStorageInterface {
+  setToken(key: string, data?: any): void;
+  getToken(key: string): void;
+  removeToken(key: string): void;
+}
 
-export class AuthStorageHelper implements AuthStorage {
+export class AuthStorageHelper implements AuthStorageInterface {
   setToken(key: string, token: any) {
     localStorage.setItem(key, token);
   }

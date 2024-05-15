@@ -33,23 +33,18 @@ export const signin = createAsyncThunk(
   ENDPOINT.auth.signin,
   async (data: any, thunkAPI) => {
     try {
-      return auth.signIn(data).then(res => res);
+      return auth.signIn(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-export const userSlice = createSlice({
+export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    reset: (state) => {
-      state.data = null;
-      state.isLoading = false;
-      state.hasError = false;
-      state.error = '';
-    },
+    reset: () => initialState
   },
   extraReducers: (builder) => {
     builder
@@ -80,5 +75,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const { reset } = userSlice.actions;
-export default userSlice.reducer;
+export const { reset } = authSlice.actions;
+export default authSlice.reducer;

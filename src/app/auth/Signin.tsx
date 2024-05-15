@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import EmailIcon from '@assets/email.svg?react';
@@ -15,8 +17,8 @@ import {
   passwordValidator
 } from 'app/shared/validators/form.validator';
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
-import { signin } from './authSlice';
-import { useState } from 'react';
+import { reset, signin } from './authSlice';
+import AuthHelper from '@core/helpers/auth.helper';
 
 interface SigninData {
   email: string;
@@ -35,9 +37,22 @@ const Signin = () => {
       password: ''
     }
   });
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const authData = useAppSelector((state) => state.auth);
   const [isShowPassword, setShowPassword] = useState(false);
+
+  const auth = new AuthHelper();
+
+  useEffect(() => {
+    if (authData.data) {
+      const { accessToken, refreshToken } = authData.data;
+      dispatch(reset());
+      auth.setAccessToken(accessToken);
+      auth.setRefreshToken(refreshToken);
+      navigate('/');
+    }
+  }, [authData.data]);
 
   const toggleShowPassword = () => {
     setShowPassword(prev => !prev);

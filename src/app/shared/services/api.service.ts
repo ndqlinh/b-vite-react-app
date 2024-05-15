@@ -9,7 +9,6 @@ export default class ApiService {
 
   constructor() {
     this.authHelper = new AuthHelper();
-    console.log(environment.apiBaseUrl);
     this.axiosInstance = axios.create({
       baseURL: environment.apiBaseUrl,
       // Common header

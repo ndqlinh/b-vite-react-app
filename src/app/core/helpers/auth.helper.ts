@@ -12,12 +12,6 @@ export interface AuthHelperInterface {
   signOut: () => void;
 }
 
-export interface AuthStorage {
-  setToken(key: string, data?: any): void;
-  getToken(key: string): void;
-  removeToken(key: string): void;
-}
-
 export interface TokenKeys {
   accessTokenKey: string;
   refreshTokenKey: string;
