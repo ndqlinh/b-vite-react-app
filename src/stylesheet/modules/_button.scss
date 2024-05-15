@@ -6,14 +6,30 @@
   align-items: center;
   justify-content: center;
   background-color: map-get($color, "white");
+  font-weight: map-get($font-weight, medium);
   border: 1px solid map-get($color, border);
   cursor: pointer;
   .btn-icon {
     @include pxRem(margin-right, 10);
   }
+  .loader {
+    @include pxRem(border-width, 2);
+    &::before,
+    &::after {
+      inset: -2px;
+    }
+  }
+  &:disabled,
+  &.disabled {
+    cursor: default;
+    opacity: 0.65;
+  }
   &.btn-primary {
     color: map-get($color, "white");
     background-color: map-get($color, "blue");
     border-color: map-get($color, "blue");
+    .loader {
+      border-right-color: rgba($color: map-get($color, "white"), $alpha: 0.59);
+    }
   }
 }

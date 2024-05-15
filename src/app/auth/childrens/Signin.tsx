@@ -19,6 +19,7 @@ import {
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 import { reset, signin } from '../authSlice';
 import AuthHelper from '@core/helpers/auth.helper';
+import Loader from '@shared/components/Loader';
 
 interface SigninData {
   email: string;
@@ -124,7 +125,9 @@ const Signin = () => {
             </div>
             <a className="txt-blue" href="#">Forgot Password?</a>
           </div>
-          <button className="btn btn-primary btn-submit">Log in</button>
+          <button className="btn btn-primary btn-submit" disabled={ authData.isLoading }>
+            { authData.isLoading ? <Loader /> : "Sign in" }
+          </button>
         </form>
         <p className="txt-sm txt-center">Don't have an account? <a className="txt-blue" href="#">Creat an account</a></p>
       </div>
