@@ -7,7 +7,7 @@
   justify-content: center;
   background-color: map-get($color, "white");
   font-weight: map-get($font-weight, medium);
-  border: 1px solid map-get($color, border);
+  border: 1px solid transparent;
   cursor: pointer;
   .btn-icon {
     @include pxRem(margin-right, 10);
@@ -23,6 +23,9 @@
   &.disabled {
     cursor: default;
     opacity: 0.65;
+  }
+  &.btn-outline {
+    border-color: map-get($color, border);
   }
   &.btn-primary {
     color: map-get($color, "white");

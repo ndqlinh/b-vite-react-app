@@ -69,11 +69,11 @@ const Signin = () => {
         <h1 className="page-title">Log in to your Account</h1>
         <h3 className="page-subtitle">Welcome back! Select method to log in</h3>
         <div className="login-sso">
-          <button className="btn btn-login-sso">
+          <button className="btn btn-outline btn-login-sso" disabled={ authData.isLoading }>
             <GoogleIcon className="btn-icon" />
             <span className="btn-text">Google</span>
           </button>
-          <button className="btn btn-login-sso">
+          <button className="btn btn-outline btn-login-sso" disabled={ authData.isLoading }>
             <FacebookIcon className="btn-icon" />
             <span className="btn-text">Facebook</span>
           </button>

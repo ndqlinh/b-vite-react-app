@@ -10,5 +10,6 @@ export const ENDPOINT = {
     resetPassword: `${RESOURCES.auth}/reset-password`,
     refreshToken: `${RESOURCES.auth}/refresh-token`,
     signout: `${RESOURCES.auth}/signout`,
-  }
+  },
+  profile: 'profile'
 }
