@@ -16,7 +16,7 @@ import {
   PASSWORD_MAXLENGTH,
   PASSWORD_MINLENGTH,
   passwordValidator
-} from 'app/shared/validators/form.validator';
+} from '@shared/validators/form.validator';
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 import { reset, signin } from '../authSlice';
 import AuthHelper from '@core/helpers/auth.helper';
