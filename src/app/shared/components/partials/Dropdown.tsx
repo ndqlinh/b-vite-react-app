@@ -16,7 +16,6 @@ const Dropdown = (props) => {
   }
 
   const handleClickOutside = () => {
-    console.log(123123);
     setShowed(false);
   }
 

@@ -14,10 +14,6 @@ const Header = () => {
     dispatch(getProfile());
   }, []);
 
-  useEffect(() => {
-    console.log(profile);
-  }, [profile]);
-
   return (
     <header className="principal-header">
       <h1 className="page-logo"><ViteLogo /></h1>
