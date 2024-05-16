@@ -1,0 +1,23 @@
+.principal-header {
+  @include pxRem(padding, 0 20);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba($color: map-get($color, border), $alpha: 0.5);
+  // box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  .page-logo {
+    line-height: 1;
+    margin-bottom: 0;
+  }
+  .header-menu {
+    display: flex;
+    align-items: center;
+    .menu-item {
+      @include pxRem(padding, 25 15);
+      cursor: pointer;
+    }
+  }
+  .btn-profile {
+    @include pxRem(padding, 20 0);
+  }
+}

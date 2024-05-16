@@ -4,6 +4,7 @@ import ViteLogo from '@assets/icons/vite.svg?react';
 
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 import { getProfile } from 'app/principal/principalSlice';
+import Dropdown from './Dropdown';
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -19,10 +20,19 @@ const Header = () => {
 
   return (
     <header className="principal-header">
-      <h1><ViteLogo /></h1>
-      <div className="header-menu"></div>
+      <h1 className="page-logo"><ViteLogo /></h1>
+      <ul className="header-menu">
+        <li className="menu-item">Home</li>
+        <li className="menu-item">Todo</li>
+      </ul>
       <div className="header-actions">
-        <button className="btn">Welcome, { profile?.data?.firstName } { profile?.data?.lastName }</button>
+        <Dropdown
+          triggerElm={
+            <button className="btn btn-profile">
+              Welcome, { profile?.data?.firstName } { profile?.data?.lastName }
+            </button>
+          }
+        />
       </div>
     </header>
   );
