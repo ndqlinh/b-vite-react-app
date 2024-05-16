@@ -20,7 +20,7 @@ import {
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 import { reset, signin } from '../authSlice';
 import AuthHelper from '@core/helpers/auth.helper';
-import Loader from '@shared/components/Loader';
+import Loader from '@shared/components/partials/Loader';
 
 interface SigninData {
   email: string;

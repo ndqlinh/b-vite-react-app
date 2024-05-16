@@ -1,12 +1,12 @@
 import { Outlet } from 'react-router-dom';
 
-import Header from '@shared/components/Header';
+import Header from '@shared/components/layout/Header';
 
 const Principal = () => {
   return (
     <>
       <Header />
-      <div className="principal-app">
+      <div className="container">
         <Outlet />
       </div>
     </>

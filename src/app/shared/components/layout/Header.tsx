@@ -4,7 +4,7 @@ import ViteLogo from '@assets/icons/vite.svg?react';
 
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 import { getProfile } from 'app/principal/principalSlice';
-import Dropdown from './Dropdown';
+import Dropdown from '../partials/Dropdown';
 
 const Header = () => {
   const dispatch = useAppDispatch();
