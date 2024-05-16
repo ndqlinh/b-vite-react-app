@@ -6,7 +6,7 @@ const Principal = () => {
   return (
     <>
       <Header />
-      <div className="container">
+      <div className="container pd-4">
         <Outlet />
       </div>
     </>

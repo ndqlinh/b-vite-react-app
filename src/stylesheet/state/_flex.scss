@@ -112,6 +112,10 @@
 .flex-col {
   display: flex;
   flex-direction: column;
+  &-centered {
+    align-items: center;
+    justify-content: center;
+  }
   &-center-x {
     align-items: center;
   }
