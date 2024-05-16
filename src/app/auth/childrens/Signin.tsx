@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 import EmailIcon from '@assets/icons/email.svg?react';
 import LockIcon from '@assets/icons/lock.svg?react';
@@ -52,6 +53,12 @@ const Signin = () => {
       auth.setAccessToken(accessToken);
       auth.setRefreshToken(refreshToken);
       navigate('/');
+    } else if (authData.hasError) {
+      toast(authData.error, {
+        type: 'error',
+        theme: 'colored'
+      });
+      dispatch(reset());
     }
   }, [authData]);
 
