@@ -1,3 +1,5 @@
+import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "./jwt.helper";
+
 export interface AuthStorageInterface {
   setToken(key: string, data?: any): void;
   getToken(key: string): void;
@@ -23,7 +25,7 @@ export class AuthStorageHelper implements AuthStorageInterface {
 
   cleanupToken() {
     Object.keys(localStorage).map(key => {
-      if (key.includes('access_token')) {
+      if (key.includes(ACCESS_TOKEN_KEY) || key.includes(REFRESH_TOKEN_KEY)) {
         this.removeToken(key);
       }
     });
