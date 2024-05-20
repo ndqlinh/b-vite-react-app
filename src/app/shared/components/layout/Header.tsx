@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import ViteLogo from '@assets/icons/vite.svg?react';
 import LogoutIcon from '@assets/icons/logout.svg?react';
@@ -29,8 +30,12 @@ const Header = () => {
     <header className="principal-header">
       <h1 className="page-logo"><ViteLogo /></h1>
       <ul className="header-menu">
-        <li className="menu-item">Home</li>
-        <li className="menu-item">Todo</li>
+        <li className="menu-item">
+          <Link to='/'>Home</Link>
+        </li>
+        <li className="menu-item">
+          <Link to='/todo'>Todo</Link>
+        </li>
       </ul>
       <div className="header-actions">
         <Dropdown
