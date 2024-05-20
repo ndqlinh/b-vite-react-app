@@ -73,9 +73,7 @@ const TodoList = () => {
 
   return (
     <div className="todo-page">
-      {
-        todoList.length && <Tabs tabs={ dummyTabs } />
-      }
+      { todoList.length && <Tabs tabs={ dummyTabs } /> }
     </div>
   )
 };
