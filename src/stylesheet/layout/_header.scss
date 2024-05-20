@@ -15,6 +15,7 @@
     .menu-item {
       @include pxRem(padding, 25 15);
       cursor: pointer;
+      font-weight: map-get($font-weight, medium);
     }
   }
   .btn-profile {
