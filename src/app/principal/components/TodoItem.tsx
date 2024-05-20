@@ -1,9 +1,9 @@
 const TodoItem = (props) => {
-  const { id, title, status } = props;
+  const { todo } = props;
 
   return (
     <li className="todo-item">
-      { title }
+      { todo.title }
     </li>
   );
 };

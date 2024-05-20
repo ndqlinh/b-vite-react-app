@@ -5,20 +5,9 @@ import TodoItem from '../components/TodoItem';
 
 const TodoList = () => {
   const [todoList, setTodoList] = useState([]);
-  const [dummyTabs, setDummytabs] = useState([
-    {
-      label: 'new',
-      paneElm: <div>Tab 1 content</div>
-    },
-    {
-      label: 'in-progress',
-      paneElm: <div>Tab 2 content</div>
-    },
-    {
-      label: 'done',
-      paneElm: <div>Tab 3 content</div>
-    }
-  ]);
+  const [selectedStatus, setSelectedStatus] = useState('new');
+  const [filteredTodos, setFilteredTodos] = useState([]);
+  const todoStatus = ['new', 'in-progress', 'done'];
 
   useEffect(() => {
     setTodoList([
@@ -49,31 +38,29 @@ const TodoList = () => {
     ])
   }, []);
 
-  useEffect(() => {
-    if (todoList.length) {
-      dummyTabs.map(tab => {
-        const todos = todoList.filter(item => item.status === tab.label);
-        tab.paneElm = <ul className="todo-list">
-          {
-            todos.map(item => (
-              <TodoItem
-                id={ item.id }
-                key={ item.id }
-                title={ item.title }
-                status={ item.status }
-              />
-            ))
-          }
-        </ul>
-      });
+  const changeTabCallback = (selectedIndex: number) => {
+    setSelectedStatus(todoStatus[selectedIndex]);
+  };
 
-      setDummytabs(prev => dummyTabs);
+  useEffect(() => {
+    if (todoList.length && selectedStatus) {
+      const result = todoList.filter(item => item.status === selectedStatus);
+      setFilteredTodos(prev => result);
     }
-  }, [todoList.length]);
+  }, [todoList.length, selectedStatus]);
 
   return (
     <div className="todo-page">
-      { todoList.length && <Tabs tabs={ dummyTabs } /> }
+      <Tabs tabs={ todoStatus } callback={ changeTabCallback }>
+        {
+          todoList.length &&
+          <ul className="todo-list">
+            {
+              filteredTodos.map(item => <TodoItem key={ item.id } todo={ item } />)
+            }
+          </ul>
+        }
+      </Tabs>
     </div>
   )
 };
