@@ -2,15 +2,14 @@
   @include pxRem(padding, 12 20);
   @include pxRem(border-radius, 5);
   @include pxRem(font-size, map-get($font-size, normal));
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @extend %flex-centered;
   background-color: map-get($color, "white");
   font-weight: map-get($font-weight, medium);
   border: 1px solid transparent;
   cursor: pointer;
   .btn-icon {
     @include pxRem(margin-right, 10);
+    @extend %flex-centered;
   }
   .loader {
     @include pxRem(border-width, 2);

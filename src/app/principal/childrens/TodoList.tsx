@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import PlusIcon from '@assets/icons/plus.svg?react';
+
 import Tabs from '@shared/components/partials/Tabs';
 import TodoItem from '../components/TodoItem';
 
@@ -51,6 +53,12 @@ const TodoList = () => {
 
   return (
     <div className="todo-page">
+      <button className="btn btn-primary">
+        <div className="btn-icon">
+          <PlusIcon />
+        </div>
+        New Task
+      </button>
       <Tabs tabs={ todoStatus } callback={ changeTabCallback }>
         {
           todoList.length &&
