@@ -77,6 +77,14 @@ const DialogProvider = (props) => {
     setDialog([]);
   }, [location]);
 
+  useEffect(() => {
+    if (dialog.length) {
+      document.body.classList.add('overflow-hidden');
+    } else {
+      document.body.classList.remove('overflow-hidden');
+    }
+  }, [dialog.length]);
+
   const addDialog = (newDialog: DialogData) => {
     setDialog([...dialog, ...[newDialog]]);
   };
