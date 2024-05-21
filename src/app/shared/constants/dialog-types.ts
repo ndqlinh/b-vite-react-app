@@ -1,0 +1,8 @@
+const DIALOG_TYPE = {
+  CONFIRM: 'CONFIRM',
+  ALERT: 'ALERT',
+  CUSTOM: 'CUSTOM',
+  CONFIRM_DANGER: 'CONFIRM_DANGER'
+};
+
+export default DIALOG_TYPE;

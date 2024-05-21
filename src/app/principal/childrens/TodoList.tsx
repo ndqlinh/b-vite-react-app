@@ -4,8 +4,11 @@ import PlusIcon from '@assets/icons/plus.svg?react';
 
 import Tabs from '@shared/components/partials/Tabs';
 import TodoItem from '../components/TodoItem';
+import { useDialog } from '@shared/contexts/dialog.context';
+import DIALOG_TYPES from '@shared/constants/dialog-types';
 
 const TodoList = () => {
+  const { addDialog } = useDialog();
   const [todoList, setTodoList] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState('new');
   const [filteredTodos, setFilteredTodos] = useState([]);
@@ -51,9 +54,20 @@ const TodoList = () => {
     }
   }, [todoList.length, selectedStatus]);
 
+  const openDialog = () => {
+    addDialog({
+      type: DIALOG_TYPES.CUSTOM,
+      content: '',
+      button: {
+        ok: 'Ok',
+        cancel: 'Cancel',
+      }
+    });
+  };
+
   return (
     <div className="todo-page">
-      <button className="btn btn-primary">
+      <button className="btn btn-primary" onClick={ openDialog }>
         <div className="btn-icon">
           <PlusIcon />
         </div>

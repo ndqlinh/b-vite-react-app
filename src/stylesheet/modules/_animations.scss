@@ -15,3 +15,16 @@
     transform: rotate(360deg);
   }
 }
+
+@keyframes fade-in-scale-centered {
+  from {
+    transform-origin: center;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  to {
+    transform-origin: center;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

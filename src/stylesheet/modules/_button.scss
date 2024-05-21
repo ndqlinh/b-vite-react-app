@@ -26,6 +26,10 @@
   &.btn-outline {
     border-color: map-get($color, border);
   }
+  &.btn-circle {
+    @include pxRem(padding, 12);
+    border-radius: 50%;
+  }
   &.btn-primary {
     color: map-get($color, "white");
     background-color: map-get($color, "blue");
