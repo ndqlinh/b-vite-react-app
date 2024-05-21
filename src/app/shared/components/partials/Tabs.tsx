@@ -3,6 +3,19 @@ import { useEffect, useState } from 'react';
 const Tabs = (props) => {
   const { tabs, children, callback } = props;
   const [selectedTab, setSelectedTab] = useState(0);
+  const [activePosition, setActivePosition] = useState<any>({});
+
+  useEffect(() => {
+    const elm = document.getElementsByClassName('tab-item active')[0];
+    const elmLeftPosition = elm.getBoundingClientRect().left;
+    const elmWidth = elm.getBoundingClientRect().width;
+
+    setActivePosition(prev => {
+      prev.left = elmLeftPosition;
+      prev.width = elmWidth;
+      return prev;
+    });
+  }, [selectedTab]);
 
   const onChangeTab = (idx: number) => {
     setSelectedTab(idx);
@@ -14,25 +27,20 @@ const Tabs = (props) => {
 
   return (
     <div className="tabs-wrapper">
-      <ul className="tab-list">
+      <div className="tab-list">
         {
           tabs.map((tab: any, ind: number) => (
-            <li
+            <div
               className={ `tab-item ${ selectedTab === ind ? 'active' : '' }` }
               key={ ind }
               onClick={ () => onChangeTab(ind) }
-            >{ tab }</li>
+            >{ tab }</div>
           ))
         }
-      </ul>
+        <div className="active-bar" style={ activePosition ? { left: `${activePosition?.left - 20}px`, width: `${activePosition?.width}px` } : {}} />
+      </div>
       <div className="tab-content">
         { children }
-        {/* {
-          data?.[selectedTab] &&
-          <div className={ `tab-pane ${selectedTab}` }>
-            { data?.[selectedTab]?.paneElm }
-          </div>
-        } */}
       </div>
     </div>
   );

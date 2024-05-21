@@ -1,11 +1,20 @@
 .tabs-wrapper {
   display: flex;
-  justify-content: center;
   flex-direction: column;
   .tab-list {
     @include pxRem(margin-bottom, 30);
     display: flex;
     justify-content: center;
+    position: relative;
+    .active-bar {
+      @include pxRem(height, 3);
+      position: absolute;
+      z-index: 1;
+      bottom: 0;
+      left: 0;
+      background: map-get($color, "blue");
+      transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
+    }
   }
   .tab-item {
     @extend %flex-centered;
@@ -15,9 +24,9 @@
     cursor: pointer;
     text-transform: capitalize;
     font-weight: map-get($font-weight, medium);
-    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease-in-out;
     &.active {
-      border-bottom-color: map-get($color, "blue");
+      color: map-get($color, "blue");
     }
   }
 }
