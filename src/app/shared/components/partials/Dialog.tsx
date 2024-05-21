@@ -45,23 +45,40 @@ const Dialog = ({ dialog, closeDialog }) => {
         <div className="dialog">
           <div className="dialog-header">
             <h6 className="dialog-title">
-              Dialog Title
+              {
+                typeof dialog.title === 'string'
+                  ? <h6 className="title" dangerouslySetInnerHTML={{ __html: dialog.title }} />
+                  : dialog.title
+              }
             </h6>
             <button className="btn btn-circle btn-close" onClick={ handleCloseDialog }>
               <CloseIcon />
             </button>
           </div>
           <div className="dialog-body">
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam doloremque aliquam eos aperiam consequatur earum iste blanditiis modi numquam voluptatibus consectetur adipisci quidem, sequi optio. Quisquam obcaecati corporis error hic.</p>
+            {
+              dialog.containComponent
+                ? dialog.content
+                : <p dangerouslySetInnerHTML={{ __html: dialog.content }} />
+            }
           </div>
-          <div className="dialog-footer">
-            <button className="btn btn-outline mr-2" onClick={ handleCloseDialog }>
-              Cancel
-            </button>
-            <button className="btn btn-primary">
-              Ok
-            </button>
-          </div>
+          {
+            dialog.button &&
+            <div className="dialog-footer">
+              {
+                dialog.button.cancel &&
+                <button className="btn btn-outline mr-2" onClick={ handleCloseDialog }>
+                  { dialog.button.cancel }
+                </button>
+              }
+              {
+                dialog.button.ok &&
+                <button className="btn btn-primary">
+                  { dialog.button.ok }
+                </button>
+              }
+            </div>
+          }
         </div>
       </div>,
       document.body

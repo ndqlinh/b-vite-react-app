@@ -57,7 +57,8 @@ const TodoList = () => {
   const openDialog = () => {
     addDialog({
       type: DIALOG_TYPES.CUSTOM,
-      content: '',
+      title: 'Dialog title',
+      content: 'lorem ipsum dolor sit amet, consectetur adip',
       button: {
         ok: 'Ok',
         cancel: 'Cancel',
