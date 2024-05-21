@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 
 import CloseIcon from '@assets/icons/close.svg?react';
+import Loader from '@shared/components/partials/Loader';
 
 import { DialogContext, DialogData } from '@shared/contexts/dialog.context';
 import DIALOG_TYPE from '@shared/constants/dialog-types';
@@ -20,14 +21,14 @@ const Dialog = ({ dialog, closeDialog }) => {
     if (dialog?.confirmHandler) {
       dialog.confirmHandler();
     }
-    if (!dialog?.pendingCloseDialog) {
-      closeDialog();
-    } else {
+    if (dialog?.pendingCloseDialog) {
       setRequestingAPI(true);
+    } else {
+      closeDialog();
     }
   };
 
-  const handleCloseDialog = () => {
+const handleCloseDialog = () => {
     if (dialog?.type !== DIALOG_TYPE.ALERT) {
       if (dialog?.cancelHandler) {
         dialog?.cancelHandler();
@@ -35,9 +36,6 @@ const Dialog = ({ dialog, closeDialog }) => {
       closeDialog();
     }
   };
-
-  // Block close popup when click on modal content
-  const handleChildClick = (e) => e.stopPropagation();
 
   return (
     createPortal(
@@ -73,8 +71,8 @@ const Dialog = ({ dialog, closeDialog }) => {
               }
               {
                 dialog.button.ok &&
-                <button className="btn btn-primary">
-                  { dialog.button.ok }
+                <button className="btn btn-primary" onClick={ handleConfirmButton }>
+                  { requestingAPI ? <Loader /> : dialog.button.ok }
                 </button>
               }
             </div>
