@@ -5,6 +5,7 @@ import TitleIcon from '@assets/icons/title.svg?react';
 import DescriptionIcon from '@assets/icons/description.svg?react';
 import BookmarkIcon from '@assets/icons/bookmark.svg?react';
 import StatusIcon from '@assets/icons/status.svg?react';
+import CalendarIcon from '@assets/icons/calendar.svg?react';
 
 import SelectBox from '@shared/components/partials/Select';
 
@@ -89,20 +90,24 @@ const TodoForm = () => {
         selectedValue={ defaultValues.priority }
       />
       <div className="form-group">
-        <Controller
-          control={ control }
-          name='dueDate'
-          render={({ field }) => (
-            <DatePicker
-              showIcon
-              className="form-field"
-              placeholderText='Select date'
-              onChange={ (date) => field.onChange(date) }
-              onKeyDown={ (event) => event.preventDefault() }
-              selected={ field.value }
-            />
-          )}
-        />
+        <div className="form-control">
+          <Controller
+            control={ control }
+            name='dueDate'
+            render={({ field }) => (
+              <DatePicker
+                showIcon
+                className="form-field cursor-pointer"
+                calendarClassName="calendar-picker-popup"
+                placeholderText='Select date'
+                onChange={ (date) => field.onChange(date) }
+                onKeyDown={ (event) => event.preventDefault() }
+                selected={ field.value }
+                icon={ <CalendarIcon className="prev-icon txt-xl" /> }
+              />
+            )}
+          />
+        </div>
       </div>
       <SelectBox
         name="status"
