@@ -3,7 +3,6 @@ import DatePicker from 'react-datepicker';
 
 import TitleIcon from '@assets/icons/title.svg?react';
 import DescriptionIcon from '@assets/icons/description.svg?react';
-import ArrowDropDownIcon from '@assets/icons/arrow-dropdown.svg?react';
 import BookmarkIcon from '@assets/icons/bookmark.svg?react';
 import StatusIcon from '@assets/icons/status.svg?react';
 

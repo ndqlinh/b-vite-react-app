@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import ArrowDownIcon from '@assets/icons/arrow-dropdown.svg?react';
-import ArrowUpIcon from '@assets/icons/arrow-dropup.svg?react';
 
 interface SelectProps {
   name: string;
