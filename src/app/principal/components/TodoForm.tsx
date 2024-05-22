@@ -64,7 +64,7 @@ const TodoForm = () => {
             id="description"
             className="form-field"
             placeholder="Description"
-            rows={5}
+            rows={ 5 }
             { ...register("description") }
           />
         </div>
@@ -93,13 +93,13 @@ const TodoForm = () => {
         <div className="form-control">
           <Controller
             control={ control }
-            name='dueDate'
+            name="dueDate"
             render={({ field }) => (
               <DatePicker
                 showIcon
                 className="form-field cursor-pointer"
                 calendarClassName="calendar-picker-popup"
-                placeholderText='Select date'
+                placeholderText="Select date"
                 onChange={ (date) => field.onChange(date) }
                 onKeyDown={ (event) => event.preventDefault() }
                 selected={ field.value }
