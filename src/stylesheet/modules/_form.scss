@@ -3,19 +3,16 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  .input-wrapper {
+  position: relative;
+  .form-control {
+    @include pxRem(border-radius, 5);
     display: flex;
     align-items: center;
-    position: relative;
-  }
-  .input {
-    @include pxRem(padding, 12 20 12 48);
-    @include pxRem(border-radius, 5);
-    @include pxRem(font-size, map-get($font-size, normal));
     width: 100%;
     border: 1px solid map-get($color, border);
     outline: none;
     transition: .5s ease;
+    overflow: hidden;
     &::placeholder {
       color: map-get($color, "grey");
     }
@@ -25,9 +22,18 @@
       box-shadow: 0 0 0 5px rgba($color: map-get($color, "blue"), $alpha: 0.3);
     }
   }
+  .form-field {
+    @include pxRem(padding, 12 20 12 48);
+    @include pxRem(font-size, map-get($font-size, normal));
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border: none;
+  }
   .prev-icon,
   .sub-icon {
     @include pxRem(font-size, 20);
+    @include pxRem(top, 12);
     display: flex;
     align-items: center;
     position: absolute;

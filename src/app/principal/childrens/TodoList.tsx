@@ -6,6 +6,7 @@ import Tabs from '@shared/components/partials/Tabs';
 import TodoItem from '../components/TodoItem';
 import { useDialog } from '@shared/contexts/dialog.context';
 import DIALOG_TYPES from '@shared/constants/dialog-types';
+import TodoForm from '../components/TodoForm';
 
 const TodoList = () => {
   const { addDialog } = useDialog();
@@ -58,7 +59,8 @@ const TodoList = () => {
     addDialog({
       type: DIALOG_TYPES.CUSTOM,
       title: 'Dialog title',
-      content: 'lorem ipsum dolor sit amet, consectetur adip',
+      containComponent: true,
+      content: <TodoForm />,
       button: {
         ok: 'Ok',
         cancel: 'Cancel',

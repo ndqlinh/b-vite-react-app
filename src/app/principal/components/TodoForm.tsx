@@ -1,46 +1,130 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm, Controller } from 'react-hook-form';
+import DatePicker from 'react-datepicker';
 
 import TitleIcon from '@assets/icons/title.svg?react';
+import DescriptionIcon from '@assets/icons/description.svg?react';
+import ArrowDropDownIcon from '@assets/icons/arrow-dropdown.svg?react';
+import BookmarkIcon from '@assets/icons/bookmark.svg?react';
+import StatusIcon from '@assets/icons/status.svg?react';
+
+import SelectBox from '@shared/components/partials/Select';
 
 interface Todo {
   title: string;
   description: string;
-  priority: 'low' | 'medium' | 'high'
+  priority: 'low' | 'medium' | 'high';
+  dueDate: Date;
+  status: 'new' | 'in-progress' | 'complete';
 }
 
 const TodoForm = () => {
+  const defaultValues = {
+    title: '',
+    description: '',
+    priority: 'low',
+    dueDate: new Date(),
+    status: 'new'
+  }
   const {
     register,
+    control,
     formState: { errors },
     handleSubmit
   } = useForm({
     mode: 'onChange',
-    defaultValues: {
-      title: '',
-      description: ''
-    }
+    defaultValues
   });
 
   const onSubmit: SubmitHandler<Todo> = (data) => {
+    console.log(data);
     // dispatch(signin(data));
   };
 
   return (
     <form className="form-login mb-8" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-group">
-        <div className="input-wrapper">
+        <div className="form-control">
           <TitleIcon className="prev-icon" />
           <input
             type="text"
             name="title"
             id="title"
-            className="input"
+            className="form-field"
             placeholder="Title"
             { ...register("title") }
           />
         </div>
         <p className="txt-red error-msg">{ errors?.title?.message }</p>
       </div>
+      <div className="form-group">
+        <div className="form-control align-items-start">
+          <DescriptionIcon className="prev-icon" />
+          <textarea
+            name="description"
+            id="description"
+            className="form-field"
+            placeholder="Description"
+            rows={5}
+            { ...register("description") }
+          />
+        </div>
+      </div>
+      <SelectBox
+        name="priority"
+        register={ register("priority") }
+        options={[
+          {
+            name: 'Low',
+            value: 'low'
+          },
+          {
+            name: 'Medium',
+            value: 'medium'
+          },
+          {
+            name: 'High',
+            value: 'high'
+          }
+        ]}
+        preIcon={ <BookmarkIcon /> }
+        selectedValue={ defaultValues.priority }
+      />
+      <div className="form-group">
+        <Controller
+          control={ control }
+          name='dueDate'
+          render={({ field }) => (
+            <DatePicker
+              showIcon
+              className="form-field"
+              placeholderText='Select date'
+              onChange={ (date) => field.onChange(date) }
+              onKeyDown={ (event) => event.preventDefault() }
+              selected={ field.value }
+            />
+          )}
+        />
+      </div>
+      <SelectBox
+        name="status"
+        register={ register("status") }
+        options={[
+          {
+            name: 'New',
+            value: 'new'
+          },
+          {
+            name: 'In progress',
+            value: 'in-progress'
+          },
+          {
+            name: 'Done',
+            value: 'done'
+          }
+        ]}
+        preIcon={ <StatusIcon /> }
+        selectedValue={ defaultValues.status }
+      />
     </form>
   );
 };

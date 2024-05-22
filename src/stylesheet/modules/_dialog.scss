@@ -6,6 +6,7 @@
   left: 0;
   background-color: rgba($color: map-get($color, "black"), $alpha: 0.25);
   overflow: hidden;
+  z-index: 3;
   .dialog {
     @include pxRem(padding, 10 40);
     @include pxRem(border-radius, 5);

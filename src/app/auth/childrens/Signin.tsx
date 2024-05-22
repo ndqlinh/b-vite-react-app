@@ -90,13 +90,13 @@ const Signin = () => {
         </div>
         <form className="form-login mb-8" onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group">
-            <div className="input-wrapper">
+            <div className="form-control">
               <EmailIcon className="prev-icon" />
               <input
                 type="text"
                 name="email"
                 id="email"
-                className="input"
+                className="form-field"
                 placeholder="Email"
                 { ...register("email", emailValidator()) }
               />
@@ -104,13 +104,13 @@ const Signin = () => {
             <p className="txt-red error-msg">{ errors?.email?.message }</p>
           </div>
           <div className="form-group">
-            <div className="input-wrapper">
+            <div className="form-control">
               <LockIcon className="prev-icon" />
               <input
                 type={ isShowPassword ? "text" : "password" }
                 name="password"
                 id="password"
-                className="input"
+                className="form-field"
                 placeholder="Password"
                 maxLength={ PASSWORD_MAXLENGTH }
                 minLength={ PASSWORD_MINLENGTH }

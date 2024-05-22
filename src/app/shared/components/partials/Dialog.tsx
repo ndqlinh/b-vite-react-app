@@ -42,13 +42,11 @@ const handleCloseDialog = () => {
       <div className="dialog-wrapper">
         <div className="dialog">
           <div className="dialog-header">
-            <h6 className="dialog-title">
-              {
-                typeof dialog.title === 'string'
-                  ? <h6 className="title" dangerouslySetInnerHTML={{ __html: dialog.title }} />
-                  : dialog.title
-              }
-            </h6>
+            {
+              typeof dialog.title === 'string'
+                ? <h6 className="dialog-title" dangerouslySetInnerHTML={{ __html: dialog.title }} />
+                : dialog.title
+            }
             <button className="btn btn-circle btn-close" onClick={ handleCloseDialog }>
               <CloseIcon />
             </button>
