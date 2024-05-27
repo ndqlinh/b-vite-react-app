@@ -4,24 +4,26 @@ import ArrowDownIcon from '@assets/icons/arrow-dropdown.svg?react';
 
 interface SelectProps {
   name: string;
-  register: any;
+  formRegister: any;
   label?: string;
   options: Array<any>;
   preIcon?: any;
   selectedValue?: any;
   onChange?: any;
   isDisabled?: boolean;
+  setFormValue?: any;
 }
 
 const SelectBox = ({
   name,
-  register,
+  formRegister,
   label,
   options,
   preIcon,
   selectedValue,
   onChange,
-  isDisabled
+  isDisabled,
+  setFormValue
 }: SelectProps) => {
   const [value, setValue] = useState(selectedValue || options[0]?.value);
   const [showOptions, setShowOptions] = useState(false);
@@ -50,6 +52,7 @@ const SelectBox = ({
   };
 
   const onSelect = (val) => {
+    setFormValue(name, val);
     setValue(val);
     setShowOptions(false);
   }
@@ -67,14 +70,17 @@ const SelectBox = ({
           { label }
         </label>
         <div className="select-group">
-          <div className={ `form-control select selected-value ${isDisabled ? 'disabled' : ''}` } onClick={ toggleShowOptions }>
+          <div
+            className={ `form-control select selected-value ${isDisabled ? 'disabled' : ''}` }
+            onClick={ toggleShowOptions }
+          >
             { options?.find(item => item?.value === value)?.name }
           </div>
           <span className='icon-arrow-down arrow-icon'>
             <ArrowDownIcon />
           </span>
           {
-            showOptions && !isDisabled &&
+            (showOptions && !isDisabled) &&
             <ul className="option-list">
               {
                 options?.map(item => (
@@ -89,22 +95,16 @@ const SelectBox = ({
               }
             </ul>
           }
-          <select
+
+          <input
+            type="text"
             name={ name }
-            ref={ () => register }
+            { ...formRegister }
             className="form-field hidden"
             onChange={ doOnChange }
-            value={ value }
+            onSelect={ doOnChange }
             disabled={ isDisabled }
-          >
-            {
-              options.map((opt, ind) => (
-                <option key={ ind } value={ opt.value }>
-                  { opt.name }
-                </option>
-              ))
-            }
-          </select>
+          />
         </div>
       </div>
     </div>

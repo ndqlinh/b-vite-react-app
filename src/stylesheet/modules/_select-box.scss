@@ -2,6 +2,7 @@
 .select-box-wrapper {
   position: relative;
   display: flex;
+  font-weight: map-get($font-weight, regular);
   .prev-icon {
     @include pxRem(top, 15);
   }

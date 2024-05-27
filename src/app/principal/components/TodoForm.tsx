@@ -29,6 +29,7 @@ const TodoForm = ({ formRef }) => {
     register,
     control,
     formState: { errors },
+    setValue,
     handleSubmit
   } = useForm({
     mode: 'onChange',
@@ -71,7 +72,8 @@ const TodoForm = ({ formRef }) => {
       </div>
       <SelectBox
         name="priority"
-        register={ register("priority") }
+        formRegister={ register("priority") }
+        setFormValue={ setValue }
         options={[
           {
             name: 'Low',
@@ -111,7 +113,8 @@ const TodoForm = ({ formRef }) => {
       </div>
       <SelectBox
         name="status"
-        register={ register("status") }
+        formRegister={ register("status") }
+        setFormValue={ setValue }
         options={[
           {
             name: 'New',
