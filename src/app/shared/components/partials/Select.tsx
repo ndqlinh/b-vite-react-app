@@ -34,7 +34,6 @@ const SelectBox = ({
   }, []);
 
   const toggleShowOptions = () => {
-    console.log(123123123);
     setShowOptions(prev => !prev);
   };
 
@@ -92,7 +91,7 @@ const SelectBox = ({
           }
           <select
             name={ name }
-            ref={ register }
+            ref={ () => register }
             className="form-field hidden"
             onChange={ doOnChange }
             value={ value }
