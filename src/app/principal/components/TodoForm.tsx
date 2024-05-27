@@ -17,7 +17,7 @@ interface Todo {
   status: 'new' | 'in-progress' | 'complete';
 }
 
-const TodoForm = () => {
+const TodoForm = ({ formRef }) => {
   const defaultValues = {
     title: '',
     description: '',
@@ -35,13 +35,13 @@ const TodoForm = () => {
     defaultValues
   });
 
-  const onSubmit: SubmitHandler<Todo> = (data) => {
+  const saveTodo: SubmitHandler<Todo> = (data) => {
     console.log(data);
     // dispatch(signin(data));
   };
 
   return (
-    <form className="form-login mb-8" onSubmit={handleSubmit(onSubmit)}>
+    <form className="form-todo mb-8" onSubmit={handleSubmit(saveTodo)} ref={ formRef }>
       <div className="form-group">
         <div className="form-control">
           <TitleIcon className="prev-icon" />

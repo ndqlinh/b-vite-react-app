@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import PlusIcon from '@assets/icons/plus.svg?react';
 
@@ -9,6 +9,7 @@ import DIALOG_TYPES from '@shared/constants/dialog-types';
 import TodoForm from '../components/TodoForm';
 
 const TodoList = () => {
+  const todoFormRef = useRef<any>();
   const { addDialog } = useDialog();
   const [todoList, setTodoList] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState('new');
@@ -55,16 +56,22 @@ const TodoList = () => {
     }
   }, [todoList.length, selectedStatus]);
 
+  const triggerSubmit = () => {
+    todoFormRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+  };
+
   const openDialog = () => {
     addDialog({
       type: DIALOG_TYPES.CUSTOM,
       title: 'Dialog title',
       containComponent: true,
-      content: <TodoForm />,
+      pendingCloseDialog: true,
+      content: <TodoForm formRef={ todoFormRef } />,
       button: {
         ok: 'Ok',
         cancel: 'Cancel',
-      }
+      },
+      confirmHandler: triggerSubmit
     });
   };
 
