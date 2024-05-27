@@ -11,5 +11,6 @@ export const ENDPOINT = {
     refreshToken: `${RESOURCES.auth}/renew`,
     signout: `${RESOURCES.auth}/signout`,
   },
-  profile: 'profile'
+  profile: 'profile',
+  todo: 'todo'
 }
