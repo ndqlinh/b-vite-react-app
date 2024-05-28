@@ -22,7 +22,7 @@ export const createTodo = createAsyncThunk(
   ENDPOINT.todo,
   async (data: any, thunkAPI) => {
     try {
-      const response: any = await api.post([ENDPOINT.todo], data);
+      const response: any = await api.post([ENDPOINT.task], data);
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -43,12 +43,12 @@ export const todoSlice = createSlice({
       })
       .addCase(createTodo.fulfilled, (state: any, action: any) => {
         state.isLoading = false;
-        state.data = action.payload.data;
+        state.data = action?.payload?.data;
       })
       .addCase(createTodo.rejected, (state: any, action: any) => {
         state.isLoading = false;
         state.hasError = true;
-        state.error = action.payload.message;
+        state.error = action?.payload?.message;
       });
   },
 });

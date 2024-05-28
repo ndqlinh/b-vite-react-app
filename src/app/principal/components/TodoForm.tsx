@@ -8,6 +8,10 @@ import StatusIcon from '@assets/icons/status.svg?react';
 import CalendarIcon from '@assets/icons/calendar.svg?react';
 
 import SelectBox from '@shared/components/partials/Select';
+import { reset, createTodo } from 'app/principal/slices/todoSlice';
+import { useAppDispatch, useAppSelector } from 'app/stores/hook';
+import { useEffect } from 'react';
+import { useDialog } from '@shared/contexts/dialog.context';
 
 interface Todo {
   title: string;
@@ -18,6 +22,9 @@ interface Todo {
 }
 
 const TodoForm = ({ formRef }) => {
+  const dispatch = useAppDispatch();
+  const todo = useAppSelector((state) => state.todo);
+  const { closeDialog } = useDialog();
   const defaultValues = {
     title: '',
     description: '',
@@ -36,9 +43,15 @@ const TodoForm = ({ formRef }) => {
     defaultValues
   });
 
+  useEffect(() => {
+    if (todo.data) {
+      dispatch(reset());
+      closeDialog();
+    }
+  }, [todo]);
+
   const saveTodo: SubmitHandler<Todo> = (data) => {
-    console.log(data);
-    // dispatch(signin(data));
+    dispatch(createTodo(data));
   };
 
   return (
