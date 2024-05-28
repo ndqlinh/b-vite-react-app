@@ -1,6 +1,10 @@
-const Loader = () => {
+interface LoaderProps {
+  className?: string;
+}
+
+const Loader = ({ className }: LoaderProps) => {
   return (
-    <div className="loader" />
+    <div className={ `loader ${className || ''}` } />
   )
 };
 

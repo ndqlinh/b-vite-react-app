@@ -19,4 +19,9 @@
   &::after {
     animation-duration: 4s;
   }
+  &.section-loader {
+    @include pxRem(width, 50);
+    border: 4px solid rgba($color: map-get($color, "black"), $alpha: 0);
+    border-right-color: rgba($color: map-get($color, "blue"), $alpha: 0.59);
+  }
 }

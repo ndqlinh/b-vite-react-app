@@ -1,0 +1,12 @@
+.todo-list {
+  width: 50%;
+  .todo-item {
+    @include pxRem(margin-bottom, 20);
+    &:last-child {
+      margin-bottom: 0;
+    }
+    .card {
+      @include pxRem(padding, 25);
+    }
+  }
+}

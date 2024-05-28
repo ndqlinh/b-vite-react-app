@@ -7,47 +7,30 @@ import TodoItem from '../components/TodoItem';
 import { useDialog } from '@shared/contexts/dialog.context';
 import DIALOG_TYPES from '@shared/constants/dialog-types';
 import TodoForm from '../components/TodoForm';
+import { useAppDispatch, useAppSelector } from 'app/stores/hook';
+import { getTodoList } from 'app/principal/slices/todoSlice';
+import { TYPE_PREFIX } from '../slices/todo-slice-prefix';
+import Loader from '@shared/components/partials/Loader';
 
 const TodoList = () => {
   const todoFormRef = useRef<any>();
   const { addDialog } = useDialog();
+  const dispatch = useAppDispatch();
   const [todoList, setTodoList] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState('new');
   const [filteredTodos, setFilteredTodos] = useState([]);
+  const todo = useAppSelector((state) => state.todo);
   const todoStatus = ['new', 'in-progress', 'done'];
 
   useEffect(() => {
-    setTodoList([
-      {
-        id: 1,
-        title: 'Hello world',
-        description: 'lorem ipsum dolor sit amet, consectetur adip',
-        dueDate: new Date(),
-        priority: 'low',
-        status: 'done'
-      },
-      {
-        id: 2,
-        title: 'Estimate Sugi tasks',
-        description: 'lorem ipsum dolor sit amet, consectetur adip',
-        dueDate: new Date(),
-        priority: 'medium',
-        status: 'in-progress'
-      },
-      {
-        id: 3,
-        title: 'Implement login SSO',
-        description: 'lorem ipsum dolor sit amet, consectetur adip',
-        dueDate: new Date(),
-        priority: 'high',
-        status: 'new'
-      }
-    ])
+    dispatch(getTodoList());
   }, []);
 
-  const changeTabCallback = (selectedIndex: number) => {
-    setSelectedStatus(todoStatus[selectedIndex]);
-  };
+  useEffect(() => {
+    if (todo.type === TYPE_PREFIX.TODO.LIST && !todo.isLoading) {
+      setTodoList(todo.data);
+    }
+  }, [todo]);
 
   useEffect(() => {
     if (todoList.length && selectedStatus) {
@@ -55,6 +38,10 @@ const TodoList = () => {
       setFilteredTodos(prev => result);
     }
   }, [todoList.length, selectedStatus]);
+
+  const changeTabCallback = (selectedIndex: number) => {
+    setSelectedStatus(todoStatus[selectedIndex]);
+  };
 
   const triggerSubmit = () => {
     todoFormRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
@@ -84,14 +71,22 @@ const TodoList = () => {
         New Task
       </button>
       <Tabs tabs={ todoStatus } callback={ changeTabCallback }>
-        {
-          todoList.length &&
-          <ul className="todo-list">
-            {
-              filteredTodos.map(item => <TodoItem key={ item.id } todo={ item } />)
-            }
-          </ul>
-        }
+        <div className="flex flex-center">
+          {
+            (todo.type === TYPE_PREFIX.TODO.LIST && todo.isLoading) &&
+            <div className="py-10">
+              <Loader className="section-loader" />
+            </div>
+          }
+          {
+            !!todoList.length &&
+            <ul className="todo-list">
+              {
+                filteredTodos.map(item => <TodoItem key={ item.id } todo={ item } />)
+              }
+            </ul>
+          }
+        </div>
       </Tabs>
     </div>
   )
