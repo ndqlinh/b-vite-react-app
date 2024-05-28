@@ -15,7 +15,7 @@ const TodoItem = (props) => {
               <input type="checkbox" name="remember" id={ todo.id } className="checkbox-input" />
               <label htmlFor={ todo.id } className="checkbox-label">
                 <span className="mr-3"><CheckboxIcon className="checked-icon" /></span>
-                <span>{ todo.title }</span>
+                <span className="todo-title">{ todo.title }</span>
               </label>
             </div>
             <p className="todo-due-date">{ moment(todo.dueDate).format('DD MMMM YYYY') }</p>

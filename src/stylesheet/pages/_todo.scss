@@ -8,6 +8,9 @@
     .card {
       @include pxRem(padding, 25);
     }
+    .todo-title {
+      font-weight: map-get($font-weight, regular);
+    }
     .todo-due-date {
       @include pxRem(font-size, map-get($font-size, xs));
       @include pxRem(margin-left, 33);
