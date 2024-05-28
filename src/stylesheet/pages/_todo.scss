@@ -8,6 +8,13 @@
     .card {
       @include pxRem(padding, 25);
     }
+    .card-action {
+      display: flex;
+      align-items: center;
+      .btn {
+        @include pxRem(padding, 8);
+      }
+    }
     .todo-title {
       @include pxRem(margin-right, 10);
       font-weight: map-get($font-weight, regular);

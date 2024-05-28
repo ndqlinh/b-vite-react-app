@@ -3,6 +3,7 @@ import moment from 'moment';
 
 import CheckboxIcon from '@assets/icons/checkbox.svg?react';
 import TrashIcon from '@assets/icons/trash.svg?react';
+import EyeIcon from '@assets/icons/eyes-show.svg?react';
 
 const TodoItem = (props) => {
   const { todo } = props;
@@ -40,6 +41,9 @@ const TodoItem = (props) => {
             <p className="todo-due-date">{ moment(todo.dueDate).format('DD MMMM YYYY') }</p>
           </div>
           <div className="card-action">
+            <button className="btn btn-circle btn-info mr-1">
+              <EyeIcon />
+            </button>
             <button className="btn btn-circle btn-danger">
               <TrashIcon />
             </button>

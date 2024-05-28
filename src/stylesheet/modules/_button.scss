@@ -49,4 +49,14 @@
       border-color: map-get($color, danger);
     }
   }
+  &.btn-info {
+    color: map-get($color, info);
+    background-color: map-get($color, bg-info);
+    border-color: map-get($color, border-info);
+    &:hover {
+      color: map-get($color, "white");
+      background-color: map-get($color, info);
+      border-color: map-get($color, info);
+    }
+  }
 }
