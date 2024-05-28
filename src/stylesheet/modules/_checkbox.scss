@@ -37,7 +37,7 @@
         transform: scale(1);
         vertical-align: middle;
         border: 1px solid map-get($color, border);
-        transition: all 0.2s ease;
+        transition: all 0.3s ease;
         .checked-icon {
           @include pxRem(top, 3);
           @include pxRem(left, 2);
@@ -64,8 +64,7 @@
           border-radius: 50%;
         }
       }
-      &:last-child {
-        // @include pxRem(padding, 8);
+      &.label-text {
         line-height: 1;
       }
     }

@@ -9,6 +9,7 @@
       @include pxRem(padding, 25);
     }
     .todo-title {
+      @include pxRem(margin-right, 10);
       font-weight: map-get($font-weight, regular);
     }
     .todo-due-date {

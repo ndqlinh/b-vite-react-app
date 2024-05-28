@@ -11,7 +11,19 @@ $color: (
   bg-hover: rgba($color: #dadce0, $alpha: .4),
   danger: #dc3545,
   bg-danger: #f8d7da,
-  border-danger: #f1aeb5
+  border-danger: #f1aeb5,
+  info: #0d6efd,
+  bg-info: #d0e2ff,
+  border-info: #9ec5fe,
+  warning: #ffc008,
+  bg-warning: #fff3cd,
+  border-warning: #ffe69c,
+  success: #1a8754,
+  bg-success: #d1e7dd,
+  border-success: #a3cfbb,
+  tertiary: #212529,
+  bg-tertiary: #ced4da,
+  border-tertiary: #ced4da,
 );
 
 $font-weight: (

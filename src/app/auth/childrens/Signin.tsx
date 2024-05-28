@@ -127,7 +127,7 @@ const Signin = () => {
               <input type="checkbox" name="remember" id="cb" className="checkbox-input" />
               <label htmlFor="cb" className="checkbox-label">
                 <span><CheckboxIcon className="checked-icon" /></span>
-                <span>Remember me</span>
+                <span className="label-text">Remember me</span>
               </label>
             </div>
             <a className="txt-blue" href="#">Forgot Password?</a>
