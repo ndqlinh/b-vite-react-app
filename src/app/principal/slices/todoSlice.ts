@@ -49,7 +49,7 @@ export const deleteTodo = createAsyncThunk(
   TYPE_PREFIX.TODO.DELETE,
   async (data: any, thunkAPI) => {
     try {
-      const response: any = await api.delete([ENDPOINT.task], data);
+      const response: any = await api.delete([`${ENDPOINT.task}/${data.id}`]);
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -95,16 +95,16 @@ export const todoSlice = createSlice({
         state.hasError = true;
         state.error = action?.payload?.message;
       })
-      .addCase(getTodoList.pending, (state: any) => {
+      .addCase(deleteTodo.pending, (state: any) => {
         state.type = TYPE_PREFIX.TODO.DELETE;
         state.isLoading = true;
       })
-      .addCase(getTodoList.fulfilled, (state: any, action: any) => {
+      .addCase(deleteTodo.fulfilled, (state: any, action: any) => {
         state.type = TYPE_PREFIX.TODO.DELETE;
         state.isLoading = false;
         state.data = action?.payload?.data;
       })
-      .addCase(getTodoList.rejected, (state: any, action: any) => {
+      .addCase(deleteTodo.rejected, (state: any, action: any) => {
         state.type = TYPE_PREFIX.TODO.DELETE;
         state.isLoading = false;
         state.hasError = true;

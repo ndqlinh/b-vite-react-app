@@ -4,10 +4,13 @@ import moment from 'moment';
 import CheckboxIcon from '@assets/icons/checkbox.svg?react';
 import TrashIcon from '@assets/icons/trash.svg?react';
 import EyeIcon from '@assets/icons/eyes-show.svg?react';
+import { useAppDispatch } from 'app/stores/hook';
+import { deleteTodo } from '../slices/todoSlice';
 
 const TodoItem = (props) => {
   const { todo } = props;
   const [badgeClass, setBadgeClass] = useState('');
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (todo.priority) {
@@ -24,6 +27,10 @@ const TodoItem = (props) => {
       }
     }
   }, [todo.priority]);
+
+  const onDeleteTodo = async (id: string) => {
+    await dispatch(deleteTodo({ id }));
+  }
 
   return (
     <li className="todo-item">
@@ -44,7 +51,7 @@ const TodoItem = (props) => {
             <button className="btn btn-circle btn-outline-info mr-1">
               <EyeIcon />
             </button>
-            <button className="btn btn-circle btn-outline-danger">
+            <button className="btn btn-circle btn-outline-danger" onClick={ () => onDeleteTodo(todo.id) }>
               <TrashIcon />
             </button>
           </div>
