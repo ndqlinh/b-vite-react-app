@@ -30,6 +30,18 @@ export const createTodo = createAsyncThunk(
   }
 );
 
+export const getTodoList = createAsyncThunk(
+  ENDPOINT.task,
+  async (data: any, thunkAPI) => {
+    try {
+      const response: any = await api.get([ENDPOINT.task]);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const todoSlice = createSlice({
   name: 'todo',
   initialState,
@@ -46,6 +58,18 @@ export const todoSlice = createSlice({
         state.data = action?.payload?.data;
       })
       .addCase(createTodo.rejected, (state: any, action: any) => {
+        state.isLoading = false;
+        state.hasError = true;
+        state.error = action?.payload?.message;
+      })
+      .addCase(getTodoList.pending, (state: any) => {
+        state.isLoading = true;
+      })
+      .addCase(getTodoList.fulfilled, (state: any, action: any) => {
+        state.isLoading = false;
+        state.data = action?.payload?.data;
+      })
+      .addCase(getTodoList.rejected, (state: any, action: any) => {
         state.isLoading = false;
         state.hasError = true;
         state.error = action?.payload?.message;
