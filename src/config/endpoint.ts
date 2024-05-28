@@ -12,6 +12,5 @@ export const ENDPOINT = {
     signout: `${RESOURCES.auth}/signout`,
   },
   profile: 'profile',
-  todo: 'todo',
   task: 'task'
 }
