@@ -19,7 +19,7 @@ const initialState: TodoStoreInterface = {
 const api = new ApiService();
 
 export const createTodo = createAsyncThunk(
-  ENDPOINT.todo,
+  ENDPOINT.task,
   async (data: any, thunkAPI) => {
     try {
       const response: any = await api.post([ENDPOINT.task], data);
