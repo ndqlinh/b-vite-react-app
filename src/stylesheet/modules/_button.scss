@@ -38,4 +38,9 @@
       border-right-color: rgba($color: map-get($color, "white"), $alpha: 0.59);
     }
   }
+  &.btn-danger {
+    color: map-get($color, danger);
+    background-color: map-get($color, bg-danger);
+    border-color: map-get($color, border-danger);
+  }
 }
