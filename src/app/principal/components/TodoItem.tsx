@@ -41,10 +41,10 @@ const TodoItem = (props) => {
             <p className="todo-due-date">{ moment(todo.dueDate).format('DD MMMM YYYY') }</p>
           </div>
           <div className="card-action">
-            <button className="btn btn-circle btn-info mr-1">
+            <button className="btn btn-circle btn-outline-info mr-1">
               <EyeIcon />
             </button>
-            <button className="btn btn-circle btn-danger">
+            <button className="btn btn-circle btn-outline-danger">
               <TrashIcon />
             </button>
           </div>
