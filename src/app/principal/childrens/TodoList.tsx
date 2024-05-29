@@ -34,18 +34,27 @@ const TodoList = () => {
   }, [todo.isLoading]);
 
   useEffect(() => {
-    if (todo.type === TYPE_PREFIX.TODO.LIST && todo.data) {
-      setTodoList(todo.data);
+    console.log(123123, todo);
+    if (todo.data) {
+      switch (todo.type) {
+        case TYPE_PREFIX.TODO.LIST:
+          setTodoList(todo.data);
+          break;
+        case TYPE_PREFIX.TODO.CREATE:
+          setTodoList(prev => [...[todo.data], ...prev]);
+          break;
+        case TYPE_PREFIX.TODO.DELETE:
+          setTodoList(prev => prev.filter(item => item.id !== todo.data.id));
+          break;
+      }
     }
   }, [todo.data]);
 
   useEffect(() => {
-    if (todoList.length) {
-      setFilteredTodoList(prev => {
-        const result = todoList.filter(item => item.status === selectedStatus);
-        return result;
-      });
-    }
+    setFilteredTodoList(prev => {
+      const result = todoList.filter(item => item.status === selectedStatus);
+      return result;
+    });
   }, [todoList, selectedStatus]);
 
   const changeTabCallback = (selectedIndex: number) => {
@@ -88,9 +97,7 @@ const TodoList = () => {
             </div> :
             filteredTodoList?.length ?
             <ul className="todo-list">
-              {
-                filteredTodoList.map(todo => <TodoItem key={ todo.id } todo={ todo } />)
-              }
+              { filteredTodoList.map(todo => <TodoItem key={ todo.id } todo={ todo } />) }
             </ul> :
             <p className="txt-grey py-10">Nothing to show</p>
           }

@@ -12,6 +12,7 @@ import SelectBox from '@shared/components/partials/Select';
 import { reset, createTodo } from 'app/principal/slices/todoSlice';
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 import { useDialog } from '@shared/contexts/dialog.context';
+import { TYPE_PREFIX } from '../slices/todo-slice-prefix';
 
 interface Todo {
   title: string;
@@ -44,11 +45,12 @@ const TodoForm = ({ formRef }) => {
   });
 
   useEffect(() => {
-    if (todo.data) {
+    if (todo.data && todo.type === TYPE_PREFIX.TODO.CREATE) {
+      console.log(123123123123);
       dispatch(reset());
       closeDialog();
     }
-  }, [todo]);
+  }, [todo.data]);
 
   const saveTodo: SubmitHandler<Todo> = (data) => {
     dispatch(createTodo(data));

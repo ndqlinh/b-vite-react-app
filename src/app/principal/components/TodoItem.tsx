@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
 
 import CheckboxIcon from '@assets/icons/checkbox.svg?react';
@@ -13,9 +13,10 @@ import Loader from '@shared/components/partials/Loader';
 const TodoItem = (props) => {
   const { todo } = props;
   const [badgeClass, setBadgeClass] = useState('');
+  const [isRequesting, setRequesting] = useState(false);
   const dispatch = useAppDispatch();
   const todoState = useAppSelector((state) => state.todo);
-  const [isRequesting, setRequesting] = useState(false);
+  const deletingId = useRef(null);
 
   useEffect(() => {
     if (todo.priority) {
@@ -34,12 +35,13 @@ const TodoItem = (props) => {
   }, [todo.priority]);
 
   useEffect(() => {
-    if (todoState.type === TYPE_PREFIX.TODO.DELETE) {
+    if (todoState.type === TYPE_PREFIX.TODO.DELETE && deletingId.current === todo.id) {
       setRequesting(todoState.isLoading);
     }
   }, [todoState.isLoading]);
 
   const onDeleteTodo = async (id: string) => {
+    deletingId.current = id;
     await dispatch(deleteTodo({ id }));
   }
 
