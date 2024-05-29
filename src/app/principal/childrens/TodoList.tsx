@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 import PlusIcon from '@assets/icons/plus.svg?react';
 
@@ -16,6 +17,7 @@ const TodoList = () => {
   const todoFormRef = useRef<any>();
   const { addDialog } = useDialog();
   const dispatch = useAppDispatch();
+  const [animationParent] = useAutoAnimate();
   const [isFetching, setFetching] = useState(false);
   const [todoList, setTodoList] = useState([]);
   const [filteredTodoList, setFilteredTodoList] = useState([]);
@@ -93,7 +95,7 @@ const TodoList = () => {
               <Loader className="section-loader" />
             </div> :
             filteredTodoList?.length ?
-            <ul className="todo-list">
+            <ul className="todo-list" ref={ animationParent }>
               { filteredTodoList.map(todo => <TodoItem key={ todo.id } todo={ todo } />) }
             </ul> :
             <p className="txt-grey py-10">Nothing to show</p>
