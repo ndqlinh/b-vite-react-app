@@ -1,5 +1,7 @@
 .todo-list {
-  width: 50%;
+  @include pxRem(padding, 0 20);
+  max-width: 600px;
+  width: 80%;
   .todo-item {
     @include pxRem(margin-bottom, 20);
     &:last-child {

@@ -33,11 +33,11 @@ const TodoList = () => {
   }, [todo]);
 
   useEffect(() => {
-    if (todoList.length && selectedStatus) {
+    if (todoList?.length && selectedStatus) {
       const result = todoList.filter(item => item.status === selectedStatus);
       setFilteredTodos(prev => result);
     }
-  }, [todoList.length, selectedStatus]);
+  }, [todoList?.length, selectedStatus]);
 
   const changeTabCallback = (selectedIndex: number) => {
     setSelectedStatus(todoStatus[selectedIndex]);
@@ -79,7 +79,7 @@ const TodoList = () => {
             </div>
           }
           {
-            !!todoList.length &&
+            !!todoList?.length &&
             <ul className="todo-list">
               {
                 filteredTodos.map(item => <TodoItem key={ item.id } todo={ item } />)
