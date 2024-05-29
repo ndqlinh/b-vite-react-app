@@ -13,6 +13,7 @@
     @extend %flex-centered;
   }
   .loader {
+    @include pxRem(width, map-get($font-size, normal));
     @include pxRem(border-width, 2);
     &::before,
     &::after {
@@ -43,59 +44,38 @@
     color: map-get($color, danger);
     background-color: map-get($color, bg-danger);
     border-color: map-get($color, border-danger);
-    &:hover {
-      color: map-get($color, "white");
-      background-color: map-get($color, danger);
-      border-color: map-get($color, danger);
-    }
   }
   &.btn-warning {
     color: map-get($color, warning);
     background-color: map-get($color, bg-warning);
     border-color: map-get($color, border-warning);
-    &:hover {
-      color: map-get($color, "white");
-      background-color: map-get($color, warning);
-      border-color: map-get($color, warning);
-    }
   }
   &.btn-info {
     color: map-get($color, info);
     background-color: map-get($color, bg-info);
     border-color: map-get($color, border-info);
-    &:hover {
-      color: map-get($color, "white");
-      background-color: map-get($color, info);
-      border-color: map-get($color, info);
-    }
   }
   &.btn-outline {
     background-color: map-get($color, "white");
     &-info {
       color: map-get($color, info);
       border-color: map-get($color, border-info);
-      &:hover {
-        color: map-get($color, "white");
-        background-color: map-get($color, info);
-        border-color: map-get($color, info);
+      .loader {
+        border-right-color: rgba($color: map-get($color, info), $alpha: 0.59);
       }
     }
     &-warning {
       color: map-get($color, warning);
       border-color: map-get($color, border-warning);
-      &:hover {
-        color: map-get($color, "white");
-        background-color: map-get($color, warning);
-        border-color: map-get($color, warning);
+      .loader {
+        border-right-color: rgba($color: map-get($color, warning), $alpha: 0.59);
       }
     }
     &-danger {
       color: map-get($color, danger);
       border-color: map-get($color, border-danger);
-      &:hover {
-        color: map-get($color, "white");
-        background-color: map-get($color, danger);
-        border-color: map-get($color, danger);
+      .loader {
+        border-right-color: rgba($color: map-get($color, danger), $alpha: 0.59);
       }
     }
   }

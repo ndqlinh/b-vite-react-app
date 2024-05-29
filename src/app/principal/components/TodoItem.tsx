@@ -4,13 +4,18 @@ import moment from 'moment';
 import CheckboxIcon from '@assets/icons/checkbox.svg?react';
 import TrashIcon from '@assets/icons/trash.svg?react';
 import EyeIcon from '@assets/icons/eyes-show.svg?react';
-import { useAppDispatch } from 'app/stores/hook';
+
+import { useAppDispatch, useAppSelector } from 'app/stores/hook';
+import { TYPE_PREFIX } from '../slices/todo-slice-prefix';
 import { deleteTodo } from '../slices/todoSlice';
+import Loader from '@shared/components/partials/Loader';
 
 const TodoItem = (props) => {
   const { todo } = props;
   const [badgeClass, setBadgeClass] = useState('');
   const dispatch = useAppDispatch();
+  const todoState = useAppSelector((state) => state.todo);
+  const [isRequesting, setRequesting] = useState(false);
 
   useEffect(() => {
     if (todo.priority) {
@@ -27,6 +32,12 @@ const TodoItem = (props) => {
       }
     }
   }, [todo.priority]);
+
+  useEffect(() => {
+    if (todoState.type === TYPE_PREFIX.TODO.DELETE) {
+      setRequesting(todoState.isLoading);
+    }
+  }, [todoState.isLoading]);
 
   const onDeleteTodo = async (id: string) => {
     await dispatch(deleteTodo({ id }));
@@ -48,11 +59,11 @@ const TodoItem = (props) => {
             <p className="todo-due-date">{ moment(todo.dueDate).format('DD MMMM YYYY') }</p>
           </div>
           <div className="card-action">
-            <button className="btn btn-circle btn-outline-info mr-1">
+            <button className="btn btn-circle btn-outline-info mr-1" disabled={ isRequesting }>
               <EyeIcon />
             </button>
-            <button className="btn btn-circle btn-outline-danger" onClick={ () => onDeleteTodo(todo.id) }>
-              <TrashIcon />
+            <button className="btn btn-circle btn-outline-danger" onClick={ () => onDeleteTodo(todo.id) } disabled={ isRequesting }>
+              { isRequesting ? <Loader /> : <TrashIcon /> }
             </button>
           </div>
         </div>
