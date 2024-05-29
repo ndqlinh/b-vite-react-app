@@ -16,9 +16,10 @@ const TodoList = () => {
   const todoFormRef = useRef<any>();
   const { addDialog } = useDialog();
   const dispatch = useAppDispatch();
+  const [isFetching, setFetching] = useState(false);
   const [todoList, setTodoList] = useState([]);
+  const [filteredTodoList, setFilteredTodoList] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState('new');
-  const [filteredTodos, setFilteredTodos] = useState([]);
   const todo = useAppSelector((state) => state.todo);
   const todoStatus = ['new', 'in-progress', 'done'];
 
@@ -27,17 +28,25 @@ const TodoList = () => {
   }, []);
 
   useEffect(() => {
-    if (todo.type === TYPE_PREFIX.TODO.LIST && !todo.isLoading) {
-      setTodoList(todo.data);
+    if (todo.type === TYPE_PREFIX.TODO.LIST) {
+      setFetching(todo.isLoading);
     }
-  }, [todo]);
+  }, [todo.isLoading]);
 
   useEffect(() => {
-    if (todoList?.length && selectedStatus) {
-      const result = todoList.filter(item => item.status === selectedStatus);
-      setFilteredTodos(prev => result);
+    if (todo.type === TYPE_PREFIX.TODO.LIST && todo.data) {
+      setTodoList(todo.data);
     }
-  }, [todoList?.length, selectedStatus]);
+  }, [todo.data]);
+
+  useEffect(() => {
+    if (todoList.length) {
+      setFilteredTodoList(prev => {
+        const result = todoList.filter(item => item.status === selectedStatus);
+        return result;
+      });
+    }
+  }, [todoList, selectedStatus]);
 
   const changeTabCallback = (selectedIndex: number) => {
     setSelectedStatus(todoStatus[selectedIndex]);
@@ -73,18 +82,17 @@ const TodoList = () => {
       <Tabs tabs={ todoStatus } callback={ changeTabCallback }>
         <div className="flex flex-center">
           {
-            (todo.type === TYPE_PREFIX.TODO.LIST && todo.isLoading) &&
+            isFetching ?
             <div className="py-10">
               <Loader className="section-loader" />
-            </div>
-          }
-          {
-            !!todoList?.length &&
+            </div> :
+            filteredTodoList?.length ?
             <ul className="todo-list">
               {
-                filteredTodos.map(item => <TodoItem key={ item.id } todo={ item } />)
+                filteredTodoList.map(todo => <TodoItem key={ todo.id } todo={ todo } />)
               }
-            </ul>
+            </ul> :
+            <p className="txt-grey py-10">Nothing to show</p>
           }
         </div>
       </Tabs>

@@ -10,10 +10,9 @@ const Tabs = (props) => {
     const elmLeftPosition = elm.getBoundingClientRect().left;
     const elmWidth = elm.getBoundingClientRect().width;
 
-    setActivePosition(prev => {
-      prev.left = elmLeftPosition;
-      prev.width = elmWidth;
-      return prev;
+    setActivePosition({
+      left: elmLeftPosition,
+      width: elmWidth
     });
   }, [selectedTab]);
 
@@ -37,7 +36,9 @@ const Tabs = (props) => {
             >{ tab }</div>
           ))
         }
-        <div className="active-bar" style={ activePosition ? { left: `${activePosition?.left - 20}px`, width: `${activePosition?.width}px` } : {}} />
+        <div
+          className="active-bar"
+          style={ activePosition ? { left: `${activePosition?.left - 20}px`, width: `${activePosition?.width}px` } : {}} />
       </div>
       <div className="tab-content">
         { children }
