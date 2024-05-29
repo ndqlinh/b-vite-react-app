@@ -14,15 +14,23 @@ import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 import { useDialog } from '@shared/contexts/dialog.context';
 import { TYPE_PREFIX } from '../slices/todo-slice-prefix';
 
-interface Todo {
+export interface Todo {
+  id?: string;
   title: string;
   description: string;
   priority: 'low' | 'medium' | 'high';
   dueDate: Date;
   status: 'new' | 'in-progress' | 'complete';
+  ownerId?: string;
+  createdAt?: string;
 }
 
-const TodoForm = ({ formRef }) => {
+interface TodoFormProps {
+  formRef: any;
+  inputData?: Todo
+}
+
+const TodoForm = ({ formRef, inputData }: TodoFormProps) => {
   const dispatch = useAppDispatch();
   const todo = useAppSelector((state) => state.todo);
   const { closeDialog } = useDialog();
@@ -31,7 +39,8 @@ const TodoForm = ({ formRef }) => {
     description: '',
     priority: 'low',
     dueDate: new Date(),
-    status: 'new'
+    status: 'new',
+    ...inputData
   }
   const {
     register,
@@ -46,7 +55,6 @@ const TodoForm = ({ formRef }) => {
 
   useEffect(() => {
     if (todo.data && todo.type === TYPE_PREFIX.TODO.CREATE) {
-      console.log(123123123123);
       dispatch(reset());
       closeDialog();
     }
@@ -57,7 +65,7 @@ const TodoForm = ({ formRef }) => {
   };
 
   return (
-    <form className="form-todo mb-8" onSubmit={handleSubmit(saveTodo)} ref={ formRef }>
+    <form className="form-todo" onSubmit={handleSubmit(saveTodo)} ref={ formRef }>
       <div className="form-group">
         <div className="form-control">
           <TitleIcon className="prev-icon" />

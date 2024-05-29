@@ -11,7 +11,7 @@ import { deleteTodo } from '../slices/todoSlice';
 import Loader from '@shared/components/partials/Loader';
 
 const TodoItem = (props) => {
-  const { todo } = props;
+  const { todo, openDetail } = props;
   const [badgeClass, setBadgeClass] = useState('');
   const [isRequesting, setRequesting] = useState(false);
   const dispatch = useAppDispatch();
@@ -61,7 +61,7 @@ const TodoItem = (props) => {
             <p className="todo-due-date">{ moment(todo.dueDate).format('DD MMMM YYYY') }</p>
           </div>
           <div className="card-action">
-            <button className="btn btn-circle btn-outline-info mr-1" disabled={ isRequesting }>
+            <button className="btn btn-circle btn-outline-info mr-1" disabled={ isRequesting } onClick={ () => openDetail(todo) }>
               <EyeIcon />
             </button>
             <button className="btn btn-circle btn-outline-danger" onClick={ () => onDeleteTodo(todo.id) } disabled={ isRequesting }>

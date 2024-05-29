@@ -7,7 +7,7 @@ import Tabs from '@shared/components/partials/Tabs';
 import TodoItem from '../components/TodoItem';
 import { useDialog } from '@shared/contexts/dialog.context';
 import DIALOG_TYPES from '@shared/constants/dialog-types';
-import TodoForm from '../components/TodoForm';
+import TodoForm, { Todo } from '../components/TodoForm';
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 import { getTodoList } from 'app/principal/slices/todoSlice';
 import { TYPE_PREFIX } from '../slices/todo-slice-prefix';
@@ -64,13 +64,13 @@ const TodoList = () => {
     todoFormRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
   };
 
-  const openDialog = () => {
+  const openDialog = (todo?: Todo) => {
     addDialog({
       type: DIALOG_TYPES.CUSTOM,
       title: 'Dialog title',
       containComponent: true,
       pendingCloseDialog: true,
-      content: <TodoForm formRef={ todoFormRef } />,
+      content: <TodoForm formRef={ todoFormRef } inputData={ todo } />,
       button: {
         ok: 'Ok',
         cancel: 'Cancel',
@@ -81,7 +81,7 @@ const TodoList = () => {
 
   return (
     <div className="todo-page">
-      <button className="btn btn-primary" onClick={ openDialog }>
+      <button className="btn btn-primary" onClick={ () => openDialog() }>
         <div className="btn-icon">
           <PlusIcon />
         </div>
@@ -96,7 +96,13 @@ const TodoList = () => {
             </div> :
             filteredTodoList?.length ?
             <ul className="todo-list" ref={ animationParent }>
-              { filteredTodoList.map(todo => <TodoItem key={ todo.id } todo={ todo } />) }
+              {
+                filteredTodoList.map(todo => <TodoItem
+                  key={ todo.id }
+                  todo={ todo }
+                  openDetail={ openDialog } />
+                )
+              }
             </ul> :
             <p className="txt-grey py-10">Nothing to show</p>
           }
