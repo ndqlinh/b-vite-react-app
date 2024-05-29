@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { SkeletonText } from "skeleton-elements/react";
 
 import ViteLogo from '@assets/icons/vite.svg?react';
 import LogoutIcon from '@assets/icons/logout.svg?react';
@@ -41,7 +42,12 @@ const Header = () => {
         <Dropdown
           triggerElm={
             <button className="btn btn-profile">
-              Welcome, { profile?.data?.firstName } { profile?.data?.lastName }
+              <span className="mr-1">Welcome,</span>
+              {
+                profile?.data ?
+                <span>{ profile?.data?.firstName } { profile?.data?.lastName }</span> :
+                <SkeletonText tag="span" effect="wave">firstnamelastname</SkeletonText>
+              }
             </button>
           }
           dropdownContent={
