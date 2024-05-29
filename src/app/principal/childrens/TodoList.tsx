@@ -42,9 +42,18 @@ const TodoList = () => {
         case TYPE_PREFIX.TODO.LIST:
           setTodoList(todo.data);
           break;
-        case TYPE_PREFIX.TODO.SAVE:
-          setTodoList(prev => [...[todo.data], ...prev]);
+        case TYPE_PREFIX.TODO.SAVE: {
+          const isExisted = todoList.find(item => item.id === todo.data.id);
+          setTodoList(prev => {
+            return isExisted ? prev.map(item => {
+              if (item.id === todo.data.id) {
+                item = { ...todo.data };
+              }
+              return item;
+            }) : [...[todo.data], ...prev];
+          });
           break;
+        }
         case TYPE_PREFIX.TODO.DELETE:
           setTodoList(prev => prev.filter(item => item.id !== todo.data.id));
           break;

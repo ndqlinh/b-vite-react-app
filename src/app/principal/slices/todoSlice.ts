@@ -25,7 +25,10 @@ export const saveTodo = createAsyncThunk(
   TYPE_PREFIX.TODO.SAVE,
   async (data: any, thunkAPI) => {
     try {
-      const response: any = await api.post([ENDPOINT.task], data);
+      delete data.createdAt;
+      const response: any = data.id
+        ? await api.put([ENDPOINT.task], data)
+        : await api.post([ENDPOINT.task], data);
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
