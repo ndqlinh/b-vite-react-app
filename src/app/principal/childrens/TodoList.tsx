@@ -36,7 +36,6 @@ const TodoList = () => {
   }, [todo.isLoading]);
 
   useEffect(() => {
-    console.log(123123, todo);
     if (todo.data) {
       switch (todo.type) {
         case TYPE_PREFIX.TODO.LIST:
