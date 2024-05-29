@@ -51,10 +51,7 @@ const TodoList = () => {
   }, [todo.data]);
 
   useEffect(() => {
-    setFilteredTodoList(prev => {
-      const result = todoList.filter(item => item.status === selectedStatus);
-      return result;
-    });
+    setFilteredTodoList(prev => todoList.filter(item => item.status === selectedStatus));
   }, [todoList, selectedStatus]);
 
   const changeTabCallback = (selectedIndex: number) => {
