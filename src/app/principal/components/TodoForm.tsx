@@ -9,7 +9,7 @@ import StatusIcon from '@assets/icons/status.svg?react';
 import CalendarIcon from '@assets/icons/calendar.svg?react';
 
 import SelectBox from '@shared/components/partials/Select';
-import { reset, createTodo } from 'app/principal/slices/todoSlice';
+import { reset, saveTodo } from 'app/principal/slices/todoSlice';
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 import { useDialog } from '@shared/contexts/dialog.context';
 import { TYPE_PREFIX } from '../slices/todo-slice-prefix';
@@ -54,18 +54,18 @@ const TodoForm = ({ formRef, inputData }: TodoFormProps) => {
   });
 
   useEffect(() => {
-    if (todo.data && todo.type === TYPE_PREFIX.TODO.CREATE) {
+    if (todo.data && todo.type === TYPE_PREFIX.TODO.SAVE) {
       dispatch(reset());
       closeDialog();
     }
   }, [todo.data]);
 
-  const saveTodo: SubmitHandler<Todo> = (data) => {
-    dispatch(createTodo(data));
+  const doSaveTodo: SubmitHandler<Todo> = (data) => {
+    dispatch(saveTodo(data));
   };
 
   return (
-    <form className="form-todo" onSubmit={handleSubmit(saveTodo)} ref={ formRef }>
+    <form className="form-todo" onSubmit={handleSubmit(doSaveTodo)} ref={ formRef }>
       <div className="form-group">
         <div className="form-control">
           <TitleIcon className="prev-icon" />

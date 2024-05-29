@@ -42,7 +42,7 @@ const TodoList = () => {
         case TYPE_PREFIX.TODO.LIST:
           setTodoList(todo.data);
           break;
-        case TYPE_PREFIX.TODO.CREATE:
+        case TYPE_PREFIX.TODO.SAVE:
           setTodoList(prev => [...[todo.data], ...prev]);
           break;
         case TYPE_PREFIX.TODO.DELETE:

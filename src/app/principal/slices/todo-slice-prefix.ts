@@ -2,9 +2,9 @@ import { ENDPOINT } from "@config/endpoint";
 
 export const TYPE_PREFIX = {
   TODO: {
-    CREATE: `${ENDPOINT.task}/create`,
+    SAVE: `${ENDPOINT.task}/save`,
     LIST: `${ENDPOINT.task}/list`,
     DELETE: `${ENDPOINT.task}/delete`,
-    FIND: `${ENDPOINT.task}/find`,
+    FIND: `${ENDPOINT.task}/find`
   }
 }

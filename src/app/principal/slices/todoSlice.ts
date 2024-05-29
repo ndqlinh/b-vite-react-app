@@ -21,8 +21,8 @@ const initialState: TodoStoreInterface = {
 
 const api = new ApiService();
 
-export const createTodo = createAsyncThunk(
-  TYPE_PREFIX.TODO.CREATE,
+export const saveTodo = createAsyncThunk(
+  TYPE_PREFIX.TODO.SAVE,
   async (data: any, thunkAPI) => {
     try {
       const response: any = await api.post([ENDPOINT.task], data);
@@ -65,17 +65,17 @@ export const todoSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createTodo.pending, (state: any) => {
-        state.type = TYPE_PREFIX.TODO.CREATE;
+      .addCase(saveTodo.pending, (state: any) => {
+        state.type = TYPE_PREFIX.TODO.SAVE;
         state.isLoading = true;
       })
-      .addCase(createTodo.fulfilled, (state: any, action: any) => {
-        state.type = TYPE_PREFIX.TODO.CREATE;
+      .addCase(saveTodo.fulfilled, (state: any, action: any) => {
+        state.type = TYPE_PREFIX.TODO.SAVE;
         state.isLoading = false;
         state.data = action?.payload?.data;
       })
-      .addCase(createTodo.rejected, (state: any, action: any) => {
-        state.type = TYPE_PREFIX.TODO.CREATE;
+      .addCase(saveTodo.rejected, (state: any, action: any) => {
+        state.type = TYPE_PREFIX.TODO.SAVE;
         state.isLoading = false;
         state.hasError = true;
         state.error = action?.payload?.message;
