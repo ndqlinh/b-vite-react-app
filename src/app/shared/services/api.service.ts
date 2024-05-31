@@ -118,7 +118,7 @@ export default class ApiService {
       return this.post(
         [ENDPOINT.auth.refreshToken],
         { token: refreshToken }
-      ).then(({ data }) => {
+      ).then(({ data }: any) => {
         if (data) {
           this.authHelper.setAccessToken(data);
           this.axiosInstance.defaults.headers.common['Authorization'] = 'Bearer ' + data;
@@ -142,19 +142,19 @@ export default class ApiService {
     if (error.isAxiosError && error.response?.status === 401) {
       const originalRequest: AxiosRequestConfig = error.config;
       if (isTokenRefreshing) {
+        if (originalRequest.url === ENDPOINT.auth.refreshToken) {
+          console.log('DO SIGN OUT');
+          signOut();
+        }
         return new Promise(function(resolve, reject) {
           const isExisted = retryQueue.find(item => item.config.url === originalRequest.url);
           if (!isExisted) {
             retryQueue.push({ config: originalRequest, resolve, reject });
           }
         });
-      }
-
-      if (!isTokenRefreshing) {
+      } else {
         isTokenRefreshing = true;
         return this.handleRefreshToken(originalRequest);
-      } else {
-        return;
       }
     }
 
