@@ -12,6 +12,7 @@ interface SelectProps {
   onChange?: any;
   isDisabled?: boolean;
   setFormValue?: any;
+  placeholder?: string;
 }
 
 const SelectBox = ({
@@ -23,9 +24,10 @@ const SelectBox = ({
   selectedValue,
   onChange,
   isDisabled,
-  setFormValue
+  setFormValue,
+  placeholder
 }: SelectProps) => {
-  const [value, setValue] = useState(selectedValue || options[0]?.value);
+  const [value, setValue] = useState(selectedValue);
   const [showOptions, setShowOptions] = useState(false);
 
   useEffect(() => {
@@ -71,10 +73,10 @@ const SelectBox = ({
         </label>
         <div className="select-group">
           <div
-            className={ `form-control select selected-value ${isDisabled ? 'disabled' : ''}` }
+            className={ `form-control select selected-value ${isDisabled ? 'disabled' : ''} ${ value ? '' : 'txt-placeholder' }` }
             onClick={ toggleShowOptions }
           >
-            { options?.find(item => item?.value === value)?.name }
+            { options?.find(item => item?.value === value)?.name || placeholder }
           </div>
           <span className='icon-arrow-down arrow-icon'>
             <ArrowDownIcon />

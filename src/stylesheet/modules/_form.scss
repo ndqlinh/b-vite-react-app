@@ -29,6 +29,9 @@
     height: 100%;
     outline: none;
     border: none;
+    &::placeholder {
+      color: map-get($color, placeholder);
+    }
   }
   .prev-icon,
   .sub-icon {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
@@ -75,7 +75,7 @@ const Signin = () => {
       <div className="card">
         <h1 className="page-title">Log in to your Account</h1>
         <h3 className="page-subtitle">Welcome back! Select method to log in</h3>
-        <div className="login-sso">
+        <div className="auth-sso">
           <button className="btn btn-outline btn-login-sso" disabled={ authData.isLoading }>
             <GoogleIcon className="btn-icon" />
             <span className="btn-text">Google</span>
@@ -136,7 +136,7 @@ const Signin = () => {
             { authData.isLoading ? <Loader /> : "Sign in" }
           </button>
         </form>
-        <p className="txt-sm txt-center">Don't have an account? <a className="txt-blue" href="#">Creat an account</a></p>
+        <p className="txt-sm txt-center">Don't have an account? <Link className="txt-blue" to='/auth/signup'>Creat an account</Link></p>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
-.login-page {
-  .login-sso {
+
+.auth-page {
+  .auth-sso {
     @include pxRem(margin-bottom, 40);
     display: flex;
     justify-content: space-between;
@@ -37,6 +38,9 @@
   }
   .form-login {
     @include pxRem(width, 350);
+  }
+  .form-signup {
+    @include pxRem(width, 400);
   }
   .btn-submit {
     width: 100%;
