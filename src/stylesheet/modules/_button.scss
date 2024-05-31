@@ -13,7 +13,6 @@
     @extend %flex-centered;
   }
   .loader {
-    @include pxRem(width, map-get($font-size, normal));
     @include pxRem(border-width, 2);
     &::before,
     &::after {

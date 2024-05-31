@@ -8,30 +8,21 @@ import axios, {
 import AuthHelper from '@core/helpers/auth.helper';
 import { environment } from 'config/environment';
 import { ENDPOINT } from 'config/endpoint';
-
-interface RetryQueueItem {
-  resolve: (value?: any) => void;
-  reject: (error?: any) => void;
-  config: AxiosRequestConfig;
-}
+import { signOut } from '@shared/utils/auth.util';
 
 export default class ApiService {
   axiosInstance: AxiosInstance;
   authHelper: AuthHelper;
-  refreshAndRetryQueue: RetryQueueItem[];
+  retryQueue: any[];
   isTokenRefreshing: boolean;
 
   constructor() {
-    this.refreshAndRetryQueue = [];
+    this.retryQueue = [];
     this.isTokenRefreshing = false;
     this.authHelper = new AuthHelper();
     this.axiosInstance = axios.create({
       baseURL: environment.apiBaseUrl,
-      // Common header
-      headers: {
-        'Content-Type': 'application/json',
-        ...this.authHelper.defaultHeader()
-      }
+      headers: { 'Content-Type': 'application/json' }
     });
     this._setInterceptors();
   }
@@ -103,73 +94,66 @@ export default class ApiService {
     );
   }
 
-  async handleRefreshToken(successCb?: () => void) {
-    const refreshToken = this.authHelper.getRefreshToken();
-    return new Promise<any>((resolve, reject) => {
-      return this.post(
-        [ENDPOINT.auth.refreshToken], {},
-        {
-          headers: {
-            'Authorization': `Bearer ${refreshToken}`
-          }
-        }
-      ).then(res => resolve(res)).catch(err => reject(err));
-    });
-  }
-
-  private _handleRetryQueue() {
-    // Retry all requests in the queue with the new token
-    this.refreshAndRetryQueue.forEach(({ config, resolve, reject }) => {
-      console.log('HandleRetryQueue', config);
-      config.headers.Authorization = `Bearer ${this.authHelper.getAccessToken()}`;
+  private _processRetryQueue() {
+    this.retryQueue.forEach(({ config, resolve, reject }) => {
       this.axiosInstance
         .request(config)
         .then((response) => resolve(response))
         .catch((err) => reject(err));
     });
-    // Clear the queue
-    this.refreshAndRetryQueue.length = 0;
+
+    this.retryQueue = [];
+  }
+
+  async handleRefreshToken(request) {
+    const refreshToken = this.authHelper.getRefreshToken();
+    return new Promise<any>((resolve, reject) => {
+      return this.post(
+        [ENDPOINT.auth.refreshToken],
+        { token: refreshToken }
+      ).then(({ data }) => {
+        if (data) {
+          console.log(55555);
+          this.authHelper.setAccessToken(data);
+          this.axiosInstance.defaults.headers.common['Authorization'] = 'Bearer ' + data;
+          request.headers['Authorization'] = 'Bearer ' + data;
+          this._processRetryQueue();
+          resolve(this.axiosInstance(request));
+        } else {
+          console.log(66666, 'SIGNOUT');
+          this.retryQueue = [];
+          signOut();
+        }
+      }).catch(err => {
+        console.log(77777);
+        signOut();
+        reject(err);
+      }).finally(() => {
+        console.log(88888);
+        this.isTokenRefreshing = false;
+      });
+    });
   }
 
   private async _handleError(error: AxiosError) {
-    const originalRequest: AxiosRequestConfig = error.config;
-
     if (error.isAxiosError && error.response?.status === 401) {
-      if (originalRequest.url === ENDPOINT.auth.refreshToken) {
-        this.refreshAndRetryQueue.length = 0;
-        this.authHelper.signOut();
-        window.location.pathname = 'auth/signin';
-      } else if (!this.isTokenRefreshing) {
-        this.isTokenRefreshing = true;
-
-        try {
-          this.handleRefreshToken().then(res => {
-            console.log('Refreshed token', res);
-            if (res.data) {
-              this.authHelper.setAccessToken(res.data);
-              this._handleRetryQueue();
-              // return this.axiosInstance(originalRequest);
-            }
-          }).catch(error => {
-            this.authHelper.signOut();
-            window.location.pathname = '/auth/signin';
+      const originalRequest: any = error.config;
+      if (!originalRequest._retry) {
+        console.log(11111);
+        if (this.isTokenRefreshing) {
+          console.log(22222);
+          return new Promise(function(resolve, reject) {
+            this.retryQueue.push({ originalRequest, resolve, reject });
           });
-
-        } catch (error) {
-          throw error;
-        } finally {
-          this.isTokenRefreshing = false;
         }
 
-        return new Promise<void>((resolve, reject) => {
-          const isExisted = this.refreshAndRetryQueue.find(item => item.config.url === originalRequest.url);
-          if (!isExisted) {
-            this.refreshAndRetryQueue.push({ config: originalRequest, resolve, reject });
-            console.log('PUSH RefreshAndRetryQueue', this.refreshAndRetryQueue);
-          }
-        });
+        originalRequest._retry = true;
+        this.isTokenRefreshing = true;
+
+        return this.handleRefreshToken(originalRequest);
       }
     }
+
     return Promise.reject(error);
   }
 }

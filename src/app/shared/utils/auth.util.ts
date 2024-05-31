@@ -5,7 +5,7 @@ const signOut = () => {
 
   // Clear localstorage
   auth.signOut();
-  window.location.href = '/auth/login'
+  window.location.href = '/auth/signin'
 };
 
 export { signOut };
