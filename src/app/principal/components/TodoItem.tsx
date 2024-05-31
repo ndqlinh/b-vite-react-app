@@ -65,7 +65,7 @@ const TodoItem = (props) => {
               <EyeIcon />
             </button>
             <button className="btn btn-circle btn-outline-danger" onClick={ () => onDeleteTodo(todo.id) } disabled={ isRequesting }>
-              { isRequesting ? <Loader /> : <TrashIcon /> }
+              { isRequesting ? <Loader className="loader-normal" /> : <TrashIcon /> }
             </button>
           </div>
         </div>

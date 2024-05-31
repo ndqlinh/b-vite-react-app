@@ -1,5 +1,5 @@
 .loader {
-  @include pxRem(width, 20);
+  @include pxRem(width, map-get($font-size, xl));
   aspect-ratio: 1;
   border-radius: 50%;
   border: 4px solid rgba($color: map-get($color, "black"), $alpha: 0);
@@ -23,5 +23,8 @@
     @include pxRem(width, 50);
     border: 4px solid rgba($color: map-get($color, "black"), $alpha: 0);
     border-right-color: rgba($color: map-get($color, "blue"), $alpha: 0.59);
+  }
+  &-normal {
+    @include pxRem(width, map-get($font-size, normal));
   }
 }
