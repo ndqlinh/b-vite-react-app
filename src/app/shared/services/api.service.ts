@@ -143,7 +143,6 @@ export default class ApiService {
       const originalRequest: AxiosRequestConfig = error.config;
       if (isTokenRefreshing) {
         if (originalRequest.url === ENDPOINT.auth.refreshToken) {
-          console.log('DO SIGN OUT');
           signOut();
         }
         return new Promise(function(resolve, reject) {
