@@ -55,24 +55,24 @@ export const authSlice = createSlice({
       })
       .addCase(signup.fulfilled, (state: any, action: any) => {
         state.isLoading = false;
-        state.data = action.payload.data;
+        state.data = action?.payload?.data;
       })
       .addCase(signup.rejected, (state: any, action: any) => {
         state.isLoading = false;
         state.hasError = true;
-        state.error = action.payload.message;
+        state.error = action?.payload?.message;
       })
       .addCase(signin.pending, (state: any) => {
         state.isLoading = true;
       })
       .addCase(signin.fulfilled, (state: any, action: any) => {
         state.isLoading = false;
-        state.data = action.payload.data;
+        state.data = action?.payload?.data;
       })
       .addCase(signin.rejected, (state: any, action: any) => {
         state.isLoading = false;
         state.hasError = true;
-        state.error = action.payload.message;
+        state.error = action?.payload?.message;
       });
   },
 });

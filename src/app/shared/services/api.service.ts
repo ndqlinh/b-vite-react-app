@@ -1,13 +1,29 @@
-import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+  InternalAxiosRequestConfig
+} from 'axios';
 import AuthHelper from '@core/helpers/auth.helper';
 import { environment } from 'config/environment';
 import { ENDPOINT } from 'config/endpoint';
 
+interface RetryQueueItem {
+  resolve: (value?: any) => void;
+  reject: (error?: any) => void;
+  config: AxiosRequestConfig;
+}
+
 export default class ApiService {
   axiosInstance: AxiosInstance;
   authHelper: AuthHelper;
+  refreshAndRetryQueue: RetryQueueItem[];
+  isTokenRefreshing: boolean;
 
   constructor() {
+    this.refreshAndRetryQueue = [];
+    this.isTokenRefreshing = false;
     this.authHelper = new AuthHelper();
     this.axiosInstance = axios.create({
       baseURL: environment.apiBaseUrl,
@@ -71,7 +87,7 @@ export default class ApiService {
 
   private _handleRespond(request: any, resolve, reject) {
     return request.then((resp: AxiosResponse) => {
-      resolve(resp.data);
+      resolve(resp?.data);
     }).catch((err: any) => {
       reject(err);
     });
@@ -88,27 +104,72 @@ export default class ApiService {
   }
 
   async handleRefreshToken(successCb?: () => void) {
-    return this.post(
-      [ENDPOINT.auth.refreshToken], {},
-      this.authHelper.setRootHeader()
-    ).then((res: any) => {
-      this.authHelper.setAccessToken(res.user_token);
-
-      if (successCb) {
-        successCb();
-      }
-    }).catch(err => {
-      // Handle err
+    const refreshToken = this.authHelper.getRefreshToken();
+    return new Promise<any>((resolve, reject) => {
+      return this.post(
+        [ENDPOINT.auth.refreshToken], {},
+        {
+          headers: {
+            'Authorization': `Bearer ${refreshToken}`
+          }
+        }
+      ).then(res => resolve(res)).catch(err => reject(err));
     });
   }
 
-  private async _handleError(error: AxiosError) {
-    if (error.isAxiosError && error.response?.status === 401) {
-      const originalRequest = error.config;
-      const req = await this.authHelper.handleRefreshToken(originalRequest);
-      return this.axiosInstance(req);
-    }
+  private _handleRetryQueue() {
+    // Retry all requests in the queue with the new token
+    this.refreshAndRetryQueue.forEach(({ config, resolve, reject }) => {
+      console.log('HandleRetryQueue', config);
+      config.headers.Authorization = `Bearer ${this.authHelper.getAccessToken()}`;
+      this.axiosInstance
+        .request(config)
+        .then((response) => resolve(response))
+        .catch((err) => reject(err));
+    });
+    // Clear the queue
+    this.refreshAndRetryQueue.length = 0;
+  }
 
+  private async _handleError(error: AxiosError) {
+    const originalRequest: AxiosRequestConfig = error.config;
+
+    if (error.isAxiosError && error.response?.status === 401) {
+      if (originalRequest.url === ENDPOINT.auth.refreshToken) {
+        this.refreshAndRetryQueue.length = 0;
+        this.authHelper.signOut();
+        window.location.pathname = 'auth/signin';
+      } else if (!this.isTokenRefreshing) {
+        this.isTokenRefreshing = true;
+
+        try {
+          this.handleRefreshToken().then(res => {
+            console.log('Refreshed token', res);
+            if (res.data) {
+              this.authHelper.setAccessToken(res.data);
+              this._handleRetryQueue();
+              // return this.axiosInstance(originalRequest);
+            }
+          }).catch(error => {
+            this.authHelper.signOut();
+            window.location.pathname = '/auth/signin';
+          });
+
+        } catch (error) {
+          throw error;
+        } finally {
+          this.isTokenRefreshing = false;
+        }
+
+        return new Promise<void>((resolve, reject) => {
+          const isExisted = this.refreshAndRetryQueue.find(item => item.config.url === originalRequest.url);
+          if (!isExisted) {
+            this.refreshAndRetryQueue.push({ config: originalRequest, resolve, reject });
+            console.log('PUSH RefreshAndRetryQueue', this.refreshAndRetryQueue);
+          }
+        });
+      }
+    }
     return Promise.reject(error);
   }
 }

@@ -33,6 +33,7 @@
         @include pxRem(width, 18);
         @include pxRem(height, 18);
         @include pxRem(border-radius, 3);
+        @include pxRem(margin-right, 10);
         position: relative;
         transform: scale(1);
         vertical-align: middle;

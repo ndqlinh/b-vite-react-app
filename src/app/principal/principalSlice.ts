@@ -43,12 +43,12 @@ export const accountSlice = createSlice({
       })
       .addCase(getProfile.fulfilled, (state: any, action: any) => {
         state.isLoading = false;
-        state.data = action.payload.data;
+        state.data = action?.payload?.data;
       })
       .addCase(getProfile.rejected, (state: any, action: any) => {
         state.isLoading = false;
         state.hasError = true;
-        state.error = action.payload.message;
+        state.error = action?.payload?.message;
       })
   },
 });

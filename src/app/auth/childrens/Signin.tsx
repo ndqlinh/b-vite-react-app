@@ -49,9 +49,9 @@ const Signin = () => {
   useEffect(() => {
     if (authData.data) {
       const { accessToken, refreshToken } = authData.data;
-      dispatch(reset());
       auth.setAccessToken(accessToken);
       auth.setRefreshToken(refreshToken);
+      dispatch(reset());
       navigate('/');
     } else if (authData.hasError) {
       toast(authData.error, {
