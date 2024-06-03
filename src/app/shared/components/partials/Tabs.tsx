@@ -6,12 +6,13 @@ const Tabs = (props) => {
   const [activePosition, setActivePosition] = useState<any>({});
 
   useEffect(() => {
+    const parentElm = document.getElementsByClassName('tab-list')[0];
     const elm = document.getElementsByClassName('tab-item active')[0];
-    const elmLeftPosition = elm.getBoundingClientRect().left;
+    const elmLeftPosition = elm.getBoundingClientRect().left - parentElm.getBoundingClientRect().left;
     const elmWidth = elm.getBoundingClientRect().width;
 
     setActivePosition({
-      left: elmLeftPosition,
+      left: elmLeftPosition + 20,
       width: elmWidth
     });
   }, [selectedTab]);
