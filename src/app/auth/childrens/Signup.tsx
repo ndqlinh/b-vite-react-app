@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
+import { toast } from 'react-toastify';
 
 import UserIcon from '@assets/icons/user-outline.svg?react';
 import EmailIcon from '@assets/icons/email.svg?react';
@@ -24,8 +26,7 @@ import {
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 import Loader from '@shared/components/partials/Loader';
 import SelectBox from '@shared/components/partials/Select';
-import { Link } from 'react-router-dom';
-import { signup } from '../authSlice';
+import { reset, signup } from '../authSlice';
 
 interface SignupData {
   firstName: string;
@@ -65,6 +66,24 @@ const Signup = () => {
   });
   const authData = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (authData.hasError) {
+      toast(authData.error, {
+        type: 'error',
+        theme: 'colored'
+      });
+      dispatch(reset());
+    } else if (authData.data) {
+      toast('Your account was created successfully', {
+        type: 'success',
+        theme: 'colored'
+      });
+      dispatch(reset());
+      navigate('/auth/signin');
+    }
+  }, [authData]);
 
   const toggleShowPassword = (name: string) => {
     setShowPassword(prev => {
@@ -83,11 +102,11 @@ const Signup = () => {
         <h1 className="page-title">Create your account</h1>
         <h3 className="page-subtitle">We are excited to see you here</h3>
         <div className="auth-sso">
-          <button className="btn btn-outline btn-login-sso">
+          <button className="btn btn-outline btn-login-sso" disabled={ authData.isLoading }>
             <GoogleIcon className="btn-icon" />
             <span className="btn-text">Google</span>
           </button>
-          <button className="btn btn-outline btn-login-sso">
+          <button className="btn btn-outline btn-login-sso" disabled={ authData.isLoading }>
             <FacebookIcon className="btn-icon" />
             <span className="btn-text">Facebook</span>
           </button>

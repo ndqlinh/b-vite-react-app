@@ -70,7 +70,7 @@ export const authSlice = createSlice({
         state.type = authActionTypes.signUp;
         state.isLoading = false;
         state.hasError = true;
-        state.error = action?.payload?.message;
+        state.error = action?.payload?.response?.data?.message;
       })
       .addCase(signin.pending, (state: any) => {
         state.type = authActionTypes.signIn;
@@ -85,7 +85,7 @@ export const authSlice = createSlice({
         state.type = authActionTypes.signIn;
         state.isLoading = false;
         state.hasError = true;
-        state.error = action?.payload?.message;
+        state.error = action?.payload?.response?.data?.message;
       });
   },
 });
