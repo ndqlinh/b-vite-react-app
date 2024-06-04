@@ -75,13 +75,13 @@ const TodoList = () => {
   const openDialog = (todo?: Todo) => {
     addDialog({
       type: DIALOG_TYPES.CUSTOM,
-      title: 'Dialog title',
+      title: todo?.id ? 'Update Todo' : 'Create Todo',
       containComponent: true,
       pendingCloseDialog: true,
       content: <TodoForm formRef={ todoFormRef } inputData={ todo } />,
       button: {
-        ok: 'Ok',
-        cancel: 'Cancel',
+        ok: todo?.id ? 'Update' : 'Create',
+        cancel: 'Discard',
       },
       confirmHandler: triggerSubmit
     });
