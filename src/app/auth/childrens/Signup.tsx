@@ -184,7 +184,6 @@ const Signup = () => {
                         onChange={ (date) => field.onChange(date) }
                         onKeyDown={ (event) => event.preventDefault() }
                         selected={ field.value }
-                        minDate={ new Date("1/1/2010") }
                         maxDate={ new Date() }
                         showYearDropdown
                         icon={ <CalendarIcon className="prev-icon txt-xl" /> }
