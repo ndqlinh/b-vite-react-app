@@ -3,13 +3,20 @@ import AuthService from '@shared/services/auth.service';
 import { ENDPOINT } from '@config/endpoint';
 
 interface AuthStoreInterface {
+  type: string;
   data: any;
   hasError: boolean;
   isLoading: boolean;
   error: string;
 }
 
+export const authActionTypes = {
+  signIn: 'SIGN_IN',
+  signUp: 'SIGN_UP',
+}
+
 const initialState: AuthStoreInterface = {
+  type: '',
   data: null,
   hasError: false,
   isLoading: false,
@@ -51,25 +58,31 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(signup.pending, (state: any) => {
+        state.type = authActionTypes.signUp;
         state.isLoading = true;
       })
       .addCase(signup.fulfilled, (state: any, action: any) => {
+        state.type = authActionTypes.signUp;
         state.isLoading = false;
         state.data = action?.payload?.data;
       })
       .addCase(signup.rejected, (state: any, action: any) => {
+        state.type = authActionTypes.signUp;
         state.isLoading = false;
         state.hasError = true;
         state.error = action?.payload?.message;
       })
       .addCase(signin.pending, (state: any) => {
+        state.type = authActionTypes.signIn;
         state.isLoading = true;
       })
       .addCase(signin.fulfilled, (state: any, action: any) => {
+        state.type = authActionTypes.signIn;
         state.isLoading = false;
         state.data = action?.payload?.data;
       })
       .addCase(signin.rejected, (state: any, action: any) => {
+        state.type = authActionTypes.signIn;
         state.isLoading = false;
         state.hasError = true;
         state.error = action?.payload?.message;
