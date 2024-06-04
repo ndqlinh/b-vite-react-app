@@ -14,14 +14,18 @@ import FacebookIcon from '@assets/icons/facebook.svg?react';
 
 import {
   emailValidator,
+  firstName,
+  lastName,
   PASSWORD_MAXLENGTH,
   PASSWORD_MINLENGTH,
+  passwordMatched,
   passwordValidator
 } from '@shared/validators/form.validator';
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 import Loader from '@shared/components/partials/Loader';
 import SelectBox from '@shared/components/partials/Select';
 import { Link } from 'react-router-dom';
+import { isDirty } from 'astro/zod';
 
 interface SignupData {
   firstName: string;
@@ -48,8 +52,9 @@ const Signup = () => {
   const {
     register,
     control,
-    formState: { errors },
+    formState: { errors, dirtyFields },
     setValue,
+    watch,
     handleSubmit
   } = useForm({
     mode: 'onChange',
@@ -95,7 +100,7 @@ const Signup = () => {
                     id="firstName"
                     className="form-field"
                     placeholder="First name"
-                    { ...register("firstName", { required: true }) }
+                    { ...register("firstName", firstName()) }
                   />
                 </div>
                 <p className="txt-red error-msg">{ errors?.firstName?.message }</p>
@@ -111,7 +116,7 @@ const Signup = () => {
                     id="lastName"
                     className="form-field"
                     placeholder="Last name"
-                    { ...register("lastName", { required: true }) }
+                    { ...register("lastName", lastName()) }
                   />
                 </div>
                 <p className="txt-red error-msg">{ errors?.lastName?.message }</p>
@@ -172,6 +177,9 @@ const Signup = () => {
                         onChange={ (date) => field.onChange(date) }
                         onKeyDown={ (event) => event.preventDefault() }
                         selected={ field.value }
+                        minDate={ new Date("1/1/2010") }
+                        maxDate={ new Date() }
+                        showYearDropdown
                         icon={ <CalendarIcon className="prev-icon txt-xl" /> }
                       />
                     )}
@@ -210,7 +218,10 @@ const Signup = () => {
                 placeholder="Confirm password"
                 maxLength={ PASSWORD_MAXLENGTH }
                 minLength={ PASSWORD_MINLENGTH }
-                { ...register("confirmPassword", passwordValidator()) }
+                { ...register("confirmPassword", passwordMatched({
+                  isDirty: dirtyFields,
+                  value: watch('password')
+                })) }
               />
               <div className="sub-icon cursor-pointer" onClick={ toggleShowPassword }>
                 { isShowPassword ? <HideIcon /> : <ShowIcon /> }
