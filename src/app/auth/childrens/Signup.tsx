@@ -25,7 +25,7 @@ import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 import Loader from '@shared/components/partials/Loader';
 import SelectBox from '@shared/components/partials/Select';
 import { Link } from 'react-router-dom';
-import { isDirty } from 'astro/zod';
+import { signup } from '../authSlice';
 
 interface SignupData {
   firstName: string;
@@ -48,7 +48,10 @@ const Signup = () => {
     confirmPassword: ''
   };
 
-  const [isShowPassword, setShowPassword] = useState(false);
+  const [isShowPassword, setShowPassword] = useState({
+    password: false,
+    confirmPassword: false
+  });
   const {
     register,
     control,
@@ -61,13 +64,17 @@ const Signup = () => {
     defaultValues
   });
   const authData = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
 
-  const toggleShowPassword = () => {
-    setShowPassword(prev => !prev);
+  const toggleShowPassword = (name: string) => {
+    setShowPassword(prev => {
+      prev[name] = !prev[name];
+      return { ...prev };
+    });
   };
 
   const onSubmit: SubmitHandler<SignupData> = (data) => {
-    // dispatch(signin(data));
+    dispatch(signup(data));
   };
 
   return (
@@ -192,7 +199,7 @@ const Signup = () => {
             <div className="form-control">
               <LockIcon className="prev-icon" />
               <input
-                type={ isShowPassword ? "text" : "password" }
+                type={ isShowPassword.password ? "text" : "password" }
                 name="password"
                 id="password"
                 className="form-field"
@@ -201,8 +208,8 @@ const Signup = () => {
                 minLength={ PASSWORD_MINLENGTH }
                 { ...register("password", passwordValidator()) }
               />
-              <div className="sub-icon cursor-pointer" onClick={ toggleShowPassword }>
-                { isShowPassword ? <HideIcon /> : <ShowIcon /> }
+              <div className="sub-icon cursor-pointer" onClick={ () => toggleShowPassword('password') }>
+                { isShowPassword.password ? <HideIcon /> : <ShowIcon /> }
               </div>
             </div>
             <p className="txt-red error-msg">{ errors?.password?.message }</p>
@@ -211,7 +218,7 @@ const Signup = () => {
             <div className="form-control">
               <LockIcon className="prev-icon" />
               <input
-                type={ isShowPassword ? "text" : "password" }
+                type={ isShowPassword.confirmPassword ? "text" : "password" }
                 name="confirmPassword"
                 id="confirmPassword"
                 className="form-field"
@@ -223,8 +230,8 @@ const Signup = () => {
                   value: watch('password')
                 })) }
               />
-              <div className="sub-icon cursor-pointer" onClick={ toggleShowPassword }>
-                { isShowPassword ? <HideIcon /> : <ShowIcon /> }
+              <div className="sub-icon cursor-pointer" onClick={ () => toggleShowPassword('confirmPassword') }>
+                { isShowPassword.confirmPassword ? <HideIcon /> : <ShowIcon /> }
               </div>
             </div>
             <p className="txt-red error-msg">{ errors?.confirmPassword?.message }</p>
