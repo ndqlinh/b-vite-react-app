@@ -21,7 +21,7 @@ const Dropdown = (props) => {
       <div className="flex-center-y" onClick={ toggleDropdown }>
         { triggerElm }
       </div>
-      <div className={ `dropdown-menu ${ isShowed ? 'showed' : 'invisible' }` }>
+      <div className={ `dropdown-menu ${ isShowed ? 'showed' : 'invisible' }` } onClick={ toggleDropdown }>
         { dropdownContent }
       </div>
     </div>

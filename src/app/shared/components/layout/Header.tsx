@@ -27,6 +27,10 @@ const Header = () => {
     navigate('/auth/signin');
   };
 
+  const openProfile = () => {
+    navigate('/profile');
+  };
+
   return (
     <header className="principal-header">
       <h1 className="page-logo"><ViteLogo /></h1>
@@ -52,7 +56,7 @@ const Header = () => {
           }
           dropdownContent={
             <ul className="dropdown-list">
-              <li className="dropdown-item">
+              <li className="dropdown-item" onClick={ openProfile }>
                 <div className="pre-icon">
                   <ProfileIcon />
                 </div>
