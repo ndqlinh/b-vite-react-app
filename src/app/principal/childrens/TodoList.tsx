@@ -7,10 +7,10 @@ import Tabs from '@shared/components/partials/Tabs';
 import TodoItem from '../components/TodoItem';
 import { useDialog } from '@shared/contexts/dialog.context';
 import DIALOG_TYPES from '@shared/constants/dialog-types';
+import ACTION_TYPES from 'app/stores/action-types';
 import TodoForm, { Todo } from '../components/TodoForm';
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 import { getTodoList } from 'app/principal/slices/todoSlice';
-import { TYPE_PREFIX } from '../slices/todo-slice-prefix';
 import Loader from '@shared/components/partials/Loader';
 
 const TodoList = () => {
@@ -30,7 +30,7 @@ const TodoList = () => {
   }, []);
 
   useEffect(() => {
-    if (todo.type === TYPE_PREFIX.TODO.LIST) {
+    if (todo.type === ACTION_TYPES.TODO.LIST) {
       setFetching(todo.isLoading);
     }
   }, [todo.isLoading]);
@@ -38,10 +38,10 @@ const TodoList = () => {
   useEffect(() => {
     if (todo.data) {
       switch (todo.type) {
-        case TYPE_PREFIX.TODO.LIST:
+        case ACTION_TYPES.TODO.LIST:
           setTodoList(todo.data);
           break;
-        case TYPE_PREFIX.TODO.SAVE: {
+        case ACTION_TYPES.TODO.SAVE: {
           const isExisted = todoList.find(item => item.id === todo.data.id);
           setTodoList(prev => {
             return isExisted ? prev.map(item => {
@@ -53,7 +53,7 @@ const TodoList = () => {
           });
           break;
         }
-        case TYPE_PREFIX.TODO.DELETE:
+        case ACTION_TYPES.TODO.DELETE:
           setTodoList(prev => prev.filter(item => item.id !== todo.data.id));
           break;
       }

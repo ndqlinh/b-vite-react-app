@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { ENDPOINT } from '@config/endpoint';
 import ApiService from '@shared/services/api.service';
-import { TYPE_PREFIX } from './todo-slice-prefix';
+import ACTION_TYPES from 'app/stores/action-types';
 
 interface TodoStoreInterface {
   type: string;
@@ -22,7 +22,7 @@ const initialState: TodoStoreInterface = {
 const api = new ApiService();
 
 export const saveTodo = createAsyncThunk(
-  TYPE_PREFIX.TODO.SAVE,
+  ACTION_TYPES.TODO.SAVE,
   async (data: any, thunkAPI) => {
     try {
       delete data.createdAt;
@@ -37,7 +37,7 @@ export const saveTodo = createAsyncThunk(
 );
 
 export const getTodoList = createAsyncThunk(
-  TYPE_PREFIX.TODO.LIST,
+  ACTION_TYPES.TODO.LIST,
   async (_, thunkAPI) => {
     try {
       const response: any = await api.get([ENDPOINT.task]);
@@ -49,7 +49,7 @@ export const getTodoList = createAsyncThunk(
 );
 
 export const deleteTodo = createAsyncThunk(
-  TYPE_PREFIX.TODO.DELETE,
+  ACTION_TYPES.TODO.DELETE,
   async (data: any, thunkAPI) => {
     try {
       const response: any = await api.delete([`${ENDPOINT.task}/${data.id}`]);
@@ -69,46 +69,46 @@ export const todoSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(saveTodo.pending, (state: any) => {
-        state.type = TYPE_PREFIX.TODO.SAVE;
+        state.type = ACTION_TYPES.TODO.SAVE;
         state.isLoading = true;
       })
       .addCase(saveTodo.fulfilled, (state: any, action: any) => {
-        state.type = TYPE_PREFIX.TODO.SAVE;
+        state.type = ACTION_TYPES.TODO.SAVE;
         state.isLoading = false;
         state.data = action?.payload?.data;
       })
       .addCase(saveTodo.rejected, (state: any, action: any) => {
-        state.type = TYPE_PREFIX.TODO.SAVE;
+        state.type = ACTION_TYPES.TODO.SAVE;
         state.isLoading = false;
         state.hasError = true;
         state.error = action?.payload?.message;
       })
       .addCase(getTodoList.pending, (state: any) => {
-        state.type = TYPE_PREFIX.TODO.LIST;
+        state.type = ACTION_TYPES.TODO.LIST;
         state.isLoading = true;
       })
       .addCase(getTodoList.fulfilled, (state: any, action: any) => {
-        state.type = TYPE_PREFIX.TODO.LIST;
+        state.type = ACTION_TYPES.TODO.LIST;
         state.isLoading = false;
         state.data = action?.payload?.data;
       })
       .addCase(getTodoList.rejected, (state: any, action: any) => {
-        state.type = TYPE_PREFIX.TODO.LIST;
+        state.type = ACTION_TYPES.TODO.LIST;
         state.isLoading = false;
         state.hasError = true;
         state.error = action?.payload?.message;
       })
       .addCase(deleteTodo.pending, (state: any) => {
-        state.type = TYPE_PREFIX.TODO.DELETE;
+        state.type = ACTION_TYPES.TODO.DELETE;
         state.isLoading = true;
       })
       .addCase(deleteTodo.fulfilled, (state: any, action: any) => {
-        state.type = TYPE_PREFIX.TODO.DELETE;
+        state.type = ACTION_TYPES.TODO.DELETE;
         state.isLoading = false;
         state.data = action?.payload?.data;
       })
       .addCase(deleteTodo.rejected, (state: any, action: any) => {
-        state.type = TYPE_PREFIX.TODO.DELETE;
+        state.type = ACTION_TYPES.TODO.DELETE;
         state.isLoading = false;
         state.hasError = true;
         state.error = action?.payload?.message;

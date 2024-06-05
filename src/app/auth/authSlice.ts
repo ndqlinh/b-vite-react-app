@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import AuthService from '@shared/services/auth.service';
 import { ENDPOINT } from '@config/endpoint';
+import ACTION_TYPES from 'app/stores/action-types';
 
 interface AuthStoreInterface {
   type: string;
@@ -8,11 +9,6 @@ interface AuthStoreInterface {
   hasError: boolean;
   isLoading: boolean;
   error: string;
-}
-
-export const authActionTypes = {
-  signIn: 'SIGN_IN',
-  signUp: 'SIGN_UP',
 }
 
 const initialState: AuthStoreInterface = {
@@ -58,31 +54,31 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(signup.pending, (state: any) => {
-        state.type = authActionTypes.signUp;
+        state.type = ACTION_TYPES.AUTH.SIGN_UP;
         state.isLoading = true;
       })
       .addCase(signup.fulfilled, (state: any, action: any) => {
-        state.type = authActionTypes.signUp;
+        state.type = ACTION_TYPES.AUTH.SIGN_UP;
         state.isLoading = false;
         state.data = action?.payload?.data;
       })
       .addCase(signup.rejected, (state: any, action: any) => {
-        state.type = authActionTypes.signUp;
+        state.type = ACTION_TYPES.AUTH.SIGN_UP;
         state.isLoading = false;
         state.hasError = true;
         state.error = action?.payload?.response?.data?.message;
       })
       .addCase(signin.pending, (state: any) => {
-        state.type = authActionTypes.signIn;
+        state.type = ACTION_TYPES.AUTH.SIGN_IN;
         state.isLoading = true;
       })
       .addCase(signin.fulfilled, (state: any, action: any) => {
-        state.type = authActionTypes.signIn;
+        state.type = ACTION_TYPES.AUTH.SIGN_IN;
         state.isLoading = false;
         state.data = action?.payload?.data;
       })
       .addCase(signin.rejected, (state: any, action: any) => {
-        state.type = authActionTypes.signIn;
+        state.type = ACTION_TYPES.AUTH.SIGN_IN;
         state.isLoading = false;
         state.hasError = true;
         state.error = action?.payload?.response?.data?.message;

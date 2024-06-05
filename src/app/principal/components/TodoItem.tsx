@@ -6,7 +6,7 @@ import TrashIcon from '@assets/icons/trash.svg?react';
 import EyeIcon from '@assets/icons/eyes-show.svg?react';
 
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
-import { TYPE_PREFIX } from '../slices/todo-slice-prefix';
+import ACTION_TYPES from 'app/stores/action-types';
 import { deleteTodo } from '../slices/todoSlice';
 import Loader from '@shared/components/partials/Loader';
 
@@ -35,7 +35,7 @@ const TodoItem = (props) => {
   }, [todo.priority]);
 
   useEffect(() => {
-    if (todoState.type === TYPE_PREFIX.TODO.DELETE && deletingId.current === todo.id) {
+    if (todoState.type === ACTION_TYPES.TODO.DELETE && deletingId.current === todo.id) {
       setRequesting(todoState.isLoading);
     }
   }, [todoState.isLoading]);
