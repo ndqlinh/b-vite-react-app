@@ -3,6 +3,7 @@ import { lazy } from 'react';
 const Principal = lazy(() => import('./Principal'));
 const Home = lazy(() => import('./childrens/Home'));
 const TodoList = lazy(() => import('./childrens/TodoList'));
+const Profile =lazy(() => import('./childrens/Profile'));
 
 const router = [
   {
@@ -17,6 +18,10 @@ const router = [
       {
         path: 'todo',
         element: TodoList
+      },
+      {
+        path: 'profile',
+        element: Profile
       }
     ]
   }
