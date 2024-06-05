@@ -17,6 +17,7 @@ import {
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 import { reset, updateProfile } from '../principalSlice';
 import ACTION_TYPES from 'app/stores/action-types';
+import moment from 'moment';
 
 interface ProfileData {
   firstName: string;
@@ -61,6 +62,16 @@ const ProfileForm = () => {
           type: 'success',
           theme: 'colored'
         });
+      }
+    }
+
+    if (profile.type === ACTION_TYPES.ACCOUNT.GET) {
+      if (profile.data) {
+        setValue('firstName', profile.data.firstName);
+        setValue('lastName', profile.data.lastName);
+        setValue('email', profile.data.email);
+        setValue('gender', profile.data.gender.toLowerCase());
+        setValue('dob', profile.data.dob);
       }
     }
   }, [profile]);
