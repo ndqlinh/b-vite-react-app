@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import DatePicker from 'react-datepicker';
+import { toast } from 'react-toastify';
 
 import UserIcon from '@assets/icons/user-outline.svg?react';
 import EmailIcon from '@assets/icons/email.svg?react';
@@ -8,13 +9,14 @@ import GenderIcon from '@assets/icons/gender.svg?react';
 import CalendarIcon from '@assets/icons/calendar-light.svg?react';
 
 import SelectBox from '@shared/components/partials/Select';
-
 import {
   emailValidator,
   firstName,
   lastName
 } from '@shared/validators/form.validator';
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
+import { reset, updateProfile } from '../principalSlice';
+import ACTION_TYPES from 'app/stores/action-types';
 
 interface ProfileData {
   firstName: string;
@@ -26,13 +28,13 @@ interface ProfileData {
 
 const ProfileForm = () => {
   const dispatch = useAppDispatch();
-  const profile = useAppSelector((state) => state.account.data);
+  const profile = useAppSelector((state) => state.account);
   const defaultValues = {
-    firstName: profile.firstName || '',
-    lastName: profile.lastName || '',
-    email: profile.email || '',
-    gender: profile.gender || '',
-    dob: profile.dob || new Date()
+    firstName: profile?.data?.firstName || '',
+    lastName: profile?.data?.lastName || '',
+    email: profile?.data?.email || '',
+    gender: profile?.data?.gender || '',
+    dob: profile?.data?.dob || new Date()
   };
 
   const {
@@ -46,10 +48,29 @@ const ProfileForm = () => {
     defaultValues
   });
 
-  const onSubmit: SubmitHandler<ProfileData> = () => {};
+  useEffect(() => {
+    if (profile.type === ACTION_TYPES.ACCOUNT.UPDATE) {
+      if (profile.hasError) {
+        toast(profile.error, {
+          type: 'error',
+          theme: 'colored'
+        });
+        dispatch(reset());
+      } else if (profile.data) {
+        toast('Your profile was updated successfully', {
+          type: 'success',
+          theme: 'colored'
+        });
+      }
+    }
+  }, [profile]);
+
+  const doUpdateProfile: SubmitHandler<ProfileData> = (data) => {
+    dispatch(updateProfile(data));
+  };
 
   return (
-    <form className="form-signup mb-8" onSubmit={handleSubmit(onSubmit)}>
+    <form className="form-signup mb-8" onSubmit={handleSubmit(doUpdateProfile)}>
       <div className="row">
         <div className="col-6">
           <div className="form-group">
