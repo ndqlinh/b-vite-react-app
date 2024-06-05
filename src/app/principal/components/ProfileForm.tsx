@@ -86,7 +86,7 @@ const ProfileForm = () => {
               />
             </div>
             <p className="txt-red error-msg">
-              { `${errors?.firstName?.message}` }
+              { `${errors?.firstName?.message || '' }` }
             </p>
           </div>
         </div>
@@ -104,7 +104,7 @@ const ProfileForm = () => {
               />
             </div>
             <p className="txt-red error-msg">
-              { `${errors?.lastName?.message}` }
+              { `${errors?.lastName?.message || '' }` }
             </p>
           </div>
         </div>
@@ -122,7 +122,7 @@ const ProfileForm = () => {
           />
         </div>
         <p className="txt-red error-msg">
-          { `${errors?.email?.message}` }
+          { `${errors?.email?.message || '' }` }
         </p>
       </div>
       <div className="row">
