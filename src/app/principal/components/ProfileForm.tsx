@@ -14,6 +14,7 @@ import {
   firstName,
   lastName
 } from '@shared/validators/form.validator';
+import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 
 interface ProfileData {
   firstName: string;
@@ -24,12 +25,14 @@ interface ProfileData {
 }
 
 const ProfileForm = () => {
+  const dispatch = useAppDispatch();
+  const profile = useAppSelector((state) => state.account.data);
   const defaultValues = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    gender: '',
-    dob: new Date()
+    firstName: profile.firstName || '',
+    lastName: profile.lastName || '',
+    email: profile.email || '',
+    gender: profile.gender || '',
+    dob: profile.dob || new Date()
   };
 
   const {
@@ -42,10 +45,6 @@ const ProfileForm = () => {
     mode: 'onChange',
     defaultValues
   });
-
-  useEffect(() => {
-    // Handle get profile details
-  }, []);
 
   const onSubmit: SubmitHandler<ProfileData> = () => {};
 
@@ -65,7 +64,9 @@ const ProfileForm = () => {
                 { ...register("firstName", firstName()) }
               />
             </div>
-            <p className="txt-red error-msg">{ errors?.firstName?.message }</p>
+            <p className="txt-red error-msg">
+              { `${errors?.firstName?.message}` }
+            </p>
           </div>
         </div>
         <div className="col-6">
@@ -81,7 +82,9 @@ const ProfileForm = () => {
                 { ...register("lastName", lastName()) }
               />
             </div>
-            <p className="txt-red error-msg">{ errors?.lastName?.message }</p>
+            <p className="txt-red error-msg">
+              { `${errors?.lastName?.message}` }
+            </p>
           </div>
         </div>
       </div>
@@ -97,7 +100,9 @@ const ProfileForm = () => {
             { ...register("email", emailValidator()) }
           />
         </div>
-        <p className="txt-red error-msg">{ errors?.email?.message }</p>
+        <p className="txt-red error-msg">
+          { `${errors?.email?.message}` }
+        </p>
       </div>
       <div className="row">
         <div className="col-6">

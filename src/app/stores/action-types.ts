@@ -11,6 +11,10 @@ const ACTION_TYPES = {
     DELETE: `${ENDPOINT.task}/delete`,
     FIND: `${ENDPOINT.task}/find`
   },
+  ACCOUNT: {
+    GET: `${ENDPOINT.profile}/get`,
+    UPDATE: `${ENDPOINT.profile}/update`
+  }
 };
 
 export default ACTION_TYPES;
