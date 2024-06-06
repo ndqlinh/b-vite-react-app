@@ -81,7 +81,7 @@ const ProfileForm = () => {
   };
 
   return (
-    <form className="form-signup mb-8" onSubmit={handleSubmit(doUpdateProfile)}>
+    <form className="form-profile" onSubmit={handleSubmit(doUpdateProfile)}>
       <div className="row">
         <div className="col-6">
           <div className="form-group">
@@ -188,10 +188,7 @@ const ProfileForm = () => {
       </div>
       <button
         className="btn btn-primary btn-submit"
-        disabled={
-          (profile?.type === ACTION_TYPES.ACCOUNT.UPDATE && profile.isLoading)
-          || !isDirty
-        }
+        disabled={ profile?.type === ACTION_TYPES.ACCOUNT.UPDATE && profile.isLoading }
       >
           {
             (
