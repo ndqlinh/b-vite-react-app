@@ -45,6 +45,18 @@ export const signin = createAsyncThunk(
   }
 );
 
+export const resetPassword = createAsyncThunk(
+  ENDPOINT.auth.resetPassword,
+  async (data: any, thunkAPI) => {
+    try {
+      const response: any = await auth.resetPassword(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+)
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -79,6 +91,21 @@ export const authSlice = createSlice({
       })
       .addCase(signin.rejected, (state: any, action: any) => {
         state.type = ACTION_TYPES.AUTH.SIGN_IN;
+        state.isLoading = false;
+        state.hasError = true;
+        state.error = action?.payload?.response?.data?.message;
+      })
+      .addCase(resetPassword.pending, (state: any) => {
+        state.type = ACTION_TYPES.AUTH.RESET_PASSWORD;
+        state.isLoading = true;
+      })
+      .addCase(resetPassword.fulfilled, (state: any, action: any) => {
+        state.type = ACTION_TYPES.AUTH.RESET_PASSWORD;
+        state.isLoading = false;
+        state.data = action?.payload?.data;
+      })
+      .addCase(resetPassword.rejected, (state: any, action: any) => {
+        state.type = ACTION_TYPES.AUTH.RESET_PASSWORD;
         state.isLoading = false;
         state.hasError = true;
         state.error = action?.payload?.response?.data?.message;

@@ -3,7 +3,8 @@ import { ENDPOINT } from '@config/endpoint';
 const ACTION_TYPES = {
   AUTH: {
     SIGN_IN: ENDPOINT.auth.signin,
-    SIGN_UP: ENDPOINT.auth.signup
+    SIGN_UP: ENDPOINT.auth.signup,
+    RESET_PASSWORD: ENDPOINT.auth.resetPassword
   },
   TODO: {
     SAVE: `${ENDPOINT.task}/save`,
