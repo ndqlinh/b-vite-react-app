@@ -57,7 +57,7 @@ const ProfileForm = () => {
           theme: 'colored'
         });
         dispatch(reset());
-      } else if (profile.data) {
+      } else if (profile.data && !profile.isLoading) {
         toast('Your profile was updated successfully', {
           type: 'success',
           theme: 'colored'

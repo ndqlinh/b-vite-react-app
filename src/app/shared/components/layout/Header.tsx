@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 import { getProfile } from 'app/principal/principalSlice';
 import Dropdown from '../partials/Dropdown';
 import AuthHelper from '@core/helpers/auth.helper';
+import ACTION_TYPES from 'app/stores/action-types';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -47,9 +48,9 @@ const Header = () => {
             <button className="btn btn-profile">
               <span className="mr-1">Welcome,</span>
               {
-                profile?.data ?
-                <span>{ profile?.data?.firstName } { profile?.data?.lastName }</span> :
-                <SkeletonText tag="span" effect="wave">firstnamelastname</SkeletonText>
+                (profile.isLoading && profile.type === ACTION_TYPES.ACCOUNT.GET) ?
+                  <SkeletonText tag="span" effect="wave">firstnamelastname</SkeletonText> :
+                  <span>{ profile?.data?.firstName } { profile?.data?.lastName }</span>
               }
             </button>
           }
