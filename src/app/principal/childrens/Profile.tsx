@@ -8,7 +8,7 @@ const Profile = () => {
   const profileTabs = ['profile', 'password'];
 
   const changeTabCallback = (tab) => {
-    setSelectedTab(tab);
+    setSelectedTab(profileTabs[tab]);
   };
 
   return (
