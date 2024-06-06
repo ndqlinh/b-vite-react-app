@@ -89,7 +89,7 @@ const PasswordForm = () => {
         </div>
         <p className="txt-red error-msg">{ errors?.password?.message }</p>
       </div>
-      <div className="form-group mb-8">
+      <div className="form-group">
         <div className="form-control">
           <LockIcon className="prev-icon" />
           <input
