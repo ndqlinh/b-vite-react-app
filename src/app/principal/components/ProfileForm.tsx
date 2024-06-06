@@ -17,7 +17,7 @@ import {
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 import { reset, updateProfile } from '../principalSlice';
 import ACTION_TYPES from 'app/stores/action-types';
-import moment from 'moment';
+import Loader from '@shared/components/partials/Loader';
 
 interface ProfileData {
   firstName: string;
@@ -187,7 +187,12 @@ const ProfileForm = () => {
         </div>
       </div>
       <button className="btn btn-primary btn-submit">
-        Update
+        {
+          (
+            profile?.type === ACTION_TYPES.ACCOUNT.UPDATE
+            && profile.isLoading
+          ) ? <Loader /> : "Update"
+        }
       </button>
     </form>
   );

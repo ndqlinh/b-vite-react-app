@@ -55,6 +55,7 @@ export const accountSlice = createSlice({
     builder
       .addCase(getProfile.pending, (state: any) => {
         state.type = ACTION_TYPES.ACCOUNT.GET;
+        state.data = null;
         state.isLoading = true;
       })
       .addCase(getProfile.fulfilled, (state: any, action: any) => {
@@ -70,6 +71,7 @@ export const accountSlice = createSlice({
       })
       .addCase(updateProfile.pending, (state: any) => {
         state.type = ACTION_TYPES.ACCOUNT.UPDATE;
+        state.data = null;
         state.isLoading = true;
       })
       .addCase(updateProfile.fulfilled, (state: any, action: any) => {
