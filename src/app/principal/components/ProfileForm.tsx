@@ -41,7 +41,7 @@ const ProfileForm = () => {
   const {
     register,
     control,
-    formState: { errors },
+    formState: { errors, isDirty },
     setValue,
     handleSubmit
   } = useForm({
@@ -186,13 +186,19 @@ const ProfileForm = () => {
           </div>
         </div>
       </div>
-      <button className="btn btn-primary btn-submit">
-        {
-          (
-            profile?.type === ACTION_TYPES.ACCOUNT.UPDATE
-            && profile.isLoading
-          ) ? <Loader /> : "Update"
+      <button
+        className="btn btn-primary btn-submit"
+        disabled={
+          (profile?.type === ACTION_TYPES.ACCOUNT.UPDATE && profile.isLoading)
+          || !isDirty
         }
+      >
+          {
+            (
+              profile?.type === ACTION_TYPES.ACCOUNT.UPDATE
+              && profile.isLoading
+            ) ? <Loader /> : "Update"
+          }
       </button>
     </form>
   );
