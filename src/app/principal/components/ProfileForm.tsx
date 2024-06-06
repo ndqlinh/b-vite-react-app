@@ -41,7 +41,7 @@ const ProfileForm = () => {
   const {
     register,
     control,
-    formState: { errors, isDirty },
+    formState: { errors },
     setValue,
     handleSubmit
   } = useForm({
