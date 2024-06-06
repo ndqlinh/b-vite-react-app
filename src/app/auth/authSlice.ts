@@ -46,7 +46,7 @@ export const signin = createAsyncThunk(
 );
 
 export const resetPassword = createAsyncThunk(
-  ENDPOINT.auth.resetPassword,
+  ENDPOINT.resetPassword,
   async (data: any, thunkAPI) => {
     try {
       const response: any = await auth.resetPassword(data);

@@ -7,10 +7,10 @@ export const ENDPOINT = {
     signin: `${RESOURCES.auth}/signin`,
     signup: `${RESOURCES.auth}/signup`,
     forgotPassword: `${RESOURCES.auth}/forgot-password`,
-    resetPassword: `${RESOURCES.auth}/reset-password`,
     refreshToken: `${RESOURCES.auth}/renew`,
     signout: `${RESOURCES.auth}/signout`,
-  },
-  profile: 'profile',
-  task: 'task'
+    },
+    profile: 'profile',
+    task: 'task',
+    resetPassword: `reset-password`,
 }

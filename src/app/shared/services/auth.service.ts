@@ -25,7 +25,7 @@ export default class AuthService extends AuthHelper {
   }
 
   async resetPassword(body: ResetPasswordBody) {
-    return this.http.put([ENDPOINT.auth.resetPassword], body);
+    return this.http.put([ENDPOINT.resetPassword], body);
   }
 
   async forgotPassword(email: string) {

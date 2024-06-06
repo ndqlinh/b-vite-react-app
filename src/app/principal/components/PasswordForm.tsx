@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import LockIcon from '@assets/icons/lock.svg?react';
 import ShowIcon from '@assets/icons/eyes-show.svg?react';
@@ -13,7 +14,9 @@ import {
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 import Loader from '@shared/components/partials/Loader';
-import { resetPassword } from 'app/auth/authSlice';
+import { reset, resetPassword } from 'app/auth/authSlice';
+import ACTION_TYPES from 'app/stores/action-types';
+import { useNavigate } from 'react-router-dom';
 
 const PasswordForm = () => {
   const [isShowPassword, setShowPassword] = useState({
@@ -34,6 +37,25 @@ const PasswordForm = () => {
   });
   const authData = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (authData.type === ACTION_TYPES.AUTH.RESET_PASSWORD) {
+      if (authData.data && !authData.isLoading) {
+        toast('Your password was updated successfully', {
+          type: 'success',
+          theme: 'colored'
+        });
+        navigate('/');
+        dispatch(reset());
+      } else if (authData.hasError) {
+        toast(authData.error, {
+          type: 'error',
+          theme: 'colored'
+        });
+      }
+    }
+  }, [authData]);
 
   const toggleShowPassword = (name: string) => {
     setShowPassword(prev => {
