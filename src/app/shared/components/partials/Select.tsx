@@ -27,7 +27,7 @@ const SelectBox = ({
   setFormValue,
   placeholder
 }: SelectProps) => {
-  const [value, setValue] = useState(selectedValue);
+  const [value, setValue] = useState('');
   const [showOptions, setShowOptions] = useState(false);
 
   useEffect(() => {
@@ -36,6 +36,12 @@ const SelectBox = ({
       document.removeEventListener('click', handleClickOutSide);
     };
   }, []);
+
+  useEffect(() => {
+    if (selectedValue) {
+      setValue(selectedValue)
+    }
+  }, [selectedValue]);
 
   const toggleShowOptions = () => {
     setShowOptions(prev => !prev);

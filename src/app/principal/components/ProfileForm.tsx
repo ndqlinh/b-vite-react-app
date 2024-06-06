@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import DatePicker from 'react-datepicker';
 import { toast } from 'react-toastify';
@@ -34,7 +34,7 @@ const ProfileForm = () => {
     firstName: profile?.data?.firstName || '',
     lastName: profile?.data?.lastName || '',
     email: profile?.data?.email || '',
-    gender: profile?.data?.gender || '',
+    gender: profile?.data?.gender?.toLowerCase() || '',
     dob: profile?.data?.dob || new Date()
   };
 
