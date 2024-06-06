@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { SkeletonText } from "skeleton-elements/react";
 
 import ViteLogo from '@assets/icons/vite.svg?react';
@@ -10,7 +10,6 @@ import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 import { getProfile } from 'app/principal/principalSlice';
 import Dropdown from '../partials/Dropdown';
 import AuthHelper from '@core/helpers/auth.helper';
-import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const navigate = useNavigate();
