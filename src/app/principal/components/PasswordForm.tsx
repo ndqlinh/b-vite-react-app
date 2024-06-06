@@ -13,6 +13,7 @@ import {
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 import Loader from '@shared/components/partials/Loader';
+import { resetPassword } from 'app/auth/authSlice';
 
 const PasswordForm = () => {
   const [isShowPassword, setShowPassword] = useState({
@@ -41,7 +42,9 @@ const PasswordForm = () => {
     });
   };
 
-  const updatePassword: SubmitHandler<any> = (data) => {};
+  const updatePassword: SubmitHandler<any> = (data) => {
+    dispatch(resetPassword(data));
+  };
 
   return (
     <form className="form-password" onSubmit={ handleSubmit(updatePassword) }>
