@@ -90,7 +90,7 @@ const PasswordForm = () => {
         <p className="txt-red error-msg">{ errors?.confirmPassword?.message }</p>
       </div>
       <button className="btn btn-primary btn-submit" disabled={ authData.isLoading }>
-        { authData.isLoading ? <Loader /> : "Sign up" }
+        { authData.isLoading ? <Loader /> : "Reset" }
       </button>
     </form>
   );

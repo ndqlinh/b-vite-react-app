@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import Tabs from '@shared/components/partials/Tabs';
 import ProfileForm from '../components/ProfileForm';
+import PasswordForm from '../components/PasswordForm';
 
 const Profile = () => {
   const [selectedTab, setSelectedTab] = useState('profile');
@@ -14,11 +15,7 @@ const Profile = () => {
   return (
     <div className="profile-detail">
       <Tabs tabs={ profileTabs } callback={ changeTabCallback }>
-        {
-          selectedTab === 'profile' ?
-            <ProfileForm /> :
-            <div className="password-form"></div>
-        }
+        { selectedTab === 'profile' ? <ProfileForm /> : <PasswordForm /> }
       </Tabs>
     </div>
   )
