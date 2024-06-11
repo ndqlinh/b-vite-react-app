@@ -18,7 +18,7 @@ import {
   passwordValidator
 } from '@shared/validators/form.validator';
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
-import { reset, signin } from '../authSlice';
+import { reset, signin, loginSso } from '../authSlice';
 import AuthHelper from '@core/helpers/auth.helper';
 import Loader from '@shared/components/partials/Loader';
 
@@ -70,17 +70,29 @@ const Signin = () => {
     dispatch(signin(data));
   };
 
+  const onLoginSso = (idp: string) => {
+    dispatch(loginSso({ idp }));
+  };
+
   return (
     <div className="auth-page login-page">
       <div className="card">
         <h1 className="page-title">Log in to your Account</h1>
         <h3 className="page-subtitle">Welcome back! Select method to log in</h3>
         <div className="auth-sso">
-          <button className="btn btn-outline btn-login-sso" disabled={ authData.isLoading }>
+          <button
+            className="btn btn-outline btn-login-sso"
+            onClick={ () => onLoginSso('google') }
+            disabled={ authData.isLoading }
+          >
             <GoogleIcon className="btn-icon" />
             <span className="btn-text">Google</span>
           </button>
-          <button className="btn btn-outline btn-login-sso" disabled={ authData.isLoading }>
+          <button
+            className="btn btn-outline btn-login-sso"
+            onClick={ () => onLoginSso('facebook') }
+            disabled={ authData.isLoading }
+          >
             <FacebookIcon className="btn-icon" />
             <span className="btn-text">Facebook</span>
           </button>

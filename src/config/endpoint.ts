@@ -9,8 +9,9 @@ export const ENDPOINT = {
     forgotPassword: `${RESOURCES.auth}/forgot-password`,
     refreshToken: `${RESOURCES.auth}/renew`,
     signout: `${RESOURCES.auth}/signout`,
-    },
-    profile: 'profile',
-    task: 'task',
-    resetPassword: `reset-password`,
+    sso: `${RESOURCES.auth}/sso`,
+  },
+  profile: 'profile',
+  task: 'task',
+  resetPassword: `reset-password`,
 }

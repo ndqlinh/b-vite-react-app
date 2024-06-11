@@ -4,7 +4,8 @@ const ACTION_TYPES = {
   AUTH: {
     SIGN_IN: ENDPOINT.auth.signin,
     SIGN_UP: ENDPOINT.auth.signup,
-    RESET_PASSWORD: ENDPOINT.auth.resetPassword
+    RESET_PASSWORD: ENDPOINT.resetPassword,
+    SSO: ENDPOINT.auth.sso
   },
   TODO: {
     SAVE: `${ENDPOINT.task}/save`,

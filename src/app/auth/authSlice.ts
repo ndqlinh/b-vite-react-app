@@ -22,7 +22,7 @@ const initialState: AuthStoreInterface = {
 const auth = new AuthService();
 
 export const signup = createAsyncThunk(
-  ENDPOINT.auth.signup,
+  ACTION_TYPES.AUTH.SIGN_UP,
   async (data: any, thunkAPI) => {
     try {
       const response: any = await auth.signUp(data);
@@ -34,7 +34,7 @@ export const signup = createAsyncThunk(
 );
 
 export const signin = createAsyncThunk(
-  ENDPOINT.auth.signin,
+  ACTION_TYPES.AUTH.SIGN_IN,
   async (data: any, thunkAPI) => {
     try {
       const response: any = await auth.signIn(data);
@@ -46,7 +46,7 @@ export const signin = createAsyncThunk(
 );
 
 export const resetPassword = createAsyncThunk(
-  ENDPOINT.resetPassword,
+  ACTION_TYPES.AUTH.RESET_PASSWORD,
   async (data: any, thunkAPI) => {
     try {
       const response: any = await auth.resetPassword(data);
@@ -55,7 +55,19 @@ export const resetPassword = createAsyncThunk(
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
-)
+);
+
+export const loginSso = createAsyncThunk(
+  ACTION_TYPES.AUTH.SSO,
+  async (data: any, thunkAPI) => {
+    try {
+      const response: any = await auth.loginSso(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -106,6 +118,21 @@ export const authSlice = createSlice({
       })
       .addCase(resetPassword.rejected, (state: any, action: any) => {
         state.type = ACTION_TYPES.AUTH.RESET_PASSWORD;
+        state.isLoading = false;
+        state.hasError = true;
+        state.error = action?.payload?.response?.data?.message;
+      })
+      .addCase(loginSso.pending, (state: any) => {
+        state.type = ACTION_TYPES.AUTH.SSO;
+        state.isLoading = true;
+      })
+      .addCase(loginSso.fulfilled, (state: any, action: any) => {
+        state.type = ACTION_TYPES.AUTH.SSO;
+        state.isLoading = false;
+        state.data = action?.payload?.data;
+      })
+      .addCase(loginSso.rejected, (state: any, action: any) => {
+        state.type = ACTION_TYPES.AUTH.SSO;
         state.isLoading = false;
         state.hasError = true;
         state.error = action?.payload?.response?.data?.message;
