@@ -21,6 +21,7 @@ import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 import { reset, signin, loginSso } from '../authSlice';
 import AuthHelper from '@core/helpers/auth.helper';
 import Loader from '@shared/components/partials/Loader';
+import { environment } from 'config/environment';
 
 interface SigninData {
   email: string;
@@ -71,7 +72,7 @@ const Signin = () => {
   };
 
   const onLoginSso = (idp: string) => {
-    dispatch(loginSso({ idp }));
+    window.location.href = `${environment.apiBaseUrl}auth/sso?idp=${idp}`;
   };
 
   return (
