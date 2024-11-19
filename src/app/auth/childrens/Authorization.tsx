@@ -17,7 +17,7 @@ const Authorization = () => {
 
   useEffect(() => {
     if (code) {
-      dispatch(authorize({ code, provider: searchParams.get('provider') }));
+      dispatch(authorize({ code }));
     }
   }, [code]);
 
@@ -40,7 +40,7 @@ const Authorization = () => {
   return (
     <div className="auth-page flex-col">
       <Loader className="section-loader mb-5" />
-      <h1>Authorizing...</h1>
+      <h2>Authorizing...</h2>
     </div>
   );
 };
