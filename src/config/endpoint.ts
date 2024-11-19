@@ -10,6 +10,7 @@ export const ENDPOINT = {
     refreshToken: `${RESOURCES.auth}/renew`,
     signout: `${RESOURCES.auth}/signout`,
     sso: `${RESOURCES.auth}/sso`,
+    authorization: `${RESOURCES.auth}/authorization`
   },
   profile: 'profile',
   task: 'task',

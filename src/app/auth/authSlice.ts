@@ -69,6 +69,18 @@ export const loginSso = createAsyncThunk(
   }
 );
 
+export const authorize = createAsyncThunk(
+  ACTION_TYPES.AUTH.AUTHORIZATION,
+  async (data: any, thunkAPI) => {
+    try {
+      const response: any = await auth.authorize(data);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -133,6 +145,21 @@ export const authSlice = createSlice({
       })
       .addCase(loginSso.rejected, (state: any, action: any) => {
         state.type = ACTION_TYPES.AUTH.SSO;
+        state.isLoading = false;
+        state.hasError = true;
+        state.error = action?.payload?.response?.data?.message;
+      })
+      .addCase(authorize.pending, (state: any) => {
+        state.type = ACTION_TYPES.AUTH.AUTHORIZATION;
+        state.isLoading = true;
+      })
+      .addCase(authorize.fulfilled, (state: any, action: any) => {
+        state.type = ACTION_TYPES.AUTH.AUTHORIZATION;
+        state.isLoading = false;
+        state.data = action?.payload?.data;
+      })
+      .addCase(authorize.rejected, (state: any, action: any) => {
+        state.type = ACTION_TYPES.AUTH.AUTHORIZATION;
         state.isLoading = false;
         state.hasError = true;
         state.error = action?.payload?.response?.data?.message;

@@ -40,6 +40,10 @@ export default class AuthService extends AuthHelper {
     return this.http.post([ENDPOINT.auth.sso], body);
   }
 
+  async authorize(body: any) {
+    return this.http.post([ENDPOINT.auth.authorization], body);
+  }
+
   refreshToken() {
     this.http.post([ENDPOINT.auth.refreshToken], {}, this.setRootHeader())
       .then((res: any) => {
