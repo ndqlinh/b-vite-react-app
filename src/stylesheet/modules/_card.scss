@@ -1,8 +1,0 @@
-.card {
-  @include pxRem(padding, 16);
-  @include pxRem(border-radius, 5);
-  display: inline-flex;
-  flex-direction: column;
-  background-color: map-get($color, "white");
-  box-shadow: 0px 0px 2.41919px rgba(0,0,0,0.084),0px 2.41919px 2.41919px rgba(0,0,0,0.168);
-}
