@@ -57,8 +57,10 @@ const Signin = () => {
       toast(authData.error, {
         type: 'error',
         theme: 'colored',
+        onClose: () => {
+          dispatch(reset());
+        },
       });
-      dispatch(reset());
     }
   }, [authData]);
 

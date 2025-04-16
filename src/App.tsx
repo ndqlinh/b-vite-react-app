@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import AOS from 'aos';
 
 import appRoutes from './app.routes';
@@ -15,11 +14,10 @@ function App() {
   return (
     <BrowserRouter>
       <DialogProvider>
-        <ToastContainer />
         <RouterOutlet routes={appRoutes} />
       </DialogProvider>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

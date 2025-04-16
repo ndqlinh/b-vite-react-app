@@ -16,7 +16,7 @@ const initialState: AuthStoreInterface = {
   data: null,
   hasError: false,
   isLoading: false,
-  error: ''
+  error: '',
 };
 
 const auth = new AuthService();
@@ -85,7 +85,7 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    reset: () => initialState
+    reset: () => initialState,
   },
   extraReducers: (builder) => {
     builder
@@ -117,7 +117,7 @@ export const authSlice = createSlice({
         state.type = ACTION_TYPES.AUTH.SIGN_IN;
         state.isLoading = false;
         state.hasError = true;
-        state.error = action?.payload?.response?.data?.message;
+        state.error = action?.payload?.message;
       })
       .addCase(resetPassword.pending, (state: any) => {
         state.type = ACTION_TYPES.AUTH.RESET_PASSWORD;
