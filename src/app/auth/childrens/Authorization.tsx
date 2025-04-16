@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import Loader from '@shared/components/partials/Loader';
+import LoaderIcon from '@assets/icons/loader.svg?react';
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 import { authorize, reset } from '../authSlice';
 import AuthHelper from '@core/helpers/auth.helper';
@@ -38,9 +38,9 @@ const Authorization = () => {
   }, [authData]);
 
   return (
-    <div className="auth-page flex-col">
-      <Loader className="section-loader mb-5" />
-      <h2>Authorizing...</h2>
+    <div className="flex flex-col flex-1 justify-center items-center">
+      <LoaderIcon className="inline w-8 h-8 me-3 animate-spin text-blue-600 mb-2" />
+      <h2 className="text-xl">Authorizing...</h2>
     </div>
   );
 };
