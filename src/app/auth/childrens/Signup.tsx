@@ -179,28 +179,30 @@ const Signup = () => {
             <p className="txt-red error-msg">{errors?.email?.message}</p>
           </div>
           <div className="flex gap-2">
-            <SelectBox
-              name="gender"
-              formRegister={register('gender')}
-              setFormValue={setValue}
-              options={[
-                {
-                  name: 'Male',
-                  value: 'male',
-                },
-                {
-                  name: 'Female',
-                  value: 'female',
-                },
-                {
-                  name: 'Other',
-                  value: 'other',
-                },
-              ]}
-              preIcon={<GenderIcon />}
-              placeholder="Gender"
-              selectedValue={defaultValues.gender}
-            />
+            <div className="form-group w-1/2">
+              <SelectBox
+                name="gender"
+                formRegister={register('gender')}
+                setFormValue={setValue}
+                options={[
+                  {
+                    name: 'Male',
+                    value: 'male',
+                  },
+                  {
+                    name: 'Female',
+                    value: 'female',
+                  },
+                  {
+                    name: 'Other',
+                    value: 'other',
+                  },
+                ]}
+                preIcon={<GenderIcon />}
+                placeholder="Gender"
+                selectedValue={defaultValues.gender}
+              />
+            </div>
             <div className="form-group">
               <div className="relative flex items-center mb-1">
                 <Controller

@@ -25,7 +25,7 @@ const SelectBox = ({
   onChange,
   isDisabled,
   setFormValue,
-  placeholder
+  placeholder,
 }: SelectProps) => {
   const [value, setValue] = useState('');
   const [showOptions, setShowOptions] = useState(false);
@@ -35,20 +35,23 @@ const SelectBox = ({
     return () => {
       document.removeEventListener('click', handleClickOutSide);
     };
-  }, []);
+  }, [showOptions]);
 
   useEffect(() => {
     if (selectedValue) {
-      setValue(selectedValue)
+      setValue(selectedValue);
     }
   }, [selectedValue]);
 
   const toggleShowOptions = () => {
-    setShowOptions(prev => !prev);
+    setShowOptions((prev) => !prev);
   };
 
   const handleClickOutSide = (e) => {
-    if (!e.target.classList.contains('select')) {
+    if (e.target.closest('.select-box-wrapper')) {
+      return;
+    }
+    if (showOptions) {
       setShowOptions(false);
     }
   };
@@ -62,61 +65,64 @@ const SelectBox = ({
   const onSelect = (val) => {
     setFormValue(name, val);
     setValue(val);
-    setShowOptions(false);
-  }
+  };
 
   return (
-    <div className='form-group select-group'>
-      <div className="select-box-wrapper">
-        {
-          preIcon &&
-          <div className="prev-icon">
-            { preIcon }
-          </div>
-        }
-        <label className="form-label" htmlFor={ name }>
-          { label }
+    <div
+      className="select-box-wrapper relative flex items-center shadow appearance-none border rounded w-full py-3 px-3 pl-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
+      onClick={toggleShowOptions}
+    >
+      {preIcon && (
+        <div className="absolute text-gray-400 text-xl left-3">{preIcon}</div>
+      )}
+      <>
+        <label className="form-label" htmlFor={name}>
+          {label}
         </label>
         <div className="select-group">
           <div
-            className={ `form-control select selected-value ${isDisabled ? 'disabled' : ''} ${ value ? '' : 'txt-placeholder' }` }
-            onClick={ toggleShowOptions }
+            className={`form-control select selected-value ${
+              isDisabled ? 'disabled' : ''
+            } ${value ? '' : 'text-gray-400'}`}
           >
-            { options?.find(item => item?.value === value)?.name || placeholder }
+            {options?.find((item) => item?.value === value)?.name ||
+              placeholder}
           </div>
-          <span className='icon-arrow-down arrow-icon'>
-            <ArrowDownIcon />
-          </span>
-          {
-            (showOptions && !isDisabled) &&
-            <ul className="option-list">
-              {
-                options?.map(item => (
-                  <li
-                    key={ item?.value }
-                    className={ `option-item ${item?.value === value ? 'selected' : ''}` }
-                    onClick={ () => onSelect(item?.value) }
-                  >
-                    { item?.name }
-                  </li>
-                ))
-              }
+
+          {showOptions && (
+            <ul className="absolute z-10 bg-white shadow-lg border rounded mt-1 w-full max-h-60 overflow-auto left-0 top-full">
+              {options?.map((item) => (
+                <li
+                  key={item?.value}
+                  className={`py-2 px-4 hover:bg-blue-50 ${
+                    item?.value === value
+                      ? 'bg-blue-600 text-white hover:bg-blue-600'
+                      : ''
+                  }`}
+                  onClick={() => onSelect(item?.value)}
+                >
+                  {item?.name}
+                </li>
+              ))}
             </ul>
-          }
+          )}
 
           <input
             type="text"
-            name={ name }
-            { ...formRegister }
+            name={name}
+            {...formRegister}
             className="form-field hidden"
-            onChange={ doOnChange }
-            onSelect={ doOnChange }
-            disabled={ isDisabled }
+            onChange={doOnChange}
+            onSelect={doOnChange}
+            disabled={isDisabled}
           />
         </div>
-      </div>
+      </>
+      <span className="absolute right-3 cursor-pointer text-gray-500 text-xl">
+        <ArrowDownIcon />
+      </span>
     </div>
   );
-}
+};
 
 export default SelectBox;

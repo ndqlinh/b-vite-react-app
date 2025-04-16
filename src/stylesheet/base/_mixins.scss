@@ -1,0 +1,147 @@
+@use "sass:list";
+@use "sass:meta";
+@use "sass:map";
+@use "sass:math";
+@use "variables" as *;
+
+@mixin clearfix() {
+  &::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
+
+// === RESPOND ABOVE ===
+// @include respond-above(small) {}
+@mixin respond-above($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    $breakpoint-value: map.get($breakpoints, $breakpoint);
+    @media (min-width: $breakpoint-value) {
+      @content;
+    }
+  } @else {
+    @warn 'Invalid breakpoint: #{$breakpoint}.';
+  }
+}
+
+// === RESPOND BELOW ===
+// @include respond-below(small) {}
+@mixin respond-below($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    $breakpoint-value: map.get($breakpoints, $breakpoint);
+    @media (max-width: ($breakpoint-value - 1)) {
+      @content;
+    }
+  } @else {
+    @warn 'Invalid breakpoint: #{$breakpoint}.';
+  }
+}
+
+// === RESPOND BETWEEN ===
+// @include respond-between(small, medium);
+@mixin respond-between($lower, $upper) {
+  @if map.has-key($breakpoints, $lower) and map.has-key($breakpoints, $upper) {
+    $lower-breakpoint: map.get($breakpoints, $lower);
+    $upper-breakpoint: map.get($breakpoints, $upper);
+    @media (min-width: $lower-breakpoint) and (max-width: ($upper-breakpoint - 1)) {
+      @content;
+    }
+  } @else {
+    @if (map.has-key($breakpoints, $lower) == false) {
+      @warn 'Your lower breakpoint was invalid: #{$lower}.';
+    }
+    @if (map.has-key($breakpoints, $upper) == false) {
+      @warn 'Your upper breakpoint was invalid: #{$upper}.';
+    }
+  }
+}
+
+// === CONVERT PXREM ===
+@function strip-units($number) {
+  @if meta.type-of($number) == "number" {
+    @return math.div($number, $number * 0 + 1);
+  }
+  @return $number;
+}
+
+@function convertRootPxToEm($value) {
+  // check for null:
+  @if ($value == null) {
+    @return $value;
+  }
+  // assume em:
+  @if (math.is-unitless($value) or math.unit($value) == em) {
+    @return 0em + $value;
+  } @else {
+    @return 0em + calc(strip-units($value) / 14);
+  }
+}
+
+@function convertPxToRem($px) {
+  @return 0rem + calc(strip-units($px) / 14);
+}
+
+@mixin pxRem($property, $values) {
+  // Create a couple of empty lists as output buffers:
+  $px-values: ();
+  $rem-values: ();
+
+  // Ensure $values is a list.
+  @if meta.type-of($values) != "list" {
+    $values: list.join((), $values);
+  }
+
+  // Loop through the $values list:
+  @each $value in $values {
+    @if meta.type-of($value) ==
+      number and
+      (math.is-unitless($value) or math.unit($value) == px)
+    {
+      $px-values: list.join($px-values, 0px + ($value));
+      $rem-values: list.join($rem-values, convertPxToRem($value));
+    } @else {
+      // no conversion:
+      $px-values: list.join($px-values, $value);
+      $rem-values: list.join($rem-values, $value);
+    }
+  }
+
+  #{$property}: $px-values;
+
+  // don't add media query if it's not needed:
+  @if $px-values != $rem-values {
+    // @media only all {
+    #{$property}: $rem-values;
+    // }
+  }
+}
+// == End / Convert Px To Rem
+
+@mixin ellipsis-special($number: null) {
+  overflow: hidden;
+  @if meta.type-of($number) != number {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: box;
+    display: -moz-box;
+    display: -webkit-box;
+    display: -ms-box;
+    box-orient: vertical;
+    -moz-box-orient: vertical;
+    -ms-line-clamp: $number;
+    -moz-line-clamp: $number;
+    -webkit-line-clamp: $number;
+    word-wrap: break-word;
+    white-space: normal;
+    /*! autoprefixer: off */
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+  }
+  // Prevent Safari from showing tooltip when text overflow is hidden with ellipsis
+  &::after {
+    content: "";
+    display: block;
+  }
+}
