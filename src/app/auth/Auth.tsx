@@ -15,7 +15,7 @@ const Auth = () => {
   }, []);
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen bg-gray-50">
       <Outlet />
     </div>
   );

@@ -99,13 +99,13 @@ const Signin = () => {
             <span className="btn-text">Facebook</span>
           </button>
         </div>
-        <div className="divide-text w-full flex items-center justify-center my-4 before:border-b before:border-gray-300 before:w-full after:border-b after:border-gray-300 after:w-full">
+        <div className="divide-text w-full flex items-center justify-center my-8 before:border-b before:border-gray-300 before:w-full after:border-b after:border-gray-300 after:w-full">
           <p className="px-2 whitespace-nowrap text-gray-600">
             or continue with email
           </p>
         </div>
         <form
-          className="flex flex-col gap-2 mb-4"
+          className="flex flex-col gap-3 mb-4"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="form-group">
@@ -124,7 +124,7 @@ const Signin = () => {
             </div>
             <p className="text-red-500 text-sm">{errors?.email?.message}</p>
           </div>
-          <div className="form-group mb-2">
+          <div className="form-group">
             <div className="relative flex items-center mb-1">
               <LockIcon className="absolute text-gray-400 text-xl left-3" />
               <input
