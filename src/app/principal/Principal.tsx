@@ -6,7 +6,10 @@ const Principal = () => {
   return (
     <>
       <Header />
-      <div className="container pd-4">
+      <div
+        className="container p-4 flex flex-1"
+        style={{ minHeight: 'calc(100vh - 64px)' }}
+      >
         <Outlet />
       </div>
     </>

@@ -8,7 +8,7 @@ const Home = () => {
   const increaseCount = () => setCount((count) => count + 1);
 
   return (
-    <div className="flex flex-col items-center flex-1">
+    <div className="flex flex-col items-center justify-center flex-1">
       <img src={ReactLogo} className="h-[40vmin] mb-12" alt="logo" />
       <h1>Vite + React</h1>
       <button

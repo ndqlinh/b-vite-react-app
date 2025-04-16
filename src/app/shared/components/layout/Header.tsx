@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { SkeletonText } from "skeleton-elements/react";
+import { SkeletonText } from 'skeleton-elements/react';
 
 import ViteLogo from '@assets/icons/vite.svg?react';
 import LogoutIcon from '@assets/icons/logout.svg?react';
@@ -32,38 +32,51 @@ const Header = () => {
   };
 
   return (
-    <header className="principal-header">
-      <h1 className="page-logo"><ViteLogo /></h1>
-      <ul className="header-menu">
+    <header className="flex items-center px-4 py-2 bg-white shadow-md">
+      <h1 className="mr-4 mb-0 text-5xl">
+        <ViteLogo />
+      </h1>
+      <ul className="flex items-center gap-2">
         <li className="menu-item">
-          <Link to='/'>Home</Link>
+          <Link to="/">Home</Link>
         </li>
         <li className="menu-item">
-          <Link to='/todo'>Todo</Link>
+          <Link to="/todo">Todo</Link>
         </li>
       </ul>
-      <div className="header-actions">
+      <div className="ml-auto">
         <Dropdown
           triggerElm={
             <button className="btn btn-profile">
               <span className="mr-1">Welcome,</span>
-              {
-                (profile.isLoading && profile.type === ACTION_TYPES.ACCOUNT.GET) ?
-                  <SkeletonText tag="span" effect="wave">firstnamelastname</SkeletonText> :
-                  <span>{ profile?.data?.firstName } { profile?.data?.lastName }</span>
-              }
+              {profile.isLoading &&
+              profile.type === ACTION_TYPES.ACCOUNT.GET ? (
+                <SkeletonText tag="span" effect="wave">
+                  firstnamelastname
+                </SkeletonText>
+              ) : (
+                <span>
+                  {profile?.data?.firstName} {profile?.data?.lastName}
+                </span>
+              )}
             </button>
           }
           dropdownContent={
             <ul className="dropdown-list">
-              <li className="dropdown-item" onClick={ openProfile }>
-                <div className="pre-icon">
+              <li
+                className="px-5 py-2 flex items-center gap-2 bg-white cursor-pointer transition-all duration-300 ease-in-out hover:bg-blue-100"
+                onClick={openProfile}
+              >
+                <div className="flex items-center">
                   <ProfileIcon />
                 </div>
                 <span className="dropdown-item-title">Profile</span>
               </li>
-              <li className="dropdown-item" onClick={ onLogout }>
-                <div className="pre-icon">
+              <li
+                className="px-5 py-2 flex items-center gap-2 bg-white cursor-pointer transition-all duration-300 ease-in-out hover:bg-blue-100"
+                onClick={onLogout}
+              >
+                <div className="flex items-center">
                   <LogoutIcon />
                 </div>
                 <span className="dropdown-item-title">Logout</span>

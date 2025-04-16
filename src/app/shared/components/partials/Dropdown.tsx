@@ -9,20 +9,25 @@ const Dropdown = (props) => {
   useOutsideEvent(dropdownRef, () => handleClickOutside());
 
   const toggleDropdown = () => {
-    setShowed(prev => !prev);
-  }
+    setShowed((prev) => !prev);
+  };
 
   const handleClickOutside = () => {
     setShowed(false);
-  }
+  };
 
   return (
-    <div className="dropdown-container" ref={ dropdownRef }>
-      <div className="flex-center-y" onClick={ toggleDropdown }>
-        { triggerElm }
+    <div className="relative" ref={dropdownRef}>
+      <div className="flex-center-y" onClick={toggleDropdown}>
+        {triggerElm}
       </div>
-      <div className={ `dropdown-menu ${ isShowed ? 'showed' : 'invisible' }` } onClick={ toggleDropdown }>
-        { dropdownContent }
+      <div
+        className={`absolute py-1 rounded min-w-[140px] scale-75 bg-white shadow-lg border top-full right-0 mt-2 transition-all ease-in-out duration-100 z-10 ${
+          isShowed ? 'scale-100 visible opacity-100' : 'opacity-0 invisible'
+        }`}
+        onClick={toggleDropdown}
+      >
+        {dropdownContent}
       </div>
     </div>
   );
