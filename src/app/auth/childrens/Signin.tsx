@@ -78,7 +78,7 @@ const Signin = () => {
 
   return (
     <div className="flex flex-col flex-1 justify-center items-center">
-      <div className="rounded overflow-hidden shadow-lg px-8 py-10 min-w-[400px] max-w-[400px] w-full bg-white">
+      <div className="rounded overflow-hidden shadow-lg px-8 py-10 max-w-[100vw] w-[400px] bg-white">
         <h1 className="font-bold text-2xl">Log in to your Account</h1>
         <h3 className="text-sm text-gray-600 mb-8">
           Welcome back! Select method to log in
