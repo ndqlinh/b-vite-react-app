@@ -1,6 +1,9 @@
 import ReactDOM from 'react-dom/client';
 import { ToastContainer } from 'react-toastify';
+
 import './global.css';
+import 'react-datepicker/dist/react-datepicker.css';
+
 import App from './App.tsx';
 import { Provider } from 'react-redux';
 import { store } from './app/stores';
