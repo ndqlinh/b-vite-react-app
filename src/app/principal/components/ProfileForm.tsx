@@ -7,17 +7,17 @@ import UserIcon from '@assets/icons/user-outline.svg?react';
 import EmailIcon from '@assets/icons/email.svg?react';
 import GenderIcon from '@assets/icons/gender.svg?react';
 import CalendarIcon from '@assets/icons/calendar-light.svg?react';
+import LoaderIcon from '@assets/icons/loader.svg?react';
 
 import SelectBox from '@shared/components/partials/Select';
 import {
   emailValidator,
   firstName,
-  lastName
+  lastName,
 } from '@shared/validators/form.validator';
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
 import { reset, updateProfile } from '../principalSlice';
 import ACTION_TYPES from 'app/stores/action-types';
-import Loader from '@shared/components/partials/Loader';
 
 interface ProfileData {
   firstName: string;
@@ -35,7 +35,7 @@ const ProfileForm = () => {
     lastName: profile?.data?.lastName || '',
     email: profile?.data?.email || '',
     gender: profile?.data?.gender?.toLowerCase() || '',
-    dob: profile?.data?.dob || new Date()
+    dob: profile?.data?.dob || new Date(),
   };
 
   const {
@@ -43,10 +43,10 @@ const ProfileForm = () => {
     control,
     formState: { errors },
     setValue,
-    handleSubmit
+    handleSubmit,
   } = useForm({
     mode: 'onChange',
-    defaultValues
+    defaultValues,
   });
 
   useEffect(() => {
@@ -54,13 +54,13 @@ const ProfileForm = () => {
       if (profile.hasError) {
         toast(profile.error, {
           type: 'error',
-          theme: 'colored'
+          theme: 'colored',
         });
         dispatch(reset());
       } else if (profile.data && !profile.isLoading) {
         toast('Your profile was updated successfully', {
           type: 'success',
-          theme: 'colored'
+          theme: 'colored',
         });
       }
     }
@@ -93,11 +93,11 @@ const ProfileForm = () => {
                 id="firstName"
                 className="form-field"
                 placeholder="First name"
-                { ...register("firstName", firstName()) }
+                {...register('firstName', firstName())}
               />
             </div>
             <p className="txt-red error-msg">
-              { `${errors?.firstName?.message || '' }` }
+              {`${errors?.firstName?.message || ''}`}
             </p>
           </div>
         </div>
@@ -111,11 +111,11 @@ const ProfileForm = () => {
                 id="lastName"
                 className="form-field"
                 placeholder="Last name"
-                { ...register("lastName", lastName()) }
+                {...register('lastName', lastName())}
               />
             </div>
             <p className="txt-red error-msg">
-              { `${errors?.lastName?.message || '' }` }
+              {`${errors?.lastName?.message || ''}`}
             </p>
           </div>
         </div>
@@ -129,43 +129,41 @@ const ProfileForm = () => {
             id="email"
             className="form-field"
             placeholder="Email"
-            { ...register("email", emailValidator()) }
+            {...register('email', emailValidator())}
           />
         </div>
-        <p className="txt-red error-msg">
-          { `${errors?.email?.message || '' }` }
-        </p>
+        <p className="txt-red error-msg">{`${errors?.email?.message || ''}`}</p>
       </div>
       <div className="row">
         <div className="col-6">
           <SelectBox
             name="gender"
-            formRegister={ register("gender") }
-            setFormValue={ setValue }
+            formRegister={register('gender')}
+            setFormValue={setValue}
             options={[
               {
                 name: 'Male',
-                value: 'male'
+                value: 'male',
               },
               {
                 name: 'Female',
-                value: 'female'
+                value: 'female',
               },
               {
                 name: 'Other',
-                value: 'other'
-              }
+                value: 'other',
+              },
             ]}
-            preIcon={ <GenderIcon /> }
+            preIcon={<GenderIcon />}
             placeholder="Gender"
-            selectedValue={ defaultValues.gender }
+            selectedValue={defaultValues.gender}
           />
         </div>
         <div className="col-6">
           <div className="form-group">
             <div className="form-control">
               <Controller
-                control={ control }
+                control={control}
                 name="dob"
                 render={({ field }) => (
                   <DatePicker
@@ -173,12 +171,12 @@ const ProfileForm = () => {
                     className="form-field cursor-pointer"
                     calendarClassName="calendar-picker-popup"
                     placeholderText="Select date"
-                    onChange={ (date) => field.onChange(date) }
-                    onKeyDown={ (event) => event.preventDefault() }
-                    selected={ field.value }
-                    maxDate={ new Date() }
+                    onChange={(date: any) => field.onChange(date)}
+                    onKeyDown={(event) => event.preventDefault()}
+                    selected={field.value}
+                    maxDate={new Date()}
                     showYearDropdown
-                    icon={ <CalendarIcon className="prev-icon txt-xl" /> }
+                    icon={<CalendarIcon className="prev-icon txt-xl" />}
                   />
                 )}
               />
@@ -188,14 +186,15 @@ const ProfileForm = () => {
       </div>
       <button
         className="btn btn-primary btn-submit"
-        disabled={ profile?.type === ACTION_TYPES.ACCOUNT.UPDATE && profile.isLoading }
+        disabled={
+          profile?.type === ACTION_TYPES.ACCOUNT.UPDATE && profile.isLoading
+        }
       >
-          {
-            (
-              profile?.type === ACTION_TYPES.ACCOUNT.UPDATE
-              && profile.isLoading
-            ) ? <Loader /> : "Update"
-          }
+        {profile?.type === ACTION_TYPES.ACCOUNT.UPDATE && profile.isLoading ? (
+          <LoaderIcon className="inline w-8 h-8 me-3 animate-spin text-blue-600 mb-2" />
+        ) : (
+          'Update'
+        )}
       </button>
     </form>
   );

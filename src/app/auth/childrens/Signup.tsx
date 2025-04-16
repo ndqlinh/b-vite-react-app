@@ -13,6 +13,7 @@ import ShowIcon from '@assets/icons/eyes-show.svg?react';
 import HideIcon from '@assets/icons/eyes-hide.svg?react';
 import GoogleIcon from '@assets/icons/google.svg?react';
 import FacebookIcon from '@assets/icons/facebook.svg?react';
+import LoaderIcon from '@assets/icons/loader.svg?react';
 
 import {
   emailValidator,
@@ -24,7 +25,6 @@ import {
   passwordValidator,
 } from '@shared/validators/form.validator';
 import { useAppDispatch, useAppSelector } from 'app/stores/hook';
-import LoaderIcon from '@assets/icons/loader.svg?react';
 import SelectBox from '@shared/components/partials/Select';
 import { reset, signup } from '../authSlice';
 
