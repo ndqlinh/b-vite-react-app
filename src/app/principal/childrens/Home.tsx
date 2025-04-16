@@ -9,7 +9,11 @@ const Home = () => {
 
   return (
     <div className="flex flex-col items-center justify-center flex-1">
-      <img src={ReactLogo} className="h-[40vmin] mb-12" alt="logo" />
+      <img
+        src={ReactLogo}
+        className="h-[40vmin] mb-12 animate-[spin_4s_linear_infinite] "
+        alt="logo"
+      />
       <h1>Vite + React</h1>
       <button
         className="py-2.5 px-5 me-2 mb-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
