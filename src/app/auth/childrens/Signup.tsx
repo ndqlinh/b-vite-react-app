@@ -143,7 +143,9 @@ const Signup = () => {
                   {...register('firstName', firstName())}
                 />
               </div>
-              <p className="txt-red error-msg">{errors?.firstName?.message}</p>
+              <p className="text-red-500 text-sm">
+                {errors?.firstName?.message}
+              </p>
             </div>
             <div className="form-group">
               <div className="relative flex items-center mb-1">
@@ -159,7 +161,9 @@ const Signup = () => {
                   {...register('lastName', lastName())}
                 />
               </div>
-              <p className="txt-red error-msg">{errors?.lastName?.message}</p>
+              <p className="text-red-500 text-sm">
+                {errors?.lastName?.message}
+              </p>
             </div>
           </div>
           <div className="form-group">
@@ -176,7 +180,7 @@ const Signup = () => {
                 {...register('email', emailValidator())}
               />
             </div>
-            <p className="txt-red error-msg">{errors?.email?.message}</p>
+            <p className="text-red-500 text-sm">{errors?.email?.message}</p>
           </div>
           <div className="flex gap-2">
             <div className="form-group w-1/2">
@@ -253,7 +257,9 @@ const Signup = () => {
                   {isShowPassword.password ? <HideIcon /> : <ShowIcon />}
                 </div>
               </div>
-              <p className="txt-red error-msg">{errors?.password?.message}</p>
+              <p className="text-red-500 text-sm">
+                {errors?.password?.message}
+              </p>
             </div>
             <div className="form-group mb-4">
               <div className="relative flex items-center mb-1">
@@ -283,7 +289,7 @@ const Signup = () => {
                   {isShowPassword.confirmPassword ? <HideIcon /> : <ShowIcon />}
                 </div>
               </div>
-              <p className="txt-red error-msg">
+              <p className="text-red-500 text-sm">
                 {errors?.confirmPassword?.message}
               </p>
             </div>

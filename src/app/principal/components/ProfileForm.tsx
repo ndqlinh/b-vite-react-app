@@ -81,61 +81,68 @@ const ProfileForm = () => {
   };
 
   return (
-    <form className="form-profile" onSubmit={handleSubmit(doUpdateProfile)}>
-      <div className="row">
-        <div className="col-6">
-          <div className="form-group">
-            <div className="form-control">
-              <UserIcon className="prev-icon" />
-              <input
-                type="text"
-                name="firstName"
-                id="firstName"
-                className="form-field"
-                placeholder="First name"
-                {...register('firstName', firstName())}
-              />
-            </div>
-            <p className="txt-red error-msg">
-              {`${errors?.firstName?.message || ''}`}
-            </p>
+    <form
+      className="flex flex-col gap-3 mb-4 max-w-[100vw] w-[500px] mx-auto"
+      onSubmit={handleSubmit(doUpdateProfile)}
+    >
+      <div className="flex gap-2">
+        <div className="form-group w-1/2">
+          <div className="relative flex items-center mb-1">
+            <UserIcon className="absolute text-gray-400 text-xl left-3" />
+            <input
+              type="text"
+              name="firstName"
+              id="firstName"
+              className={`shadow appearance-none border rounded w-full py-3 px-3 pl-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                errors.firstName ? 'border-red-500' : ''
+              }`}
+              placeholder="First name"
+              {...register('firstName', firstName())}
+            />
           </div>
+          <p className="text-red-500 text-sm">
+            {`${errors?.firstName?.message || ''}`}
+          </p>
         </div>
-        <div className="col-6">
-          <div className="form-group">
-            <div className="form-control">
-              <UserIcon className="prev-icon" />
-              <input
-                type="text"
-                name="lastName"
-                id="lastName"
-                className="form-field"
-                placeholder="Last name"
-                {...register('lastName', lastName())}
-              />
-            </div>
-            <p className="txt-red error-msg">
-              {`${errors?.lastName?.message || ''}`}
-            </p>
+        <div className="form-group w-1/2">
+          <div className="relative flex items-center mb-1">
+            <UserIcon className="absolute text-gray-400 text-xl left-3" />
+            <input
+              type="text"
+              name="lastName"
+              id="lastName"
+              className={`shadow appearance-none border rounded w-full py-3 px-3 pl-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                errors.lastName ? 'border-red-500' : ''
+              }`}
+              placeholder="Last name"
+              {...register('lastName', lastName())}
+            />
           </div>
+          <p className="text-red-500 text-sm">
+            {`${errors?.lastName?.message || ''}`}
+          </p>
         </div>
       </div>
       <div className="form-group">
-        <div className="form-control">
-          <EmailIcon className="prev-icon" />
+        <div className="relative flex items-center mb-1">
+          <EmailIcon className="absolute text-gray-400 text-xl left-3" />
           <input
             type="text"
             name="email"
             id="email"
-            className="form-field"
+            className={`shadow appearance-none border rounded w-full py-3 px-3 pl-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+              errors.email ? 'border-red-500' : ''
+            }`}
             placeholder="Email"
             {...register('email', emailValidator())}
           />
         </div>
-        <p className="txt-red error-msg">{`${errors?.email?.message || ''}`}</p>
+        <p className="text-red-500 text-sm">{`${
+          errors?.email?.message || ''
+        }`}</p>
       </div>
-      <div className="row">
-        <div className="col-6">
+      <div className="flex gap-2 mb-4">
+        <div className="form-group w-1/2">
           <SelectBox
             name="gender"
             formRegister={register('gender')}
@@ -159,39 +166,42 @@ const ProfileForm = () => {
             selectedValue={defaultValues.gender}
           />
         </div>
-        <div className="col-6">
-          <div className="form-group">
-            <div className="form-control">
-              <Controller
-                control={control}
-                name="dob"
-                render={({ field }) => (
-                  <DatePicker
-                    showIcon
-                    className="form-field cursor-pointer"
-                    calendarClassName="calendar-picker-popup"
-                    placeholderText="Select date"
-                    onChange={(date: any) => field.onChange(date)}
-                    onKeyDown={(event) => event.preventDefault()}
-                    selected={field.value}
-                    maxDate={new Date()}
-                    showYearDropdown
-                    icon={<CalendarIcon className="prev-icon txt-xl" />}
-                  />
-                )}
-              />
-            </div>
+        <div className="form-group w-1/2">
+          <div className="relative flex items-center mb-1">
+            <Controller
+              control={control}
+              name="dob"
+              render={({ field }) => (
+                <DatePicker
+                  showIcon
+                  className={`shadow appearance-none border rounded w-full !py-3 !px-3 !pl-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline cursor-pointer ${
+                    errors.dob ? 'border-red-500' : ''
+                  }`}
+                  wrapperClassName="w-full"
+                  calendarClassName="calendar-picker-popup"
+                  placeholderText="Select date"
+                  onChange={(date: any) => field.onChange(date)}
+                  onKeyDown={(event) => event.preventDefault()}
+                  selected={field.value}
+                  maxDate={new Date()}
+                  showYearDropdown
+                  icon={
+                    <CalendarIcon className="absolute text-gray-400 text-xl left-3 !p-0 top-1/2 -translate-y-1/2" />
+                  }
+                />
+              )}
+            />
           </div>
         </div>
       </div>
       <button
-        className="btn btn-primary btn-submit"
+        className="font-medium text-white rounded px-5 py-2.5 text-center bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br shadow-lg shadow-blue-500/50"
         disabled={
           profile?.type === ACTION_TYPES.ACCOUNT.UPDATE && profile.isLoading
         }
       >
         {profile?.type === ACTION_TYPES.ACCOUNT.UPDATE && profile.isLoading ? (
-          <LoaderIcon className="inline w-8 h-8 me-3 animate-spin text-blue-600 mb-2" />
+          <LoaderIcon className="inline w-4 h-4 me-3 animate-spin" />
         ) : (
           'Update'
         )}
