@@ -42,26 +42,32 @@ const TodoList = () => {
           setTodoList(todo.data);
           break;
         case ACTION_TYPES.TODO.SAVE: {
-          const isExisted = todoList.find(item => item.id === todo.data.id);
-          setTodoList(prev => {
-            return isExisted ? prev.map(item => {
-              if (item.id === todo.data.id) {
-                item = { ...todo.data };
-              }
-              return item;
-            }) : [...[todo.data], ...prev];
+          const isExisted = todoList.find((item) => item.id === todo.data.id);
+          setTodoList((prev) => {
+            return isExisted
+              ? prev.map((item) => {
+                  if (item.id === todo.data.id) {
+                    item = { ...todo.data };
+                  }
+                  return item;
+                })
+              : [...[todo.data], ...prev];
           });
           break;
         }
         case ACTION_TYPES.TODO.DELETE:
-          setTodoList(prev => prev.filter(item => item.id !== todo.data.id));
+          setTodoList((prev) =>
+            prev.filter((item) => item.id !== todo.data.id)
+          );
           break;
       }
     }
   }, [todo.data]);
 
   useEffect(() => {
-    setFilteredTodoList(prev => todoList.filter(item => item.status === selectedStatus));
+    setFilteredTodoList((prev) =>
+      todoList.filter((item) => item.status === selectedStatus)
+    );
   }, [todoList, selectedStatus]);
 
   const changeTabCallback = (selectedIndex: number) => {
@@ -69,7 +75,9 @@ const TodoList = () => {
   };
 
   const triggerSubmit = () => {
-    todoFormRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+    todoFormRef.current.dispatchEvent(
+      new Event('submit', { cancelable: true, bubbles: true })
+    );
   };
 
   const openDialog = (todo?: Todo) => {
@@ -78,46 +86,42 @@ const TodoList = () => {
       title: todo?.id ? 'Update Todo' : 'Create Todo',
       containComponent: true,
       pendingCloseDialog: true,
-      content: <TodoForm formRef={ todoFormRef } inputData={ todo } />,
+      content: <TodoForm formRef={todoFormRef} inputData={todo} />,
       button: {
         ok: todo?.id ? 'Update' : 'Create',
         cancel: 'Discard',
       },
-      confirmHandler: triggerSubmit
+      confirmHandler: triggerSubmit,
     });
   };
 
   return (
     <div className="todo-page">
-      <button className="btn btn-primary" onClick={ () => openDialog() }>
+      <button className="btn btn-primary" onClick={() => openDialog()}>
         <div className="btn-icon">
           <PlusIcon />
         </div>
         New Task
       </button>
-      <Tabs tabs={ todoStatus } callback={ changeTabCallback }>
+      <Tabs tabs={todoStatus} callback={changeTabCallback}>
         <div className="flex flex-center">
-          {
-            isFetching ?
+          {isFetching ? (
             <div className="py-10">
               <Loader className="section-loader" />
-            </div> :
-            filteredTodoList?.length ?
-            <ul className="todo-list" ref={ animationParent }>
-              {
-                filteredTodoList.map(todo => <TodoItem
-                  key={ todo.id }
-                  todo={ todo }
-                  openDetail={ openDialog } />
-                )
-              }
-            </ul> :
+            </div>
+          ) : filteredTodoList?.length ? (
+            <ul className="todo-list" ref={animationParent}>
+              {filteredTodoList.map((todo) => (
+                <TodoItem key={todo.id} todo={todo} openDetail={openDialog} />
+              ))}
+            </ul>
+          ) : (
             <p className="txt-grey py-10">Nothing to show</p>
-          }
+          )}
         </div>
       </Tabs>
     </div>
-  )
+  );
 };
 
 export default TodoList;
